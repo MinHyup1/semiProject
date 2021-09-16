@@ -5,41 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-#wrapper { 
-    border: 1px solid black;
-    padding: 5px 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 450px; height: 250px;
-    margin-left: -220px;
-    margin-top : -170px;
-    
-    display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-} 
-.form{
-	width: 300px;
-}
-.form > div{
-	background-color:lightgray;
-	display: flex;
-	justify-content: center;
-	padding-bottom: 7px;
-	align-items: center;
-	min-height: 100px;
-}
-
-button{
-	float: none;
-	padding: 3px;
-	margin-left: 75px;
-	 background:lightblue; border: none; 
-}
-</style>
+<link href='${contextPath}/resources/css/member/check.css' rel='stylesheet'/>
+<style>button{margin-left: 75px;}</style>
 </head>
 <body>
 <div id="wrapper">
