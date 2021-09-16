@@ -6,17 +6,15 @@
 
 <meta charset="UTF-8">
 <title>MEDIBOOK</title>
-<link rel="stylesheet" href="${contextPath}/resources/css/all.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/all.css">
-<script type="text/javascript" src="${contextPath}/resources/js/web-util.js"></script>
+<link rel="stylesheet" href="/resources/css/all.css">
+<link rel="stylesheet" href="/resources/css/main.css">
+<link rel="stylesheet" href="/resources/css/all.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="resources/js/bootstrap.js"></script>
-<script src="resources/js/klorofil-common.js"></script>
+<!-- <script src="/resources/js/bootstrap.js"></script>
+<script src="/resources/js/klorofil-common.js"></script> -->
 <html>
-<!-- <head>
-
-</head> -->
+<head>
+</head>
 <body>
 <!-- WRAPPER -->
 	<div id="wrapper">
@@ -77,7 +75,7 @@
 		</div>
 		<!-- END LEFT SIDEBAR -->
 		<!-- MAIN -->
-		<div class="main">
+		<!-- <div class="main"> -->
 			<!-- MAIN CONTENT -->
 			<!-- <div class="main-content"> -->
 			

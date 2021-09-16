@@ -1,37 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<<<<<<< HEAD
-<link rel="stylesheet" href="resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="resources/css/main.css">
-<link rel="stylesheet" href="resources/css/all.css">
-</head>
-<body>
-	<!-- WRAPPER -->
-	<div id="wrapper">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<div id="wrapper">
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="brand">
-				<a href="메인화면보낸다!"><i class="fas fa-plus-square"></i> MEDIBOOK</a>
+				<a href="메인화면.jsp"><i class="fas fa-plus-square"></i> MEDIBOOK</a>
 			</div>
 			<div class="container-fluid">
 				<div class="navbar-btn">
 					<button type="button" class="btn-toggle-fullwidth"><i class="far fa-arrow-alt-circle-left"></i></button>
 				</div>
 				<div class="navbar-btn navbar-btn-right">
-					<a class="btn btn-success update-pro" title="" target="" href="로그인페이지 .jsp"> <span>login</span></a>
-					<a class="btn btn-success update-pro" title="" target="" href="로그인페이지 .jsp"> <span>회원가입</span></a>
-				</div> <!-- 로그아웃 버튼은 추가  -->
+					<a class="btn btn-success update-pro" title="" target="" href="로그인페이지.jsp"> <span>login</span></a>
+					<a class="btn btn-success update-pro" title="" target="" href="회원가입페이지.jsp"> <span>회원가입</span></a>
+				</div><!-- 로그아웃 버튼 추가 예정 -->
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
 								<i class="far fa-bell"></i> <!--종 아이콘  -->
-								<span class="badge bg-danger">2</span> <!-- 종아이콘에 나오는 숫자 -->
+								<span class="badge bg-danger">5</span> <!-- 종아이콘에 나오는 숫자 -->
 							</a>
-							<ul class="dropdown-menu notifications"><!-- 종버튼 알람부분 -->
+							<ul class="dropdown-menu notifications"> <!-- 종버튼 알람부분 -->
 								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
 								<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
 								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
@@ -43,7 +34,7 @@
 						<li class="dropdown"> <!-- dropdown open -->
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-user-circle"></i>  <span>user-name</span>  <i class="fas fa-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="계정정보.jsp"><i class="far fa-user"></i> <span>My Profile</span></a></li>
+								<li><a href="개인정보수정.jsp"><i class="far fa-user"></i> <span>My Profile</span></a></li>
 								<li><a href="로그아웃"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
 							</ul>
 						</li>
@@ -66,27 +57,6 @@
 				</nav>
 			</div>
 		</div>
+		<!-- END LEFT SIDEBAR -->
 		<!-- MAIN -->
-		<div class="main">  
-			<!-- 가운데 그림 또는 그래프 또는 기타등등 아이디어 환영 -->
-			<img alt="image" src="http://www.medigatenews.com/file/news/190983">
-			<img alt="image" src="http://www.medigatenews.com/file/news/190983">
-			<img alt="image" src="http://www.medigatenews.com/file/news/190983">
-		</div>
 		
-		<footer>
-			
-		</footer>
-	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="resources/js/bootstrap.js"></script>
-	<script src="resources/js/klorofil-common.js"></script>
-=======
-</head>
-<body>
-	<script type="text/javascript">
-		location.href='/index';
-	</script>
->>>>>>> refs/heads/dev
-</body>
-</html>
