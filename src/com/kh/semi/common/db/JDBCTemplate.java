@@ -21,7 +21,7 @@ public class JDBCTemplate {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			File file = new File("../semiProject/Wallet_semiproject.zip");
-	        String rootPath =  file.getCanonicalPath();
+	        String rootPath = file.getCanonicalPath();
 			String url = "jdbc:oracle:thin:@semiproject_high?TNS_ADMIN="+rootPath;
 			String user = "ADMIN";
 			String password = "Qwer1234qwer";
