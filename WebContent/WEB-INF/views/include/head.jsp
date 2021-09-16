@@ -14,9 +14,9 @@
 <script src="resources/js/bootstrap.js"></script>
 <script src="resources/js/klorofil-common.js"></script>
 <html>
-<head>
+<!-- <head>
 
-</head>
+</head> -->
 <body>
 <!-- WRAPPER -->
 	<div id="wrapper">
