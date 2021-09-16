@@ -46,7 +46,7 @@ button{
 input {
 	padding: 5px;
 }
-
+</style>
 </head>
 <body>
 <div id="wrapper">

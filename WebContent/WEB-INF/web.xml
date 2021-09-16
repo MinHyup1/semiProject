@@ -7,7 +7,7 @@
    
    <filter>
    	<filter-name>encodingFilter</filter-name>
-   	<filter-class>com.kh.toy.common.filter.EncodingFilter</filter-class>
+   	<filter-class>com.kh.semi.common.filter.EncodingFilter</filter-class>
    </filter>
    <filter-mapping>
    	<filter-name>encodingFilter</filter-name>
@@ -16,7 +16,7 @@
    
    <filter>
    	<filter-name>wrapperFilter</filter-name>
-   	<filter-class>com.kh.toy.common.filter.WrapperFilter</filter-class>
+   	<filter-class>com.kh.semi.common.filter.WrapperFilter</filter-class>
    </filter>
    <filter-mapping>
    	<filter-name>wrapperFilter</filter-name>
