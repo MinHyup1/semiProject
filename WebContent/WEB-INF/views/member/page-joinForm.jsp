@@ -4,6 +4,7 @@
 <html>
 <head>
 <link href='${contextPath}/resources/css/member/joinForm.css' rel='stylesheet'/>
+<script src='${contextPath}/resources/js/member/joinForm.js'></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -75,13 +76,13 @@
 			<li class="checkBox check01">
 				<ul class="clearfix">
 					<li>이용약관, 개인정보 수집 및 이용에 모두 동의합니다.</li>
-					<li class="checkAllBtn"><input type="checkbox" name="chkAll" id="chk" class="chkAll"></li>
+					<li class="checkAllBtn"><input type="checkbox" id="allCheckList" name="chkAll" onclick="allCheck(event)"></li>
 				</ul>
 			</li>
 			<li class="checkBox check02">
 				<ul class="clearfix">
 					<li>이용약관 동의(필수)</li>
-					<li class="checkBtn"><input id="agree1" type="checkbox" name="chk"></li>
+					<li class="checkBtn"><input type="checkbox" class="checkList" id="agree1" name="chk" onclick="checkList(event)"></li>
 				</ul> <textarea name="" id="">제 1 조 (목적)
 이 약관은 {MEDIBOOK}(이하 "사이트"라 합니다)에서 제공하는 인터넷서비스(이하 "서비스"라 합니다)의 이용 조건 및 절차에 관한 기본적인 사항을 규정함을 목적으로 합니다.
  
@@ -185,7 +186,7 @@
 			<li class="checkBox check03">
 				<ul class="clearfix">
 					<li>개인정보 수집 및 이용에 대한 안내(필수)</li>
-					<li class="checkBtn"><input id="agree2" type="checkbox" name="chk"></li>
+					<li class="checkBtn"><input type="checkbox" class="checkList" id="agree2" name="chk" onclick="checkList(event)"></li>
 				</ul> <textarea name="" id="">
 1. 개인정보의 처리 목적
 
@@ -237,7 +238,6 @@
 			<a class="cancel" href="#"><button class="fpmgBt2">가입취소</button></a>
 		</div>
 </form>
-
 </div>
 
 
