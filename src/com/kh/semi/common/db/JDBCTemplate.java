@@ -1,5 +1,7 @@
 package com.kh.semi.common.db;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,13 +15,14 @@ public class JDBCTemplate {
 	// 클래스의 인스턴스가 하나만 생성되도록 처리하는 디자인패턴
 	private static JDBCTemplate instance;
 	PoolDataSource pds;
-
+	
 	// 1. 오라클 드라이버 jvm에 등록
 	private JDBCTemplate() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-
-			String url = "jdbc:oracle:thin:@pclass_high" + "?TNS_ADMIN=C:/CODE/before/d_front/e_servlet/Wallet_PCLASS";
+			File file = new File("../semiProject/Wallet_semiproject.zip");
+	        String rootPath = file.getCanonicalPath();
+			String url = "jdbc:oracle:thin:@semiproject_high?TNS_ADMIN="+rootPath;
 			String user = "ADMIN";
 			String password = "Qwer1234qwer";
 			final String CONN_FACTORY_CLASS_NAME = "oracle.jdbc.pool.OracleDataSource";
@@ -57,6 +60,9 @@ public class JDBCTemplate {
 			pds.setInactiveConnectionTimeout(10);
 
 		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
