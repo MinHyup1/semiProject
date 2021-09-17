@@ -18,6 +18,8 @@
 	<button formaction="/test/schedule">진료스케줄</button>
 	<button formaction="/test/searchHos">병원검색</button>
 </div>
+
+
 </form>
 </body>
 </html>
