@@ -22,7 +22,7 @@ public class JDBCTemplate {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			File file = new File("../semiProject/Wallet_semiproject.zip");
 	        String rootPath = file.getCanonicalPath();
-			String url = "jdbc:oracle:thin:@semiproject_high?TNS_ADMIN="+rootPath;
+			String url = "jdbc:oracle:thin:@semiproject_high?TNS_ADMIN="+rootPath; //테스트 아직 못해봄(09.16)
 			String user = "ADMIN";
 			String password = "Qwer1234qwer";
 			final String CONN_FACTORY_CLASS_NAME = "oracle.jdbc.pool.OracleDataSource";

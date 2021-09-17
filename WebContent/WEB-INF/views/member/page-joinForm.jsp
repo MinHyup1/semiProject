@@ -3,153 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style type="text/css">
-
-	#wrapper {
-		margin-top: 40px;
-	}
-
-	table {
-		border: 1px solid #ddd;
-		background-color: #fff;
-		margin-bottom: 20px;
-		width: 100%;
-	}
-	
-	
-	.title {
-		font-size: 16px;
-		background-color: #f7f7f7;
-		color: #4D4C4C;
-	}
-	
-	b {
-		color: #4D4C4C;
-		font-size: 22px;
-		font-weight: bolder;
-	}
-	
-	.inputInfo, .check{
-		font-size: 13px;
-		color: #4D4C4C;
-	}
-
-	input {
-		margin-left: 10px; 
-	}
-
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box
-	}
-	
-	body {
-		min-width: 715px;
-		background-color: #f7f7f7;
-	}
-	
-	ul>li {
-		list-style: none
-	}
-	
-	.clearfix::after {
-		content: "";
-		display: block;
-		clear: both;
-	}
-
-	#joinForm {
-		width: 80%;
-		margin: 0 auto;
-	}
-	
-	ul.join_box {
-		border: 1px solid #ddd;
-		background-color: #fff;
-	}
-	
-	.checkBox,.checkBox>ul {
-		position: relative;
-	}
-	
-	.checkBox>ul>li {
-		float: left;
-	}
-	
-	.checkBox>ul>li:first-child {
-		width: 85%;
-		padding: 15px;
-		font-weight: 600;
-		color: #888;
-	}
-	
-	.checkBox>ul>li:nth-child(2) {
-		position: absolute;
-		top: 50%;
-		right: 30px;
-		margin-top: -12px;
-	}
-	
-	.checkBox textarea {
-		width: 96%;
-		height: 150px;
-		margin: 0 2%;
-		background-color: #f7f7f7;
-		color: #888;
-		border: none;
-	}
-	
-	.footBtwrap {
-		display:flex;
-		position:relative;
-		text-align: center;
-		justify-content: center;
-		margin-top: 15px;
-		margin-bottom: 40px;
-	}
-	
-	.footBtwrap>a {
-		width: 35%;
-		height: 60px;
-	}
-	
-	.footBtwrap>a>button {
-		width: 95%;
-		height: 100%;
-		font-size: 20px;
-		line-height: 60px;
-	}
-	
-	.fpmgBt1 {
-		background-color: #00AAFF;
-		color: #fff;
-		border: 0;
-		border-radius: 5px;
-	}
-	
-	.fpmgBt2 {
-		background-color: #fff;
-		color:#888;
-		border: 1.5px solid #ddd;
-		border-radius: 5px;
-	}
-
-	.aTag {
-		color: #4D4C4C;
-		font-size:6px;
-		border-top: none;
-	}
-
-	.bTag, .code{
-		border-bottom: none;
-	}
-	
-	.ad {
-	 	border-top: none;
-	}
-	
-</style>
+<link href='${contextPath}/resources/css/member/joinForm.css' rel='stylesheet'/>
+<script src='${contextPath}/resources/js/member/joinForm.js'></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -221,13 +76,13 @@
 			<li class="checkBox check01">
 				<ul class="clearfix">
 					<li>이용약관, 개인정보 수집 및 이용에 모두 동의합니다.</li>
-					<li class="checkAllBtn"><input type="checkbox" name="chkAll" id="chk" class="chkAll"></li>
+					<li class="checkAllBtn"><input type="checkbox" id="allCheckList" name="chkAll" onclick="allCheck(event)"></li>
 				</ul>
 			</li>
 			<li class="checkBox check02">
 				<ul class="clearfix">
 					<li>이용약관 동의(필수)</li>
-					<li class="checkBtn"><input id="agree1" type="checkbox" name="chk"></li>
+					<li class="checkBtn"><input type="checkbox" class="checkList" id="agree1" name="chk" onclick="checkList(event)"></li>
 				</ul> <textarea name="" id="">제 1 조 (목적)
 이 약관은 {MEDIBOOK}(이하 "사이트"라 합니다)에서 제공하는 인터넷서비스(이하 "서비스"라 합니다)의 이용 조건 및 절차에 관한 기본적인 사항을 규정함을 목적으로 합니다.
  
@@ -331,7 +186,7 @@
 			<li class="checkBox check03">
 				<ul class="clearfix">
 					<li>개인정보 수집 및 이용에 대한 안내(필수)</li>
-					<li class="checkBtn"><input id="agree2" type="checkbox" name="chk"></li>
+					<li class="checkBtn"><input type="checkbox" class="checkList" id="agree2" name="chk" onclick="checkList(event)"></li>
 				</ul> <textarea name="" id="">
 1. 개인정보의 처리 목적
 
@@ -383,7 +238,6 @@
 			<a class="cancel" href="#"><button class="fpmgBt2">가입취소</button></a>
 		</div>
 </form>
-
 </div>
 
 

@@ -42,7 +42,6 @@
    <error-page>
    	<exception-type>com.kh.semi.common.exception.HandlableException</exception-type>
    	<location>/exception-handler</location>
-   	
    </error-page>
    
    

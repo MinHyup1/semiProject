@@ -5,48 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-#wrapper { 
-    border: 1px solid black;
-    padding: 5px 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 450px; height: 350px;
-    margin-left: -220px;
-    margin-top : -170px;
-    
-    display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-} 
-h1{
-	font-size: 25px;
-	padding-bottom: 20px;
-}
-.form{
-	width: 300px;
-}
-.form > div{
-	display: flex;
-	justify-content: center;
-	padding-bottom: 7px;
-	align-items: center;
-}
-label{
-	flex: 1;
-	text-align: left;
-}
-button{
-	width: 85px;
-	float: right;
-	padding: 3px;
-}
-input {
-	padding: 5px;
-}
-</style>
+<link href='${contextPath}/resources/css/member/find.css' rel='stylesheet'/>
 </head>
 <body>
 <div id="wrapper">

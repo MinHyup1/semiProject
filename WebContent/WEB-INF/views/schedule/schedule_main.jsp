@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <head>
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
-<%-- <%@ include file="/WEB-INF/views/include/head2.jsp" %> --%>
 <link href='${contextPath}/resources/css/schedule/calendar/main.css' rel='stylesheet'/>
 <script src='${contextPath}/resources/js/schedule/calendar/render.js'></script>
 <script src='${contextPath}/resources/js/schedule/calendar/main.js'></script>
@@ -11,7 +10,6 @@
 <link href='${contextPath}/resources/css/schedule/schedule_main.css' rel='stylesheet'/>
 </head>
 <!-- <body> -->
-<%-- <%@ include file="/WEB-INF/views/include/body.jsp" %> --%>
 <div class="main">
 		<div class="main-content">
 				<div class="select_menu">
@@ -58,7 +56,7 @@
 			
 		</footer>
 	</div>
+	
 </body>
-<script src="/resources/js/bootstrap.js"></script>
-<script src="/resources/js/klorofil-common.js"></script>
+
 </html>
