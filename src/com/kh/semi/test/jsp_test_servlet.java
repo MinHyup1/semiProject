@@ -52,6 +52,12 @@ public class jsp_test_servlet extends HttpServlet {
 		case "board":
 			request.getRequestDispatcher("/board/freeBoard").forward(request, response);
 			break;
+		case "loginPage":
+			request.getRequestDispatcher("/member/loginPage").forward(request, response);
+			break;
+		case "joinPage":
+			request.getRequestDispatcher("/member/joinPage").forward(request, response);
+			break;
 			
 		default: response.setStatus(404);
 		}
