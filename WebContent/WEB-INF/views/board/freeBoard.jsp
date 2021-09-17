@@ -159,5 +159,8 @@ a {
 			<a href="#" class="bt">마지막 페이지</a>
 		</div>
 	</div>
+<script type="text/javascript">
+	selectedMenu = 'board';
+</script>
 </body>
 </html>

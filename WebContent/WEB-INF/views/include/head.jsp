@@ -64,34 +64,27 @@
 			<div class="sidebar-scroll">
 				<nav>
 					<ul class="nav asdasd">
-						<li><a href="/test/searchHos?active=T" class="" dataset-loc="searchHosp"><i class="fas fa-hospital"></i> <span>병원 검색</span></a></li>
-						<li><a href="/test/searchPharm" class=""><i class="fas fa-vial"></i> <span>약국 검색</span></a></li>
-						<li><a href="/test/searchMedi" class=""><i class="fas fa-pills"></i> <span>의약품 검색</span></a></li>
-						<li><a href="/test/schedule" class=""><i class="far fa-calendar-check"></i> <span>진료 스케줄</span></a></li>
-						<li><a href="/test/board" class=""><i class="fas fa-list"></i> <span>게시판</span></a></li>
+						<li><a href="/test/searchHos?active=T" class="" data-loc="searchHosp"><i class="fas fa-hospital"></i> <span>병원 검색</span></a></li>
+						<li><a href="/test/searchPharm" class="" data-loc="searchPharm"><i class="fas fa-vial"></i> <span>약국 검색</span></a></li>
+						<li><a href="/test/searchMedi" class="" data-loc="searchMedi"><i class="fas fa-pills"></i> <span>의약품 검색</span></a></li>
+						<li><a href="/test/schedule" class="" data-loc="schedule"><i class="far fa-calendar-check"></i> <span>진료 스케줄</span></a></li>
+						<li><a href="/test/board" class="" data-loc="board"><i class="fas fa-list"></i> <span>게시판</span></a></li>
 					</ul>
 				</nav>
 			</div>
 		</div>
 		<script type="text/javascript">
 		var selectedMenu = 'main';
-		
-		
 
-		/* window.addEventListener('load', e=>{
+		window.addEventListener('DOMContentLoaded', e=>{
 			document.querySelectorAll(".asdasd>li>a").forEach(e => {
-				console.dir(e.taget);
 				if(e.dataset.loc == selectedMenu) {
 					 e.classList[1] = 'active' 
 					e.className = 'active';
-					console.dir(e.className);
-					console.dir(e.classList[1]);
 				}
 			});
-
-		}) */
+		})
 		
-		console.dir(selectedMenu);
 		</script>
 		<!-- END LEFT SIDEBAR -->
 		<!-- MAIN -->

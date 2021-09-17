@@ -6,6 +6,15 @@
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 </head>
 <body>
-
+<div class="main">
+		
+		</div>
+		
+		<footer>
+		</footer>
+	</div>
+<script type="text/javascript">
+	selectedMenu = 'searchMedi';
+</script>
 </body>
 </html>

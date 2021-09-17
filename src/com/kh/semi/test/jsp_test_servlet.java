@@ -41,16 +41,16 @@ public class jsp_test_servlet extends HttpServlet {
 			request.getRequestDispatcher("/schedule/schedule_main").forward(request, response);
 			break;
 		case "searchHos":
-			request.getRequestDispatcher("/menu/searchHospital/searchHospital").forward(request, response);
+			request.getRequestDispatcher("/hospital/searchHospital").forward(request, response);
 			break;
 		case "searchPharm":
-			request.getRequestDispatcher("/menu/searchPharmacy/searchPharmacy").forward(request, response);
+			request.getRequestDispatcher("/pharmacy/pharmacy").forward(request, response);
 			break;
 		case "searchMedi":
-			request.getRequestDispatcher("/menu/searchMedi/searchMedi").forward(request, response);
+			request.getRequestDispatcher("/medicine/medicine").forward(request, response);
 			break;
 		case "board":
-			request.getRequestDispatcher("/menu/board/board").forward(request, response);
+			request.getRequestDispatcher("/board/freeBoard").forward(request, response);
 			break;
 			
 		default: response.setStatus(404);

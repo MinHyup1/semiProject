@@ -56,7 +56,9 @@
 			
 		</footer>
 	</div>
-	
+<script type="text/javascript">
+	selectedMenu = 'schedule';
+</script>
 </body>
 
 </html>
