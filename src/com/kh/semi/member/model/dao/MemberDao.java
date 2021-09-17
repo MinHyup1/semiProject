@@ -13,8 +13,8 @@ import com.kh.semi.common.exception.DataAccessException;
 import com.kh.semi.member.model.dto.Member;
 
 //DAO(DATA ACCESS OBJECT)
-//DBMS�� ������ �������� ��ȸ, ����, ����, ���� ��û�� ������ Ŭ����
-//DAO�� �޼���� �ϳ��� �޼��� �� �ϳ��� ������ ó���ϵ��� �ۼ�
+//DBMS에 접근해 데이터의 조회, 수정, 삽입, 삭제 요청을 보내는 클래스
+//DAO의 메서드는 하나의 메서드 당 하나의 쿼리만 처리하도록 작성
 public class MemberDao {
 	
 	private JDBCTemplate template = JDBCTemplate.getInstance();
@@ -108,14 +108,14 @@ public class MemberDao {
 		return res;
 	}
 	
-	//userId�� ' or 1=1 or user_id = ' ���� ���޹����� ��� ȸ���� ��й�ȣ�� ����
-	//SQL Injection ����
-	//�������� SQL������ �����ؼ� ������ DataBase�� �����ϴ� ���
+	//userId로 ' or 1=1 or user_id = ' 값을 전달받으면 모든 회원의 비밀번호가 수정
+	//SQL Injection 공격
+	//악의적인 SQL구문을 주입해서 상대방의 DataBase를 공격하는 기법
 	
-	//SQL Injection ���� ���� ���� PreparedStatement ���
-	//�ν��Ͻ��� ������ �� ���� ���ø��� �̸� ���
-	//������ ��ϵ� ���� ���ø��� ������ ����Ǵ� ���� ����
-	//���ڿ��� ���ؼ� �ڵ����� �̽������� ó�� 
+	//SQL Injection 공격 막기 위해 PreparedStatement 사용
+	//인스턴스를 생성할 때 쿼리 템플릿을 미리 등록
+	//생성시 등록된 쿼리 템플릿의 구조가 변경되는 것을 방지
+	//문자열에 대해서 자동으로 이스케이프 처리 
 	//ex) ->\' or 1=1 or user_id = \'
 	public int updateMemberPassword(String userId, String password,Connection conn) {
 		int res = 0;
