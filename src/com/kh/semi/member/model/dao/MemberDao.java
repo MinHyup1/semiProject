@@ -188,7 +188,7 @@ public class MemberDao {
 			case "reg_date" : member.setRegDate(rset.getDate("reg_date")); break;
 			case "rentable_date" : member.setRentableDate(rset.getDate("rentable_date")); break;
 			case "tell" : member.setTell(rset.getString("tell")); break;
-			default : throw new SQLException("�������� �÷����� �����߽��ϴ�."); //����ó��
+			default : throw new SQLException("부적절한 컬럼명을 전달했습니다"); 
 			}
 		}
 		return member;
