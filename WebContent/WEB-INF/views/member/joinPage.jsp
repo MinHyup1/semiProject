@@ -25,7 +25,11 @@
 									<a href="#"><button class="btn btn-lg kakao">카카오톡 간편 회원가입</button></a>
 								</div>
 								<a id="or">또는</a>
+<<<<<<< HEAD
 								<a href="/test/join"><button type="submit" class="btn btn-primary btn-lg btn-block">일반 회원가입</button></a>
+=======
+								<a><button formaction="/test/join" type="submit" class="btn btn-primary btn-lg btn-block">일반 회원가입</button></a>
+>>>>>>> refs/heads/dev
 							</form>
 						</div>
 					</div>
