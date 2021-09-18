@@ -6,7 +6,6 @@
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 </head>
 <body>
-<<<<<<< HEAD
 <div class="main">
 		
 		</div>

@@ -13,8 +13,8 @@ import com.kh.semi.common.exception.DataAccessException;
 import com.kh.semi.member.model.dto.Member;
 
 //DAO(DATA ACCESS OBJECT)
-//DBMS�� ������ �������� ��ȸ, ����, ����, ���� ��û�� ������ Ŭ����
-//DAO�� �޼���� �ϳ��� �޼��� �� �ϳ��� ������ ó���ϵ��� �ۼ�
+//DBMS에 접근해 데이터의 조회, 수정, 삽입, 삭제 요청을 보내는 클래스
+//DAO의 메서드는 하나의 메서드 당 하나의 쿼리만 처리하도록 작성
 public class MemberDao {
 	
 	private JDBCTemplate template = JDBCTemplate.getInstance();

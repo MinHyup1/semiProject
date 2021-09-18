@@ -14,38 +14,6 @@
 
 <script type="text/javascript">
 selectedMenu = 'searchHosp';
-
-/* var navList = document.getElementsByClassName("asdasd");
-
-function handleClick(event) {
-  console.log(event.target);
-  console.log(event.target.classList);
-
-  if (event.target.classList[1] === "active") {
-    event.target.classList.remove("active");
-  } else {
-    for (var i = 0; i < navList .length; i++) {
-      navList [i].classList.remove("active");
-    }
-
-    event.target.classList.add("active");
-  }
-}
-
-function init() {
-  for (var i = 0; i < navList .length; i++) {
-    navList [i].addEventListener("click", handleClick);
-  }
-}
-
-init(); */
-
-/* var divElement = document.getElementByClassName('asdasd');
-
-divElement.addEventListener('click', (e) => {
-  var targetElement = e.target;
-  targetElement.setAttribute('class', 'active');  
-}); */
 </script>
 <div class="main">
 <c:if test="${empty active}">

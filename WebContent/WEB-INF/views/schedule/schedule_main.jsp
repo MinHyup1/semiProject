@@ -10,23 +10,23 @@
 <link href='${contextPath}/resources/css/schedule/schedule_main.css' rel='stylesheet'/>
 </head>
 <!-- <body> -->
-<div class="main">
-		<div class="main-content">
+		<div class="main">
+			<div class="main-content">
 				<div class="select_menu">
 					<div class="top_menu">
 						<div class="top_btn menu_btn">
-							<a class="btn_desc"><span class="desc">진료 내역을 기록하고 알림까지 설정해보세요.</span>
+							<a class="btn_desc" href="${contextPath}/schedule/schedule-record-form"><span class="desc">진료 내역을 기록하고 알림까지 설정해보세요.</span>
 							<span class="tit top_tit">진료 일정 기록</span></a>
 							<!-- <a class="menu_btn"><span>진료 일정 기록</span></a> -->
 						</div>
 					</div>
 					<div class="bottom_menu">
 						<div class="bottom_btn_left bottom_btn menu_btn">
-							<a class="btn_desc"><span class="tit bottom_left_tit">진료 알림 등록</span>
+							<a class="btn_desc" href="${contextPath}/schedule/visit-notice-form"><span class="tit bottom_left_tit">진료 알림 등록</span>
 							<span class="desc">예약된 진료 일정 알림을 등록해보세요.</span></a>
 						</div>
 						<div class="bottom_btn_right bottom_btn menu_btn">
-							<a class="btn_desc"><span class="tit bottom_right_tit">복용 알림 등록</span>
+							<a class="btn_desc" href="${contextPath}/schedule/medicine-notice-form"><span class="tit bottom_right_tit">복용 알림 등록</span>
 							<span class="desc">복용 기간, 시간을 등록하고 알림을 받아보세요.</span></a>
 						</div>
 					</div>
