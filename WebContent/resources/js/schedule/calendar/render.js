@@ -155,6 +155,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
 })();
 
+let addMedicineNotice = function() {
+	let timeInp = document.createElement('label');
+	timeInp.innerHTML = "<input type='time' name='dose_notice' required> ";
+	
+	let trashIcon = document.createElement('i');
+	trashIcon.className = 'fas fa-trash';
+	
+	trashIcon.addEventListener('click', (e) => {
+		e.target.parentElement.remove();
+	})
+	
+	timeInp.appendChild(trashIcon);
+	
+	document.querySelector('.input_form').appendChild(timeInp);
+	
+};
 
-
+let addVisitNotice = function(e) {
+	let dateTimeInp = document.createElement('label');
+	dateTimeInp.innerHTML = "<input type='datetime-local' name='visit_notice_date' required> ";
+	
+	let trashIcon = document.createElement('i');
+	trashIcon.className = 'fas fa-trash';
+	
+	trashIcon.addEventListener('click', (e) => {
+		e.target.parentElement.remove();
+	})
+	
+	dateTimeInp.appendChild(trashIcon);
+	
+	document.querySelector('.added-notice').appendChild(dateTimeInp);
+	
+};
 

@@ -27,10 +27,9 @@
 							<label>복용 시작일 : <input type="date" name="dose_start"></label>
 							<label>복용 종료일 : <input type="date" name="dose_end"></label>
 							<label>1일 복용 횟수 : <input type="number" name="dose_times" value="0" step="1" min="0" max="24">회</label>
-							<label class="add_btn">다음 진료 알림 <button type="button" onclick="">추가</button></label>
-							<label><input type="datetime-local" name="visit_notice_date" required> <i class="fas fa-trash"></i></label>
-							<label class="add_btn">뵥용 알림 시간 <button type="button" onclick="">추가</button></label>
-							<label><input type="time" name="dose_notice" required> <i class="fas fa-trash"></i></label>
+							<div><label class="add_btn">다음 진료 알림</label>  <button type="button" onclick="addVisitNotice(event)">추가</button></div>
+							<div class='added-notice'></div>
+							<div><label class="add_btn">복용 알림 시간</label> <button type="button" class="add-time" onclick="addMedicineNotice()">추가</button></div>
 						</form>
 					</div>
 					<div class="action_icons">

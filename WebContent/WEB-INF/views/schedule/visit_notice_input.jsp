@@ -16,7 +16,7 @@
 					<div id='calendar'></div>
 				</div>
 				<div class="wrap_form">
-					<div class="form_title">진료 일정 기록</div>
+					<div class="form_title">진료 알림 등록</div>
 					<div class="input_list">
 						<form action="#" class="input_form" id="input_form">
 							<label>진료 날짜 : <input type="date" class='standard_date' name="schedule_date" value='${param.date}' autofocus required></label>
