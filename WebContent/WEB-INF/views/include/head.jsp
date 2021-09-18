@@ -28,8 +28,8 @@
 					<button type="button" class="btn-toggle-fullwidth"><i class="far fa-arrow-alt-circle-left"></i></button>
 				</div>
 				<div class="navbar-btn navbar-btn-right">
-					<a href="/test/loginPage" class="btn btn-success update-pro" title="" target="" href="로그인페이지.jsp"> <span>login</span></a>
-					<a href="/test/joinPage" class="btn btn-success update-pro" title="" target="" href="회원가입페이지.jsp"> <span>회원가입</span></a>
+					<a href="/member/loginPage" class="btn btn-success update-pro" title="" target="" href="로그인페이지.jsp"> <span>login</span></a>
+					<a href="/member/joinPage" class="btn btn-success update-pro" title="" target="" href="회원가입페이지.jsp"> <span>회원가입</span></a>
 				</div><!-- 로그아웃 버튼 추가 예정 -->
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">

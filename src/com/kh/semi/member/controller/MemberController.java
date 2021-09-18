@@ -68,11 +68,34 @@ public class MemberController extends HttpServlet {
 		case "mypage":
 			mypage(request,response);
 			break;
+		case "findId":
+			findId(request,response);
+			break;
+		case "findPassword":
+			findPassword(request,response);
+			break;
+		case "loginPage":
+			loginPage(request,response);
+			break;
 		default: throw new PageNotFoundException();
 		
 		}
 	}
 	
+	private void loginPage(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		request.getRequestDispatcher("/member/loginPage").forward(request, response);
+		
+	}
+
+	private void findPassword(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		request.getRequestDispatcher("/member/findPassword").forward(request, response);
+		
+	}
+
+	private void findId(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		request.getRequestDispatcher("/member/findId").forward(request, response);
+	}
+
 	private void mypage(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		request.getRequestDispatcher("/member/mypage").forward(request, response);
 		
@@ -86,9 +109,9 @@ public class MemberController extends HttpServlet {
 		String email = request.getParameter("email");
 		
 		Member member = new Member();
-		member.setUserId(userId);
+		member.setId(userId);
 		member.setPassword(password);
-		member.setTell(tell);
+		member.setPhone(tell);
 		member.setEmail(email);
 		
 		String presistToken = UUID.randomUUID().toString();

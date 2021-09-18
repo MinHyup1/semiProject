@@ -94,10 +94,10 @@ public class MemberDao {
 		
 		try {
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, member.getUserId());
+			pstm.setString(1, member.getId());
 			pstm.setString(2, member.getPassword());
 			pstm.setString(3, member.getEmail());
-			pstm.setString(4, member.getTell());
+			pstm.setString(4, member.getPhone());
 			res = pstm.executeUpdate();
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
@@ -107,16 +107,7 @@ public class MemberDao {
 		
 		return res;
 	}
-	
-	//userId�� ' or 1=1 or user_id = ' ���� ���޹����� ��� ȸ���� ��й�ȣ�� ����
-	//SQL Injection ����
-	//�������� SQL������ �����ؼ� ������ DataBase�� �����ϴ� ���
-	
-	//SQL Injection ���� ���� ���� PreparedStatement ���
-	//�ν��Ͻ��� ������ �� ���� ���ø��� �̸� ���
-	//������ ��ϵ� ���� ���ø��� ������ ����Ǵ� ���� ����
-	//���ڿ��� ���ؼ� �ڵ����� �̽������� ó�� 
-	//ex) ->\' or 1=1 or user_id = \'
+
 	public int updateMemberPassword(String userId, String password,Connection conn) {
 		int res = 0;
 		
@@ -162,14 +153,10 @@ public class MemberDao {
 	
 	private Member convertAllToMember(ResultSet rset) throws SQLException {
 		Member member = new Member();
-		member.setUserId(rset.getString("user_id"));
+		member.setId(rset.getString("user_id"));
 		member.setPassword(rset.getString("password"));
 		member.setEmail(rset.getString("email"));
-		member.setGrade(rset.getString("grade"));
-		member.setIsLeave(rset.getInt("is_leave"));
-		member.setRegDate(rset.getDate("reg_date"));
-		member.setRentableDate(rset.getDate("rentable_date"));
-		member.setTell(rset.getString("tell"));
+		member.setPhone(rset.getString("tell"));
 		return member;
 	}
 	
@@ -180,15 +167,11 @@ public class MemberDao {
 			column = column.trim();
 			
 			switch (column) {
-			case "user_id": member.setUserId(rset.getString("user_id")); break;
+			case "user_id": member.setId(rset.getString("user_id")); break;
 			case "password": member.setPassword(rset.getString("password")); break;
 			case "email" : member.setEmail(rset.getString("email")); break;
-			case "grade" : member.setGrade(rset.getString("grade")); break;
-			case "is_leave" : member.setIsLeave(rset.getInt("is_leave")); break;
-			case "reg_date" : member.setRegDate(rset.getDate("reg_date")); break;
-			case "rentable_date" : member.setRentableDate(rset.getDate("rentable_date")); break;
-			case "tell" : member.setTell(rset.getString("tell")); break;
-			default : throw new SQLException("�������� �÷����� �����߽��ϴ�."); //����ó��
+			case "tell" : member.setPhone(rset.getString("tell")); break;
+			default : throw new SQLException("부적절한 컬럼명을 입력하셨습니다."); 
 			}
 		}
 		return member;

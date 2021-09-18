@@ -33,7 +33,7 @@
 								</div>
 								<a href="#"><button type="submit" class="btn btn-primary btn-lg btn-block">기존 회원 로그인</button></a>
 								
-									<span class="helper-text"><a href="#">아이디 찾기 | </a><a href="#">비밀번호 찾기 | </a><a href="#">가입하기</a></span>
+									<span class="helper-text"><a href="/member/findId">아이디 찾기 | </a><a href="/member/findPassword">비밀번호 찾기 | </a><a href="/member/joinPage">가입하기</a></span>
 								
 							</form>
 						</div>

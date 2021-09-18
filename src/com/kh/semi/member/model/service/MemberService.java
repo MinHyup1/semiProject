@@ -18,16 +18,6 @@ import com.kh.semi.common.http.RequestParams;
 import com.kh.semi.member.model.dao.MemberDao;
 import com.kh.semi.member.model.dto.Member;
 
-
-//Service
-//���ø����̼��� �����Ͻ������� �ۼ�
-//������� ��û�� ��Ʈ�ѷ��� ���� ���ӹ޾� �ش� ��û�� ó���ϱ� ���� �ʿ��� �ٽ����� �۾��� ����
-//�۾��� �����ϱ� ���� �����ͺ��̽��� ����� �����Ͱ� �ʿ��ϸ� Dao���� ��û
-//�����Ͻ������� Service�� ����ϱ� ������ Transaction������ Service�� ���.
-
-//Connection��ü ���� , closeó��
-//commit, rollback
-//SQLException�� ���� ����ó��(rollback)
 public class MemberService {
 
 	private MemberDao memberDao = new MemberDao();
@@ -83,8 +73,6 @@ public class MemberService {
 		
 		try {
 			res = memberDao.insertMember(member,conn);
-			//ȸ�����Կ� �����ϸ� ���̵�� ȸ���� ������ �޾ƿͼ� ��ȯ
-			//Member member = memberDao.selectMemberById(member.getUserId(), conn);			
 			template.commit(conn);			
 		}  catch (Exception e) {
 			template.rollback(conn);
@@ -134,10 +122,10 @@ public class MemberService {
 		String queryString = conn.urlEncodedForm(RequestParams
 												.builder()
 												.param("mailTemplate","join-auth-mail")
-												.param("userId", member.getUserId())
+												.param("userId", member.getId())
 												.param("presistToken",persistToken).build());
 										
-		String response = conn.get("http://localhost:9090/mail?mailTemplate=join-auth-mail&userId="+member.getUserId());
+		String response = conn.get("http://localhost:9090/mail?mailTemplate=join-auth-mail&userId="+member.getId());
 		/* mailSender.sendEmail(member.getEmail(), "회원가입 축하합니다.",response); */
 	}
 	
