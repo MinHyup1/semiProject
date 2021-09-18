@@ -4,7 +4,7 @@
 <head>
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 <link href='${contextPath}/resources/css/schedule/calendar/main.css' rel='stylesheet'/>
-<script src='${contextPath}/resources/js/schedule/calendar/render.js'></script>
+<script defer src='${contextPath}/resources/js/schedule/calendar/render.js'></script>
 <script src='${contextPath}/resources/js/schedule/calendar/main.js'></script>
 <script src='${contextPath}/resources/js/schedule/calendar/locales-all.js'></script>
 <link href='${contextPath}/resources/css/schedule/schedule_record_form.css' rel='stylesheet'/>
@@ -19,7 +19,7 @@
 					<div class="form_title">진료 일정 기록</div>
 					<div class="input_list">
 						<form action="#" class="input_form" id="input_form">
-							<label>복용 시작일 : <input type="date" name="dose_start"></label>
+							<label>복용 시작일 : <input type="date" class='standard_date' name="dose_start" value='${param.date}'></label>
 							<label>복용 종료일 : <input type="date" name="dose_end"></label>
 							<label class="search_btn">처방 약국 : <input type="text" name="pharm" placeholder="방문한 약국을 기록해보세요" disabled> <button type="button" onclick="">검색</button></label>
 							<label class="search_btn">처방 약 : <input type="text" name="searched_med" placeholder="처방 받은 약을 기록해보세요" disabled> <button type="button" onclick="">검색</button></label>

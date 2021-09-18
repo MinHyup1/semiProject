@@ -1,11 +1,23 @@
+(function() {
+	var calendar;
+	var prevSelected = undefined;
+	var standardDate = new Date(); /* 일정 날짜로 선택된 날짜 */
+	var scheduleDate; /* standard 날짜의 셀 */
+
 document.addEventListener('DOMContentLoaded', function() {
     //var initialLocaleCode = 'ko';
     var localeSelectorEl = document.getElementById('locale-selector');
     var calendarEl = document.getElementById('calendar');
-	var prevSelected = undefined;
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      headerToolbar: {
+	
+	if(!document.querySelector('.select_menu')) {
+		standardDate = document.querySelector('.standard_date').value;
+	}
+	
+    calendar = new FullCalendar.Calendar(calendarEl, {
+		
+		initialDate: standardDate,
+		
+	  headerToolbar: {
         left: 'today',
         center: 'title',
         right: 'prevYear,prev,next,nextYear'
@@ -17,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
       buttonText: {
     	today: 'today'  
       },
-      initialDate: new Date(),
+      /*initialDate: new Date(),*/
       //locale: 'ko',
       //buttonIcons: false, // show the prev/next text
       //weekNumbers: true,
@@ -28,6 +40,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	  dateClick: function(info) {
 		if(prevSelected) {
 			prevSelected.style.backgroundColor = '';
+			if(standardDate != Date.now() && info.dayEl.dataset.date == standardDate) {
+				return;
+			}
 		}
 		/*alert('Date : ' + info.dateStr);*/
 		prevSelected = info.dayEl
@@ -39,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	  /*eventMouseEnter: function(info) {
 		info.el.style.backgroundColor = 'yellow';
 	  },*/
-
+		
       events: [
         {
           title: 'All Day Event',
@@ -99,34 +114,47 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     calendar.render();
-
-    /* // build the locale selector's options
-    calendar.getAvailableLocaleCodes().forEach(function(localeCode) {
-      var optionEl = document.createElement('option');
-      optionEl.value = localeCode;
-      optionEl.selected = localeCode == initialLocaleCode;
-      optionEl.innerText = localeCode;
-      localeSelectorEl.appendChild(optionEl);
-    });
-
-    // when the selected option changes, dynamically change the calendar option
-    localeSelectorEl.addEventListener('change', function() {
-      if (this.value) {
-        calendar.setOption('locale', this.value);
-      }
-    }); */
+	
+	if(!document.querySelector('.select_menu')) {
+		document.querySelectorAll('.fc-scrollgrid-sync-table>tbody>tr').forEach(e => {
+			e.childNodes.forEach(cell => {
+				if(cell.dataset.date == standardDate) {
+					scheduleDate = cell;
+					scheduleDate.style.backgroundColor = '#ffb3b3';
+				}
+			})
+		})
+	}
 	
 	document.querySelector('.fc-scrollgrid-sync-table>tbody').addEventListener('dblclick', e => {
 		/* 일정등록 선택 화면 뿌리기 */
-		document.querySelector('.select_menu').style.display = 'initial';
+		if(document.querySelector('.select_menu')) {
+			document.querySelector('.select_menu').style.display = 'initial';
 		
-		document.querySelector('.select_menu').addEventListener('click', e => {
-			if(e.target.className == 'top_menu' || e.target.className == 'bottom_menu'){
-				document.querySelector('.select_menu').style.display = 'none';
-			};
-		});
-		
+			document.querySelector('.select_menu').addEventListener('click', e => {
+				if(e.target.className == 'top_menu' || e.target.className == 'bottom_menu'){
+					document.querySelector('.select_menu').style.display = 'none';
+				};
+			});
+			let doubleClickedDate = prevSelected.dataset.date;
+			document.querySelectorAll('.btn_desc').forEach(e => {
+				e.href = e.href.split('?')[0];
+				e.href += '?date=' + doubleClickedDate;
+			})
+		}
 	});
 	
-
+	/*document.querySelector('.fc-button-group').addEventListener('click', e => {
+		console.dir(e);
+		console.dir(scheduleDate.style.backgroundColor);
+		scheduleDate.style.backgroundColor = '#ff6666';
+	});*/
+	
+	
 });
+
+})();
+
+
+
+

@@ -4,8 +4,8 @@
 <head>
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 <link href='${contextPath}/resources/css/schedule/calendar/main.css' rel='stylesheet'/>
-<script src='${contextPath}/resources/js/schedule/calendar/render.js'></script>
 <script src='${contextPath}/resources/js/schedule/calendar/main.js'></script>
+<script defer src='${contextPath}/resources/js/schedule/calendar/render.js'></script>
 <script src='${contextPath}/resources/js/schedule/calendar/locales-all.js'></script>
 <link href='${contextPath}/resources/css/schedule/schedule_main.css' rel='stylesheet'/>
 </head>
@@ -14,6 +14,7 @@
 			<div class="main-content">
 				<div class="select_menu">
 					<div class="top_menu">
+						<!-- btn_desc의 href queryString은 render.js에서 생성 -->
 						<div class="top_btn menu_btn">
 							<a class="btn_desc" href="${contextPath}/schedule/schedule-record-form"><span class="desc">진료 내역을 기록하고 알림까지 설정해보세요.</span>
 							<span class="tit top_tit">진료 일정 기록</span></a>
@@ -39,7 +40,7 @@
 					<div class="schedule_list">
 						<table border="1" class="schedule_table">
 							<thead>
-								<th>2020.09월</th>
+								<th>2021.09월</th>
 							</thead>
 							<tbody>
 								<td>
