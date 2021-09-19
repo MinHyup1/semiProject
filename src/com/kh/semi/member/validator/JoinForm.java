@@ -71,7 +71,11 @@ public class JoinForm {
 		if (!valid) { //전화번호 패턴이 통과되지 못했다면,
 			failedAttribute.put("phone", phone); //실패한 값들 넣어주기
 			res = false;
+		}else if(memberService.selectMemberByPhone(phone) != null) {
+			failedAttribute.put("phone", phone); //실패한 값들 넣어주기
+			res = false;
 		}
+		
 		
 		//실패했다면, 실패한 속성 값들 세션에 넣어주기(세션에 넣어줘야 재요청이 들어왔을 때도 값을 가져와서 사용가능)
 		if(!res) {

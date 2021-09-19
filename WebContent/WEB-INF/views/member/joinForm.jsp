@@ -22,31 +22,25 @@
 		<tr>
 			<td width="200" align="center" class="title">* 아이디</td>
 			<td class="inputInfo" width="500">
-				<input type="text" size="30" name="userId" id="userId" maxlength="20" placeholder="영문소문자/숫자, 5~11 글자"
+				<input type="text" size="30" name="userId" id="userId" maxlength="20" placeholder="영문소문자 or 영문소문자+숫자, 5~11 글자"
 				 	<c:if test="${empty joinFailed.userId}">
 				 		value = "${joinForm.userId}"
 				 	</c:if>
 				required />
 				<input class="check" id="btnIdCheck" type="button" value="중복체크" />
 				<span id="idCheck"  class="valid-msg" >
-					<c:if test="${not empty joinFailed.userId}">
-						이미 존재하는 아이디 입니다.
-					</c:if>
 				</span>	
 			</td>
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 비밀번호</td>
 			<td class="inputInfo" width="500">
-				<input type="password" size="30" name="password" id="password" placeholder="특수문자+영어+숫자, 8~20 글자" 
+				<input type="password" size="30" name="password" id="password" placeholder="특수문자+영어+숫자, 8글자 이상" 
 					<c:if test="${empty joinFailed.password}">
 						value = "${joinForm.password}"
 					</c:if>
 				required />
 				<span id="pwCheck" class="valid-msg">
-					<c:if test="${not empty joinFailed.password}">
-                		비밀번호는 영어,숫자,특수문자 조합의 8글자 이상의 문자열입니다.
-                	</c:if>
 				</span>	
 			</td>
 		</tr>
@@ -60,6 +54,7 @@
 			<td width="200" align="center" class="title">* 이름</td>
 			<td width="500">
 				<input type="text" size="30" name="name" id="name" required />
+				<span id="nameCheck" class="valid-msg"></span>
 			</td>
 		</tr>
 		<tr>
@@ -78,16 +73,13 @@
 		<tr>
 			<td width="200" align="center" class="title">* 휴대전화</td>
 			<td width="500">
-				<input type="text" size="30" name="phone" id="phone" maxlength="20" 
+				<input type="text" size="30" name="phone" id="phone" maxlength="20" placeholder="숫자만 입력, 9~11 자리" 
 					<c:if test="${empty joinFailed.phone}">
                 		value = "${joinForm.phone}"
                 	</c:if>
 				required />
 				<input class="check" id="btnPhoneCheck" type="button" value="중복체크" />
 				<span  id="phoneCheck" class="valid-msg">
-					<c:if test="${not empty joinFailed.phone}">
-                		전화번호는 9~11자리 숫자입니다.
-                	</c:if>
 				</span>	
 			</td>
 		</tr>
@@ -120,9 +112,6 @@
 				required />
 				<input class="check" id="btnEmailCheck" type="button" value="중복체크" />
 				<span  id="emailCheck" class="valid-msg">
-					<c:if test="${not empty joinFailed.email}">
-                		이미 가입된 이메일 입니다.
-                	</c:if>
 				</span>		
 			</td>
 		</tr>

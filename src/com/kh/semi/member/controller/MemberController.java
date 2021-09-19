@@ -53,38 +53,35 @@ public class MemberController extends HttpServlet {
 		String[] uriArr = request.getRequestURI().split("/");
 		
 		switch (uriArr[uriArr.length-1]) {
-		case "login-form":
-			loginForm(request,response);
-			break;
-		case "login" :
+		case "login" : //세미 사용 코드
 			login(request,response);
 			break;
 		case "logout" :
 			logout(request,response);
 			break;
-		case "loginPage" : //세미
+		case "loginPage" : //세미 사용 코드
 			loginPage(request,response);
 			break;
-		case "basicLogin" : //세미
-			basicLoginForm(request,response);
-			break;
-		case "join-form" :
-			joinForm(request,response);
-			break;
-		case "join" :   //join-form.jsp에서 가입버튼 누르면 url을 member/join으로 호출하니까 여기로 넘어옴 //세미
+		case "join" :   //join-form.jsp에서 가입버튼 누르면 url을 member/join으로 호출하니까 여기로 넘어옴 //세미 사용 코드
 			join(request,response);
 			break;
-		case "joinPage": //세미
+		case "joinPage": //세미 사용 코드
 			joinPage(request,response);
 			break;
-		case "basicJoin": //세미
+		case "basicJoin": //세미 사용 코드
 			basicJoin(request,response);
 			break;
-		case "id-check" : //joinForm.js에서 id-check로 보내줌 //세미
+		case "id-check" : //joinForm.js에서 id-check로 보내줌 //세미 사용 코드
 			checkId(request,response);
 			break;
-		case "nickName-check" : //joinForm.js에서 nick-check로 보내줌 //세미
+		case "nickName-check" : //joinForm.js에서 nick-check로 보내줌 //세미 사용 코드
 			checkNick(request,response);
+			break;
+		case "phone-check" : //joinForm.js에서 phone-check로 보내줌 //세미 사용 코드
+			checkPhone(request,response);
+			break;
+		case "email-check" : //joinForm.js에서 email-check로 보내줌 //세미 사용 코드
+			checkEmail(request,response);
 			break;
 		case "join-impl" : 
 			joinImpl(request,response);
@@ -96,10 +93,27 @@ public class MemberController extends HttpServlet {
 		
 		}
 	}
+	
 
-	private void basicLoginForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String userId = request.getParameter("userId");
+		String password = request.getParameter("password");
 		
 		
+		Member member = memberService.memberAuthenticate(userId, password);
+		
+		if(member == null) {
+			response.sendRedirect("/member/loginPage?err=1");
+			return;
+		}
+		
+		//로그인 성공시 authentication 라는 이름으로 세션에 사용자 정보 담아놓기
+		if(member != null) {
+			request.getSession().setAttribute("authentication", member);
+			System.out.println("로그인 성공!!");
+			response.sendRedirect("/index");
+		}
 	}
 
 	private void loginPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -147,8 +161,15 @@ public class MemberController extends HttpServlet {
 		//request.getSession().setAttribute("persistUser", member);
 		memberService.insertMember(member);
 		
-		
 		response.sendRedirect("/member/loginPage");
+
+		//밑에 주석코드 동작 안함 ㅠㅠ   (Uncaught SyntaxError: Unexpected token '<') 에러
+//		request.setAttribute("msg", "회원가입이 완료되었습니다."); 
+//		request.setAttribute("url", "/member/loginPage");
+//		request.getRequestDispatcher("/error/result").forward(request, response);
+		System.out.println("회원가입 완료!");
+
+		
 		
 		/*
 		 * //메일을 보내기 전에 난수를 하나 생성해주기 String persistToken = UUID.randomUUID().toString();
@@ -206,9 +227,28 @@ public class MemberController extends HttpServlet {
 			response.getWriter().print("disable");
 		}
 	}
-
-	private void joinForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/member/join-form").forward(request, response); //join-form.jsp로 보내줌
+	
+	private void checkPhone(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String phone = request.getParameter("phone");
+		Member member = memberService.selectMemberByPhone(phone);
+		
+		if(member == null) {
+			response.getWriter().print("available");
+		}else {
+			response.getWriter().print("disable");
+		}
+	}
+	
+	private void checkEmail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String email = request.getParameter("email");
+		Member member = memberService.selectMemberByEmail(email);
+		
+		if(member == null) {
+			response.getWriter().print("available");
+		}else {
+			response.getWriter().print("disable");
+		}
+		
 	}
 
 	private void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -218,42 +258,7 @@ public class MemberController extends HttpServlet {
 		response.sendRedirect("/index");
 		
 	}
-
-	private void loginForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/member/login").forward(request, response);
-		
-	}
 	
-	private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String userId = request.getParameter("userId");
-		String password = request.getParameter("password");
-		
-		
-		Member member = memberService.memberAuthenticate(userId, password);
-		
-		//System.out.println(member);
-
-		//1. DataBase 또는 Service단에서 문제가 생겨서 예외가 발생(MemberDao에서 쿼리문에 오타 집어넣어서 확인해보기)
-	
-		
-		//2. 사용자가 잘못된 아이디와 비밀번호를 입력한 경우
-		//	  사용자에게 아이디나 비밀번호가 틀렸음을 알림, login-form으로 redirect
-		if(member == null) {
-			response.sendRedirect("/member/login-form?err=1");
-			return;
-		}
-		
-		//로그인 성공시 authentication 라는 이름으로 세션에 사용자 정보 담아놓기
-		if(member != null) {
-			request.getSession().setAttribute("authentication", member);
-			System.out.println("로그인 성공!!");
-			response.sendRedirect("/index");   //sendRedirect로 넘겼는데 index.jsp에서 ${authentication.userId}님 안녕? 에서 userId를 받아올 수 있는지..?세션에 저장하니까 되나..?
-		}
-		//request.getSession().setAttribute("authentication", member);
-		//response.sendRedirect("/index");   //sendRedirect로 넘겼는데 index.jsp에서 ${authentication.userId}님 안녕? 에서 userId를 받아올 수 있는지..?세션에 저장하니까 되나..?
-		
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

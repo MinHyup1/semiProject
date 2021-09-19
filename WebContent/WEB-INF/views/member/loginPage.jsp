@@ -22,7 +22,7 @@
 									<a href="#"><button class="btn btn-lg kakao">카카오톡 간편 로그인</button></a>
 								</div>
 								<a id="or">또는</a>
-							<form class="form-auth-small" action="">
+							<form class="form-auth-small" action="/member/login" method="post">
 								<div class="form-group">
 									<label for="signin-id" class="control-label sr-only">아이디</label>
 									<input type="text" class="form-control" name="userId" id="userId" placeholder="아이디를 입력하세요.">
@@ -31,7 +31,7 @@
 									<label for="signin-password" class="control-label sr-only">비밀번호</label>
 									<input type="password" class="form-control" name="password" id="password" placeholder="비밀번호를 입력하세요.">
 								</div>
-								<a><button formaction="/member/basicLogin" type="submit" class="btn btn-primary btn-lg btn-block">기존 회원 로그인</button></a>
+								<a><button type="submit" class="btn btn-primary btn-lg btn-block">기존 회원 로그인</button></a>
 								
 									<span class="helper-text"><a href="#">아이디 찾기 | </a><a href="#">비밀번호 찾기 | </a><a href="#">가입하기</a></span>
 								

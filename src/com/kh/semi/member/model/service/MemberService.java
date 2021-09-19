@@ -126,6 +126,28 @@ public class MemberService {
 		return member;
 	}
 
+	public Member selectMemberByPhone(String phone) {
+		Connection conn = template.getConnection();
+		Member member = null;
+		try {
+			member = memberDao.selectMemberByPhone(phone, conn);
+		} finally {
+			template.close(conn);
+		}
+		return member;
+	}
+
+	public Member selectMemberByEmail(String email) {
+		Connection conn = template.getConnection();
+		Member member = null;
+		try {
+			member = memberDao.selectMemberByEmail(email, conn);
+		} finally {
+			template.close(conn);
+		}
+		return member;
+	}
+
 	
 	
 	
