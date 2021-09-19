@@ -18,7 +18,7 @@
 				<div class="wrap_form">
 					<div class="form_title">복용 알림 등록</div>
 					<div class="input_list">
-						<form action="#" class="input_form" id="input_form">
+						<form action="schedule/dose-notice-register" class="input_form" id="input_form">
 							<label>복용 시작일 : <input type="date" class='standard_date' name="dose_start" value='${param.date}'></label>
 							<label>복용 종료일 : <input type="date" name="dose_end"></label>
 							<label class="search_btn">처방 약국 : <input type="text" name="pharm" placeholder="방문한 약국을 기록해보세요" disabled> <button type="button" onclick="">검색</button></label>
