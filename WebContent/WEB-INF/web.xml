@@ -20,6 +20,15 @@
     <filter-name>wrapperFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  <filter>
+	<filter-name>validatorFilter</filter-name>
+	<filter-class>com.kh.semi.common.filter.ValidatorFilter</filter-class>
+  </filter>
+  <filter-mapping>
+	<filter-name>validatorFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
   <error-page>
     <error-code>404</error-code>
     <location>/WEB-INF/views/error/404.jsp</location>

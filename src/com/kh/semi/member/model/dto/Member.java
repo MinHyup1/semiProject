@@ -1,48 +1,67 @@
 package com.kh.semi.member.model.dto;
 
-
 import java.sql.Date;
 
 //DTO(DATA TRANSFER OBJECT)
-//���������۰�ü
-//�����ͺ��̽��κ��� ��� �� �����͸� service(�����Ͻ�����)���� ������ ���� ����ϴ� ��ü
-//�����Ͻ� ������ �����ϰ� ���� ����, �����ϰ� ������ ���۸��� ���� ���Ǵ� ��ü
-//getter/setter, equals, hashCode, toString �޼��常�� ������.
+//데이터 전송 객체
+//데이터베이스로부터 얻어 온 데이터를 service(비지니스로직)으로 보내기 위해 사용하는 객체
+//비지니스 로직을 포함하고 있지 않은, 순수하게 데이터 전송만을 위해 사용되는 객체
+//getter / setter, equals, hashCode, toString 메서드만을 가진다.
 
-//*** ����
-//DTO�� ����� ģ����
+//*** 참고
+//DTO와 비슷한 친구들
 //DOMAIN OBJECT, VALUE OBJECT(VO), ENTITY, BEAN
 
-//DTO�� ����(JAVA BEAN �Ծ�)
-//1. ��� �ʵ庯���� PRIVATE ó��
-//2. ��� �ʵ庯���� GETTER/SETTER �޼��带 ������ �Ѵ�.
-//3. �ݵ�� �⺻�����ڰ� ������ ��(�Ű������� �ִ� �����ڰ� �ִ���, �⺻�����ڰ� �־���Ѵ�.)
+//DTO의 조건(JAVA BEAN 규약)
+//1. 모든 필드변수는 private 처리
+//2. 모든 필드변수는 getter/setter 메서드를 가져야 한다.
+//3. 반드시 기본생성자가 존재할 것(매개변수가 있는 생성자가 있더라도, 기본생성자가 있어야한다.)
 
-//����Ŭ - �ڹ� Ÿ�� ����
+//오라클 - 자바 타입 매핑
 //CHAR, VARCHAR2 -> String
-//DATE -> java.util.Date, java.sql.Date
+//DATA -> java.util.Date, java.sql.Date
 //Number -> int, double
 public class Member {
+
+	/*
+	 * USER_ID        VARCHAR2(36 CHAR) 
+	 * PASSWORD       VARCHAR2(60 CHAR) 
+	 * EMAIL          VARCHAR2(50 CHAR)
+	 * GRADE          CHAR(4 CHAR) 
+	 * TELL           VARCHAR2(15 CHAR) 
+	 * REG_DATE DATE
+	 * RENTABLE_DATE DATE
+	 * IS_LEAVE       NUMBER
+	 */
 	
-	private String userId;
+	private String userCode;
+	private String id;
 	private String password;
-	private String grade;
+	private String name;
+	private String nick;
+	private String phone;
+	private String address;
 	private String email;
-	private String tell;
-	private Date regDate;
-	private Date rentableDate;
-	private int isLeave;
+	private String gender;
 	
 	public Member() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public String getUserId() {
-		return userId;
+	
+	public String getUserCode() {
+		return userCode;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getPassword() {
@@ -53,12 +72,36 @@ public class Member {
 		this.password = password;
 	}
 
-	public String getGrade() {
-		return grade;
+	public String getName() {
+		return name;
 	}
 
-	public void setGrade(String grade) {
-		this.grade = grade;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getEmail() {
@@ -69,68 +112,23 @@ public class Member {
 		this.email = email;
 	}
 
-	public String getTell() {
-		return tell;
+	public String getGender() {
+		return gender;
 	}
 
-	public void setTell(String tell) {
-		this.tell = tell;
-	}
-
-	public Date getRegDate() {
-		return regDate;
-	}
-
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
-	}
-
-	public Date getRentableDate() {
-		return rentableDate;
-	}
-
-	public void setRentableDate(Date rentableDate) {
-		this.rentableDate = rentableDate;
-	}
-
-	public int getIsLeave() {
-		return isLeave;
-	}
-
-	public void setIsLeave(int isLeave) {
-		this.isLeave = isLeave;
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	@Override
 	public String toString() {
-		return "Member [userId=" + userId + ", password=" + password + ", grade=" + grade + ", email=" + email
-				+ ", tell=" + tell + ", regDate=" + regDate + ", rentableDate=" + rentableDate + ", isLeave=" + isLeave
-				+ "]";
+		return "Member [userCode=" + userCode + ", id=" + id + ", password=" + password + ", name=" + name + ", nick="
+				+ nick + ", phone=" + phone + ", address=" + address + ", email=" + email + ", gender=" + gender + "]";
 	}
+
 	
+
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 
 }
-
-
-
-
-
-
-
-

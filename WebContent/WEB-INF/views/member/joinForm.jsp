@@ -3,14 +3,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link href='${contextPath}/resources/css/member/joinForm.css' rel='stylesheet'/>
-<script src='${contextPath}/resources/js/member/joinForm.js'></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 <div id="wrapper">
-<form action="" id="joinForm">
+<form action="/member/join" method="post" id="frm_join">
 	<table border=1 width="1000" height="500" bordercolor="gray" cellspacing=0>
 		<tr class="bTag">
 			<td class="bTag" colspan="2" align="center"><b>회원가입</b>
@@ -21,53 +21,110 @@
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 아이디</td>
-			<td class="inputInfo" width="500"><input type="text" name="id" maxlength="20" required>
-				(영문소문자/숫자, 5 ~ 11 글자) <input class="check" type="button" value="중복체크"></td>
+			<td class="inputInfo" width="500">
+				<input type="text" size="30" name="userId" id="userId" maxlength="20" placeholder="영문소문자/숫자, 5~11 글자"
+				 	<c:if test="${empty joinFailed.userId}">
+				 		value = "${joinForm.userId}"
+				 	</c:if>
+				required />
+				<input class="check" id="btnIdCheck" type="button" value="중복체크" />
+				<span id="idCheck"  class="valid-msg" >
+					<c:if test="${not empty joinFailed.userId}">
+						이미 존재하는 아이디 입니다.
+					</c:if>
+				</span>	
+			</td>
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 비밀번호</td>
-			<td class="inputInfo" width="500"><input type="password" name="password" required>
-				(특수문자+영어+숫자, 8 ~ 20 글자)</td>
+			<td class="inputInfo" width="500">
+				<input type="password" size="30" name="password" id="password" placeholder="특수문자+영어+숫자, 8~20 글자" 
+					<c:if test="${empty joinFailed.password}">
+						value = "${joinForm.password}"
+					</c:if>
+				required />
+				<span id="pwCheck" class="valid-msg">
+					<c:if test="${not empty joinFailed.password}">
+                		비밀번호는 영어,숫자,특수문자 조합의 8글자 이상의 문자열입니다.
+                	</c:if>
+				</span>	
+			</td>
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 비밀번호 확인</td>
-			<td class="inputInfo" width="500"><input type="password" name="passwordCheck" required>
+			<td class="inputInfo" width="500">
+				<input type="password" size="30" name="passwordCheck" id="passwordCheck" required />
 			</td>
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 이름</td>
-			<td width="500"><input type="text" name="userName" required></td>
+			<td width="500">
+				<input type="text" size="30" name="name" id="name" required />
+			</td>
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 닉네임</td>
-			<td class="inputInfo" width="500"><input type="text" name="nick" required> (2글자 이상)
-				<input class="check" type="button" value="중복체크"></td>
+			<td class="inputInfo" width="500">
+				<input type="text" size="30" name="nick" id="nick" placeholder="2글자 이상" 
+					<c:if test="${empty joinFailed.nick}">
+						value = "${joinForm.nick}"
+					</c:if>
+				required />
+				<input class="check" id="btnNickCheck" type="button" value="중복체크" />
+				<span id="nickCheck" class="valid-msg">
+				</span>	
+			</td>
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 휴대전화</td>
 			<td width="500">
-				<input type="text" name="tell" maxlength="20" required>
-				<input class="check" type="button" value="중복체크"></td>
+				<input type="text" size="30" name="phone" id="phone" maxlength="20" 
+					<c:if test="${empty joinFailed.phone}">
+                		value = "${joinForm.phone}"
+                	</c:if>
+				required />
+				<input class="check" id="btnPhoneCheck" type="button" value="중복체크" />
+				<span  id="phoneCheck" class="valid-msg">
+					<c:if test="${not empty joinFailed.phone}">
+                		전화번호는 9~11자리 숫자입니다.
+                	</c:if>
+				</span>	
+			</td>
 		</tr>
 		<tr>
 			<td width="200" rowspan="3" align="center" class="title">주소</td>
 			<td width="200" class="code">
-				<input type="text" size="6" name="addressCode1">
+				<input type="text" size="6" name="addressCode1" id="addressCode1" />
 			     -
-			    <input type="text" size="6" name="addressCode2">
-				<input class="check" type="button" value="우편번호 검색"></td>
+			    <input type="text" size="6" name="addressCode2" id="addressCode2" />
+				<input class="check" type="button" value="우편번호 검색" />
+			</td>
 		</tr>
 		<tr>
-			<td class="inputInfo code ad"><input type="text" size="50" name="address1"> 기본주소</td>
+			<td class="inputInfo code ad">
+				<input type="text" size="50" name="address1" id="address1" /> 기본주소
+			</td>
 		</tr>
 		<tr>
-			<td class="inputInfo ad"><input type="text" size="50" name="address2">
-				나머지주소(선택입력가능)</td>
+			<td class="inputInfo ad">
+				<input type="text" size="50" name="address2" id="address2" /> 나머지주소(선택입력가능)
+			</td>
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 이메일</td>
-			<td width="500"><input type="email" size="50" name="email" maxlength="20" required>
-				<input class="check" type="button" value="중복체크"></td>
+			<td width="500">
+				<input type="email" size="30" name="email" id="email" maxlength="20"
+					<c:if test="${empty joinFailed.email}">
+                		value = "${joinForm.email}"
+                	</c:if>
+				required />
+				<input class="check" id="btnEmailCheck" type="button" value="중복체크" />
+				<span  id="emailCheck" class="valid-msg">
+					<c:if test="${not empty joinFailed.email}">
+                		이미 가입된 이메일 입니다.
+                	</c:if>
+				</span>		
+			</td>
 		</tr>
 	</table>
 
@@ -234,13 +291,15 @@
 		</ul>
 		
 		<div class="footBtwrap">
-			<a class="ok" href="#"><button class="fpmgBt1">회원가입</button></a>
-			<a class="cancel" href="#"><button class="fpmgBt2">가입취소</button></a>
+			<a><input type="submit" value="회원가입" class="fpmgBt1" /></a>
+			<a><input type="submit" value="가입취소" class="fpmgBt2" /></a>
+<!-- 			<a class="ok" href="#"><button class="fpmgBt1">회원가입</button></a>
+			<a class="cancel" href="#"><button class="fpmgBt2">가입취소</button></a> -->
 		</div>
 </form>
 </div>
 
-
+<script src='${contextPath}/resources/js/member/joinForm.js'></script>
 
 </body>
 </html>
