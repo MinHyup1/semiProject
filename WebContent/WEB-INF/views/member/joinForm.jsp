@@ -5,6 +5,7 @@
 <head>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link href='${contextPath}/resources/css/member/joinForm.css' rel='stylesheet'/>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -86,10 +87,8 @@
 		<tr>
 			<td width="200" rowspan="3" align="center" class="title">주소</td>
 			<td width="200" class="code">
-				<input type="text" size="6" name="addressCode1" id="addressCode1" />
-			     -
-			    <input type="text" size="6" name="addressCode2" id="addressCode2" />
-				<input class="check" type="button" value="우편번호 검색" />
+			    <input type="text" size="15" name="addressCode" id="addressCode" />
+				<input class="check" type="button" value="우편번호 검색" onclick="postCodeSearch()" />
 			</td>
 		</tr>
 		<tr>

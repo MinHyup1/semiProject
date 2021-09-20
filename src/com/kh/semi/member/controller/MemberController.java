@@ -103,11 +103,18 @@ public class MemberController extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
 		
-		
 		Member member = memberService.memberAuthenticate(userId, password);
+		Member memberId = memberService.selectMemberById(userId);
 		
-		if(member == null) {
-			response.sendRedirect("/member/loginPage?err=1");
+		if(memberId == null) {
+			request.setAttribute("msg", "존재하지 않는 아이디 입니다."); 
+			request.setAttribute("url", "/member/loginPage");
+			request.getRequestDispatcher("/error/result").forward(request, response);
+			return;
+		} else if(memberId != null && member == null) {
+			request.setAttribute("msg", "비밀번호가 일치하지 않습니다."); 
+			request.setAttribute("url", "/member/loginPage");
+			request.getRequestDispatcher("/error/result").forward(request, response);
 			return;
 		}
 		
