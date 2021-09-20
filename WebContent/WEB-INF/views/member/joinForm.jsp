@@ -87,7 +87,7 @@
 		<tr>
 			<td width="200" rowspan="3" align="center" class="title">주소</td>
 			<td width="200" class="code">
-			    <input type="text" size="15" name="addressCode" id="addressCode" />
+			    <input type="text" size="15" name="postCode" id="postCode" />
 				<input class="check" type="button" value="우편번호 검색" onclick="postCodeSearch()" />
 			</td>
 		</tr>

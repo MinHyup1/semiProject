@@ -122,6 +122,7 @@ public class MemberController extends HttpServlet {
 		if(member != null) {
 			request.getSession().setAttribute("authentication", member);
 			System.out.println("로그인 성공!!");
+			System.out.println(member.getAddress());
 			response.sendRedirect("/index");
 		}
 	}
@@ -153,7 +154,9 @@ public class MemberController extends HttpServlet {
 		String name = request.getParameter("name");
 		String nick = request.getParameter("nick");
 		String phone = request.getParameter("phone");
-		String address = request.getParameter("address");
+		String postCode = request.getParameter("postCode");
+		String address1 = request.getParameter("address1");
+		String address2 = request.getParameter("address2");
 		String email = request.getParameter("email");
 		String gender = request.getParameter("gender");
 
@@ -164,7 +167,7 @@ public class MemberController extends HttpServlet {
 		member.setName(name);
 		member.setNick(nick);
 		member.setPhone(phone);
-		member.setAddress(address);
+		member.setAddress(postCode, address1, address2);
 		member.setEmail(email);
 		member.setGender(gender);
 		
