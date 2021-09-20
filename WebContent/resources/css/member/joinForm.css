@@ -32,6 +32,10 @@
 	input {
 		margin-left: 10px; 
 	}
+	
+	input::placeholder {
+	 font-size: 8px;
+	}
 
 	* {
 		margin: 0;

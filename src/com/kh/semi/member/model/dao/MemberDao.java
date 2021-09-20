@@ -12,6 +12,8 @@ import com.kh.semi.common.db.JDBCTemplate;
 import com.kh.semi.common.exception.DataAccessException;
 import com.kh.semi.member.model.dto.Member;
 
+import oracle.jdbc.proxy.annotation.Pre;
+
 //DAO(DATA ACCESS OBJECT)
 //DBMS에 접근해 데이터의 조회, 수정, 삽입, 삭제 요청을 보내는 클래스
 //DAO의 메서드는 하나의 메서드 당 하나의 쿼리만 처리하도록 작성
@@ -184,9 +186,49 @@ public class MemberDao {
 		return member;
 	}
 	
+	public Member selectMemberByPhone(String phone, Connection conn) {
+		Member member = null;
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = "select * from member where phone = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, phone);
+			rset = pstm.executeQuery();
+			if(rset.next()) {
+				member = convertAllToMember(rset);
+			}
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		
+		return member;
+	}
 	
-	
-	
+	public Member selectMemberByEmail(String email, Connection conn) {
+		Member member = null;
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = "select * from member where email = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, email);
+			rset = pstm.executeQuery();
+			if(rset.next()) {
+				member = convertAllToMember(rset);
+			}
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		
+		return member;
+	}
 	
 	
 	
@@ -229,6 +271,9 @@ public class MemberDao {
 		}
 		return member;
 	}
+
+
+
 
 	
 	
