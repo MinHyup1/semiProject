@@ -19,7 +19,7 @@
 								<div class="logo text-center"><p>MEDIBOOK</p></div>
 							</div>
 								<div class="form-group">
-									<a href="#"><button class="btn btn-lg kakao">카카오톡 간편 로그인</button></a>
+									<a id="custom-login-btn" href="javascript:loginWithKakao()"><button class="btn btn-lg kakao" href="/member/index">카카오톡 간편 로그인</button></a>
 								</div>
 								<a id="or">또는</a>
 							<form class="form-auth-small" action="/member/login" method="post">
@@ -44,6 +44,26 @@
 			</div>
 		</div>
 	</div>
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+        // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+        Kakao.init('cfb699a7c2c194f945a6a34a6be6daa5');
 
+        // SDK 초기화 여부를 판단합니다.
+        console.log(Kakao.isInitialized());
+        
+    </script>
+<script type="text/javascript">
+  function loginWithKakao() {
+    Kakao.Auth.login({
+      success: function(authObj) {
+        alert(JSON.stringify(authObj))
+      },
+      fail: function(err) {
+        alert(JSON.stringify(err))
+      },
+    })
+  }
+</script>
 </body>
 </html>

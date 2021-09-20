@@ -56,7 +56,7 @@ public class MemberController extends HttpServlet {
 		case "login" : //세미 사용 코드
 			login(request,response);
 			break;
-		case "logout" :
+		case "logout" ://세미 사용 코드
 			logout(request,response);
 			break;
 		case "loginPage" : //세미 사용 코드
@@ -91,12 +91,36 @@ public class MemberController extends HttpServlet {
 			break;
 		case "mypage" : 
 			mypage(request,response);
+			break;		
+		case "findId" : 
+			findId(request,response);
 			break;
+		case "findPassword" : 
+			findPassword(request,response);
+			break;
+			
+		case "memberInfo" : 
+			memberInfo(request,response);
+			break;
+			
 		default: throw new PageNotFoundException();  //우리가 만든 예외처리 클래스 넣어주기
 		
 		}
 	}
-	
+	private void memberInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		request.getRequestDispatcher("/member/memberInfo").forward(request, response);
+	}
+
+	private void findPassword(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		request.getRequestDispatcher("/member/findPassword").forward(request, response);
+	}
+
+	/* /member/memberInfo */
+
+	private void findId(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+		request.getRequestDispatcher("/member/findId").forward(request, response);
+		
+	}
 
 	private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

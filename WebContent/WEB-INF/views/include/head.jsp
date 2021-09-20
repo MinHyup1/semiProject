@@ -29,9 +29,12 @@
 				</div>
 				<div class="navbar-btn navbar-btn-right">
 				<!-- href 부분 멤버로 수정 -->
+				<c:if test="${empty authentication}">
 					<a href="/member/loginPage" class="btn btn-success update-pro" title="" target="" href="로그인페이지.jsp"> <span>login</span></a>
+				</c:if>	
 					<a href="/member/joinPage" class="btn btn-success update-pro" title="" target="" href="회원가입페이지.jsp"> <span>회원가입</span></a>
 				</div><!-- 로그아웃 버튼 추가 예정 -->
+				<c:if test="${not empty authentication}">
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
@@ -49,14 +52,15 @@
 							</ul>
 						</li>
 						<li class="dropdown"> <!-- dropdown open -->
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-user-circle"></i>  <span>user-name</span>  <i class="fas fa-chevron-down"></i></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-user-circle"></i>  <span>${authentication.nick}</span>  <i class="fas fa-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="개인정보수정.jsp"><i class="far fa-user"></i> <span>My Profile</span></a></li>
-								<li><a href="로그아웃"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+								<li><a href="/member/"><i class="far fa-user"></i> <span>My Profile</span></a></li>
+								<li><a href="/member/logout"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
 							</ul>
 						</li>
 					</ul>
 				</div>
+				</c:if>
 			</div>
 		</nav>
 		<!-- END NAVBAR -->
