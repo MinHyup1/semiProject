@@ -164,12 +164,11 @@ public class MemberController extends HttpServlet {
 		//request.getSession().setAttribute("persistUser", member);
 		memberService.insertMember(member);
 		
-		response.sendRedirect("/member/loginPage");
+		//response.sendRedirect("/member/loginPage");
 
-		//밑에 주석코드 동작 안함 ㅠㅠ   (Uncaught SyntaxError: Unexpected token '<') 에러
-//		request.setAttribute("msg", "회원가입이 완료되었습니다."); 
-//		request.setAttribute("url", "/member/loginPage");
-//		request.getRequestDispatcher("/error/result").forward(request, response);
+		request.setAttribute("msg", "회원가입이 완료되었습니다."); 
+		request.setAttribute("url", "/member/loginPage");
+		request.getRequestDispatcher("/error/result").forward(request, response);
 		System.out.println("회원가입 완료!");
 
 		
