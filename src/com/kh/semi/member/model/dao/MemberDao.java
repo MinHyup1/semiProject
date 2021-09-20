@@ -241,7 +241,7 @@ public class MemberDao {
 		member.setName(rset.getString("name"));
 		member.setNick(rset.getString("nick"));
 		member.setPhone(rset.getString("phone"));
-		member.setAddress(rset.getString("address"));
+		member.setAddress(rset.getString("address"),"","");
 		member.setEmail(rset.getString("email"));
 		member.setGender(rset.getString("gender"));
 
@@ -263,7 +263,7 @@ public class MemberDao {
 			case "name" : member.setName(rset.getString("name")); break;
 			case "nick" : member.setNick(rset.getString("nick")); break;
 			case "phone" : member.setPhone(rset.getString("phone")); break;
-			case "address" : member.setAddress(rset.getString("address")); break;
+			case "address" : member.setAddress(rset.getString("address"),"",""); break;
 			case "email" : member.setEmail(rset.getString("email")); break;
 			case "gender" : member.setGender(rset.getString("gender")); break;
 			default : throw new SQLException("부적절한 컬럼명을 전달했습니다."); //예외처리
@@ -272,6 +272,7 @@ public class MemberDao {
 		return member;
 	}
 
+	
 
 
 

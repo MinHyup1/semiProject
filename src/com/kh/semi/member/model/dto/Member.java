@@ -100,8 +100,8 @@ public class Member {
 		return address;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAddress(String postCode, String address1, String address2) {
+		this.address = postCode + " " + address1 +  " " + address2;
 	}
 
 	public String getEmail() {

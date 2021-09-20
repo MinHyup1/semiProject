@@ -1,43 +1,40 @@
 
-//전체 체크버튼 클릭 시 전체체크 및 해제
-function allCheck(e) {
-    if(e.target.checked) {
-      document.querySelectorAll(".checkList").forEach(function(v, i) {
-        v.checked = true;
-      });
-    } else {
-      document.querySelectorAll(".checkList").forEach(function(v, i) {
-        v.checked = false;
-      });
-    }
-  }
+
+
+	//전체 체크버튼 클릭 시 전체체크 및 해제
+	function allCheck(e) {
+    	if(e.target.checked) {
+      		document.querySelectorAll(".checkList").forEach(function(v, i) {
+        		v.checked = true;
+      		});
+    	} else {
+			document.querySelectorAll(".checkList").forEach(function(v, i) {
+        	v.checked = false;
+      		});
+    	}
+  	}
   
- //개별 체크버튼 클릭 시 전체 체크버튼 체크 및 해제
-  function checkList(e) {
-    let checkCount = 0;
-    document.querySelectorAll(".checkList").forEach(function(v, i) {
-      if(v.checked === false){
-        checkCount++;
-      }
-    });
+	//개별 체크버튼 클릭 시 전체 체크버튼 체크 및 해제
+ 	function checkList(e) {
+    	let checkCount = 0;
+			document.querySelectorAll(".checkList").forEach(function(v, i) {
+      			if(v.checked === false){
+        			checkCount++;
+      			}
+    		});
 
-    if(checkCount>0) {
-      document.getElementById("allCheckList").checked = false;
-    } else if(checkCount === 0) {
-      document.getElementById("allCheckList").checked = true;
-    }
-  }
-
-   		 
-		/*   		
-		1. 이미 존재하는 아이디로 사용자가 가입하려는 경우
-   		2. 비밀번호는 영어, 숫자, 특수문자 조합의 8자리 이상의 문자열
-   		3. 전화번호는 숫자로만 입력
-		*/
-   		 
+    	if(checkCount>0) {
+      		document.getElementById("allCheckList").checked = false;
+    	} else if(checkCount === 0) {
+      		document.getElementById("allCheckList").checked = true;
+    	}
+  	}   		 
    		
 	/* 즉시 실행함수로 넣어주면 전역 안에 포함이 안되기 때문에 외부에서의 접근을 막아줄 수 있다 */
    	(()=>{
+	
+		//전체체크박스 값을 일단 false로 잡아놓고, 회원가입 클릭 시 맨 아래코드에서 체크여부 확인
+		document.getElementById('allCheckList').checked = false;
 		
 		//아이디 정규식검사 및 중복검사
    		let confirmId = '';
@@ -173,8 +170,6 @@ function allCheck(e) {
    			
    			let pwReg = /(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Zㄱ-힣0-9])(?=.{8,})/;
 			let nameReg = /^[가-힣]{2,5}$|^[a-zA-Z]{2,}$/;
-			//let pw = document.querySelector('#password').value;
-			//let pwCheck = document.querySelector('#passwordCheck').value;
 
    			if(confirmId != userId.value){
    				e.preventDefault(); //submit태그의 동작을 중단시킴
@@ -214,16 +209,67 @@ function allCheck(e) {
 				e.preventDefault();
 				document.querySelector('#emailCheck').innerHTML = '이메일 중복 검사를 통과하지 않았습니다.';
 			}
-
+			
+			let check1 = document.getElementById('allCheckList').checked;
+			if(check1 === false){
+				e.preventDefault();
+				alert("이용약관, 개인정보 수집 및 이용에 모두 동의하여 주십시오.");
+			}
 			
    		})
-   	
-
-
-
-
-
-
-
+  
 
    	})();
+
+	//주소검색 api활용
+	function postCodeSearch(){
+		new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    //document.getElementById("address1").value = extraAddr;
+                
+                } else {
+                    document.getElementById("address1").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postCode').value = data.zonecode;
+                document.getElementById("address1").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("address2").focus();
+            }
+        }).open();
+	}
+
+
+
+	

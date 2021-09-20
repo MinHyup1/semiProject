@@ -62,14 +62,17 @@ public class MemberController extends HttpServlet {
 		case "loginPage" : //세미 사용 코드
 			loginPage(request,response);
 			break;
-		case "join" :   //join-form.jsp에서 가입버튼 누르면 url을 member/join으로 호출하니까 여기로 넘어옴 //세미 사용 코드
-			join(request,response);
-			break;
 		case "joinPage": //세미 사용 코드
 			joinPage(request,response);
 			break;
 		case "basicJoin": //세미 사용 코드
 			basicJoin(request,response);
+			break;
+		case "join" :   //join-form.jsp에서 가입버튼 누르면 url을 member/join으로 호출하니까 여기로 넘어옴 //세미 사용 코드
+			join(request,response);
+			break;
+		case "joinCancel" : //세미 사용 코드(가입취소)
+			joinCancel(request,response);
 			break;
 		case "id-check" : //joinForm.js에서 id-check로 보내줌 //세미 사용 코드
 			checkId(request,response);
@@ -100,11 +103,18 @@ public class MemberController extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
 		
-		
 		Member member = memberService.memberAuthenticate(userId, password);
+		Member memberId = memberService.selectMemberById(userId);
 		
-		if(member == null) {
-			response.sendRedirect("/member/loginPage?err=1");
+		if(memberId == null) {
+			request.setAttribute("msg", "존재하지 않는 아이디 입니다."); 
+			request.setAttribute("url", "/member/loginPage");
+			request.getRequestDispatcher("/error/result").forward(request, response);
+			return;
+		} else if(memberId != null && member == null) {
+			request.setAttribute("msg", "비밀번호가 일치하지 않습니다."); 
+			request.setAttribute("url", "/member/loginPage");
+			request.getRequestDispatcher("/error/result").forward(request, response);
 			return;
 		}
 		
@@ -112,6 +122,7 @@ public class MemberController extends HttpServlet {
 		if(member != null) {
 			request.getSession().setAttribute("authentication", member);
 			System.out.println("로그인 성공!!");
+			System.out.println(member.getAddress());
 			response.sendRedirect("/index");
 		}
 	}
@@ -143,7 +154,9 @@ public class MemberController extends HttpServlet {
 		String name = request.getParameter("name");
 		String nick = request.getParameter("nick");
 		String phone = request.getParameter("phone");
-		String address = request.getParameter("address");
+		String postCode = request.getParameter("postCode");
+		String address1 = request.getParameter("address1");
+		String address2 = request.getParameter("address2");
 		String email = request.getParameter("email");
 		String gender = request.getParameter("gender");
 
@@ -154,19 +167,18 @@ public class MemberController extends HttpServlet {
 		member.setName(name);
 		member.setNick(nick);
 		member.setPhone(phone);
-		member.setAddress(address);
+		member.setAddress(postCode, address1, address2);
 		member.setEmail(email);
 		member.setGender(gender);
 		
 		//request.getSession().setAttribute("persistUser", member);
 		memberService.insertMember(member);
 		
-		response.sendRedirect("/member/loginPage");
+		//response.sendRedirect("/member/loginPage");
 
-		//밑에 주석코드 동작 안함 ㅠㅠ   (Uncaught SyntaxError: Unexpected token '<') 에러
-//		request.setAttribute("msg", "회원가입이 완료되었습니다."); 
-//		request.setAttribute("url", "/member/loginPage");
-//		request.getRequestDispatcher("/error/result").forward(request, response);
+		request.setAttribute("msg", "회원가입이 완료되었습니다."); 
+		request.setAttribute("url", "/member/loginPage");
+		request.getRequestDispatcher("/error/result").forward(request, response);
 		System.out.println("회원가입 완료!");
 
 		
@@ -186,6 +198,13 @@ public class MemberController extends HttpServlet {
 		 * request.getRequestDispatcher("/error/result").forward(request, response);
 		 */
 		
+	}
+	
+	//가입취소 버튼 클릭 시 작동
+	private void joinCancel(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("msg", "회원가입이 취소되었습니다. 메인페이지로 이동합니다.");
+		request.setAttribute("url", "/index");
+		request.getRequestDispatcher("/error/result").forward(request, response);
 	}
 
 	//회원가입 진행(db로 넘겨줌) join-auth-mail.jsp파일의 151번줄 <a>태그에 주소 넣어줬음 => 버튼 누르면 여기로 요청 날아오도록 하려고
