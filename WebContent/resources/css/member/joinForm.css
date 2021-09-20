@@ -54,7 +54,7 @@
 		clear: both;
 	}
 
-	#joinForm {
+	#frm_join {
 		width: 80%;
 		margin: 0 auto;
 	}
@@ -109,11 +109,12 @@
 		height: 60px;
 	}
 	
-	.footBtwrap>a>button {
+	.footBtwrap>a>input {
 		width: 95%;
 		height: 100%;
 		font-size: 20px;
 		line-height: 60px;
+		margin: 0;
 	}
 	
 	.fpmgBt1 {
@@ -143,4 +144,9 @@
 	.ad {
 	 	border-top: none;
 	}
-	
+
+	.valid-msg {
+		display: block;
+		color: red;
+		font-size: 10px;
+	}

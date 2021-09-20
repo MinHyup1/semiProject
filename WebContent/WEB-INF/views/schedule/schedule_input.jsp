@@ -4,7 +4,7 @@
 <head>
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 <link href='${contextPath}/resources/css/schedule/calendar/main.css' rel='stylesheet'/>
-<script src='${contextPath}/resources/js/schedule/calendar/render.js'></script>
+<script defer src='${contextPath}/resources/js/schedule/calendar/render.js'></script>
 <script src='${contextPath}/resources/js/schedule/calendar/main.js'></script>
 <script src='${contextPath}/resources/js/schedule/calendar/locales-all.js'></script>
 <link href='${contextPath}/resources/css/schedule/schedule_record_form.css' rel='stylesheet'/>
@@ -18,19 +18,18 @@
 				<div class="wrap_form">
 					<div class="form_title">진료 일정 기록</div>
 					<div class="input_list">
-						<form action="#" class="input_form" id="input_form">
-							<label>진료 날짜 : <input type="date" name="schedule_date" value='2021-09-15' autofocus required></label>
+						<form action="schedule/schedule-register" method="post" class="input_form" id="input_form">
+							<label>진료 날짜 : <input type="date" class='standard_date' id="schedule_date" name="schedule_date" value='${param.date}' autofocus required></label>
 							<label class="search_btn">진료 병원 : <input type="text" name="hospital" placeholder="진료 병원을 기록해보세요" disabled> <button type="button" onclick="">검색</button></label>
 							<label class="search_btn">처방 약국 : <input type="text" name="pharm" placeholder="방문한 약국을 기록해보세요" disabled> <button type="button" onclick="">검색</button></label>
 							<label class="search_btn">처방 약 : <input type="text" name="searched_med" placeholder="처방 받은 약을 기록해보세요" disabled> <button type="button" onclick="">검색</button></label>
 							<div><span>aaa</span></div><!-- 처음에는 1칸, 약 추가시 칸 추가 / 휴지통 아이콘 사용하기 -->
-							<label>복용 시작일 : <input type="date" name="dose_start"></label>
-							<label>복용 종료일 : <input type="date" name="dose_end"></label>
+							<label>복용 시작일 : <input type="date" id="dose_start" name="dose_start"></label>
+							<label>복용 종료일 : <input type="date" id="dose_end" name="dose_end"></label>
 							<label>1일 복용 횟수 : <input type="number" name="dose_times" value="0" step="1" min="0" max="24">회</label>
-							<label class="add_btn">다음 진료 알림 <button type="button" onclick="">추가</button></label>
-							<label><input type="datetime-local" name="visit_notice_date" required> <i class="fas fa-trash"></i></label>
-							<label class="add_btn">뵥용 알림 시간 <button type="button" onclick="">추가</button></label>
-							<label><input type="time" name="dose_notice" required> <i class="fas fa-trash"></i></label>
+							<div><label class="add_btn">다음 진료 알림</label>  <button type="button" onclick="addVisitNotice(event)">추가</button></div>
+							<div class='added-notice'></div>
+							<div><label class="add_btn">복용 알림 시간</label> <button type="button" class="add-time" onclick="addMedicineNotice()">추가</button></div>
 						</form>
 					</div>
 					<div class="action_icons">
@@ -47,6 +46,7 @@
 <script type="text/javascript">
 	selectedMenu = 'schedule';
 </script>
+<script src='${contextPath}/resources/js/schedule/scheduleForm.js'></script>
 </body>
 
 </html>

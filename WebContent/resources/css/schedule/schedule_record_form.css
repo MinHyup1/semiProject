@@ -62,7 +62,7 @@
 }
 
 input[type=date]{
-	width: 150px;
+	width: 160px;
 }
 
 input[type=text]{
@@ -95,6 +95,30 @@ input[type=text]::placeholder{
 	border-color: #79c0de;
 	background-color: #79c0de;
 	color: #e6e6e6;
+}
+
+.input_form>div{
+	margin-bottom: 11px;
+}
+
+button[type="button"]{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: bold;
+}
+
+.input_form>.added-notice{
+	margin-bottom: 0;
+}
+
+.added-notice>label{
+	margin-bottom: 13px;
+}
+
+.added-notice>label>input{
+	height: 30px;
+	border-width: 1px;
+	border-color: #8c8c8c;
+	border-radius: 5px;
 }
 
 .action_icons{

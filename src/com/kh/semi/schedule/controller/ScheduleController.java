@@ -22,20 +22,27 @@ public class ScheduleController extends HttpServlet {
 		String[] uriArr = request.getRequestURI().split("/");
 		
 		switch (uriArr[uriArr.length-1]) {
-		case "schedule-main":
+		case "schedule-main": //메인페이지 이동
 			scheduleMain(request, response);
 			break;
-		case "schedule-record-form":
+		case "schedule-record-form": //일정 기록 페이지 이동
 			scheduleRecordForm(request, response);
 			break;
-		case "visit-notice-form":
+		case "schedule-register": //일정 등록
+			scheduleRegister(request, response);
+			break;
+		case "visit-notice-form": //진료 알림 작성페이지 이동
 			visitNoticeForm(request, response);
 			break;
-		case "medicine-notice-form":
+		case "medicine-notice-form": //복용 알림 작성페이지 이동
 			medicineNoticeForm(request, response);
 			break;
 		default: throw new PageNotFoundException();
 		}
+		
+	}
+
+	private void scheduleRegister(HttpServletRequest request, HttpServletResponse response) {
 		
 	}
 
