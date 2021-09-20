@@ -1,43 +1,38 @@
 
-//전체 체크버튼 클릭 시 전체체크 및 해제
-function allCheck(e) {
-    if(e.target.checked) {
-      document.querySelectorAll(".checkList").forEach(function(v, i) {
-        v.checked = true;
-      });
-    } else {
-      document.querySelectorAll(".checkList").forEach(function(v, i) {
-        v.checked = false;
-      });
-    }
-  }
+	//전체 체크버튼 클릭 시 전체체크 및 해제
+	function allCheck(e) {
+    	if(e.target.checked) {
+      		document.querySelectorAll(".checkList").forEach(function(v, i) {
+        		v.checked = true;
+      		});
+    	} else {
+			document.querySelectorAll(".checkList").forEach(function(v, i) {
+        	v.checked = false;
+      		});
+    	}
+  	}
   
- //개별 체크버튼 클릭 시 전체 체크버튼 체크 및 해제
-  function checkList(e) {
-    let checkCount = 0;
-    document.querySelectorAll(".checkList").forEach(function(v, i) {
-      if(v.checked === false){
-        checkCount++;
-      }
-    });
+	//개별 체크버튼 클릭 시 전체 체크버튼 체크 및 해제
+ 	function checkList(e) {
+    	let checkCount = 0;
+			document.querySelectorAll(".checkList").forEach(function(v, i) {
+      			if(v.checked === false){
+        			checkCount++;
+      			}
+    		});
 
-    if(checkCount>0) {
-      document.getElementById("allCheckList").checked = false;
-    } else if(checkCount === 0) {
-      document.getElementById("allCheckList").checked = true;
-    }
-  }
-
-   		 
-		/*   		
-		1. 이미 존재하는 아이디로 사용자가 가입하려는 경우
-   		2. 비밀번호는 영어, 숫자, 특수문자 조합의 8자리 이상의 문자열
-   		3. 전화번호는 숫자로만 입력
-		*/
-   		 
+    	if(checkCount>0) {
+      		document.getElementById("allCheckList").checked = false;
+    	} else if(checkCount === 0) {
+      		document.getElementById("allCheckList").checked = true;
+    	}
+  	}   		 
    		
 	/* 즉시 실행함수로 넣어주면 전역 안에 포함이 안되기 때문에 외부에서의 접근을 막아줄 수 있다 */
    	(()=>{
+	
+		//전체체크박스 값을 일단 false로 잡아놓고, 회원가입 클릭 시 맨 아래코드에서 체크여부 확인
+		document.getElementById('allCheckList').checked = false;
 		
 		//아이디 정규식검사 및 중복검사
    		let confirmId = '';
@@ -173,8 +168,6 @@ function allCheck(e) {
    			
    			let pwReg = /(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Zㄱ-힣0-9])(?=.{8,})/;
 			let nameReg = /^[가-힣]{2,5}$|^[a-zA-Z]{2,}$/;
-			//let pw = document.querySelector('#password').value;
-			//let pwCheck = document.querySelector('#passwordCheck').value;
 
    			if(confirmId != userId.value){
    				e.preventDefault(); //submit태그의 동작을 중단시킴
@@ -214,16 +207,15 @@ function allCheck(e) {
 				e.preventDefault();
 				document.querySelector('#emailCheck').innerHTML = '이메일 중복 검사를 통과하지 않았습니다.';
 			}
-
+			
+			let check1 = document.getElementById('allCheckList').checked;
+			if(check1 === false){
+				e.preventDefault();
+				alert("이용약관, 개인정보 수집 및 이용에 모두 동의하여 주십시오.");
+			}
 			
    		})
-   	
-
-
-
-
-
-
-
+  
 
    	})();
+	

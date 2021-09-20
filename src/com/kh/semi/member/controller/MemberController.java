@@ -62,14 +62,17 @@ public class MemberController extends HttpServlet {
 		case "loginPage" : //세미 사용 코드
 			loginPage(request,response);
 			break;
-		case "join" :   //join-form.jsp에서 가입버튼 누르면 url을 member/join으로 호출하니까 여기로 넘어옴 //세미 사용 코드
-			join(request,response);
-			break;
 		case "joinPage": //세미 사용 코드
 			joinPage(request,response);
 			break;
 		case "basicJoin": //세미 사용 코드
 			basicJoin(request,response);
+			break;
+		case "join" :   //join-form.jsp에서 가입버튼 누르면 url을 member/join으로 호출하니까 여기로 넘어옴 //세미 사용 코드
+			join(request,response);
+			break;
+		case "joinCancel" : //세미 사용 코드(가입취소)
+			joinCancel(request,response);
 			break;
 		case "id-check" : //joinForm.js에서 id-check로 보내줌 //세미 사용 코드
 			checkId(request,response);
@@ -186,6 +189,13 @@ public class MemberController extends HttpServlet {
 		 * request.getRequestDispatcher("/error/result").forward(request, response);
 		 */
 		
+	}
+	
+	//가입취소 버튼 클릭 시 작동
+	private void joinCancel(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("msg", "회원가입이 취소되었습니다. 메인페이지로 이동합니다.");
+		request.setAttribute("url", "/index");
+		request.getRequestDispatcher("/error/result").forward(request, response);
 	}
 
 	//회원가입 진행(db로 넘겨줌) join-auth-mail.jsp파일의 151번줄 <a>태그에 주소 넣어줬음 => 버튼 누르면 여기로 요청 날아오도록 하려고
