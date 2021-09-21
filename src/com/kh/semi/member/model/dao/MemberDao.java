@@ -230,6 +230,30 @@ public class MemberDao {
 		return member;
 	}
 	
+	public Member findUserId(String userName, String email, String tell, Connection conn) {
+		Member member = null;
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = "select * from member where name = ? and email = ? and phone = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, userName);
+			pstm.setString(2, email);
+			pstm.setString(3, tell);
+			rset = pstm.executeQuery();
+			
+			if(rset.next()) {
+				member = convertAllToMember(rset);
+			}
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return member;
+	}
+	
 	
 	
 	
@@ -271,7 +295,6 @@ public class MemberDao {
 		}
 		return member;
 	}
-
 
 	
 	
