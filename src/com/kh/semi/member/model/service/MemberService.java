@@ -106,6 +106,7 @@ public class MemberService {
 		int res = 0;
 		try {
 			res = memberDao.deleteMember(userId, conn);
+			template.commit(conn);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

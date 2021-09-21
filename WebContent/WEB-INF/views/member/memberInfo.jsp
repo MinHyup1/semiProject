@@ -73,7 +73,7 @@
 		<div class="footBtwrap">
 			<a id="modify" href="https://www.naver.com/"><button class="fpmgBt1">회원정보수정</button></a>
 			<a id="cancel" href="#"><button class="fpmgBt2">취소</button></a>
-			<a id="out" href="#"><button class="fpmgBt3">회원탈퇴</button></a>
+			<a id="out" "><button class="fpmgBt3" onclick="location.href='/member/delete'">회원탈퇴</button></a>
 		</div>
 	
 </form>

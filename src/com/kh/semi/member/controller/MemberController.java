@@ -102,11 +102,22 @@ public class MemberController extends HttpServlet {
 		case "memberInfo" : 
 			memberInfo(request,response);
 			break;
+		case "delete" : 
+			delete(request,response);
+			break;
 			
 		default: throw new PageNotFoundException();  //우리가 만든 예외처리 클래스 넣어주기
 		
 		}
 	}
+	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		Member member =(Member) request.getSession().getAttribute("authentication");//멤버객체에 authentication를 집어넣는다
+		String userId = member.getId();
+		System.out.println("맴버아이디 제발 : "+member.getId());//출력 후 확인
+		memberService.deleteMember(userId);//삭제 진행
+		logout(request, response);//로그아웃 사용해 세션 끊고 인덱스로 이동
+	}
+
 	private void memberInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		request.getRequestDispatcher("/member/memberInfo").forward(request, response);
 	}
@@ -114,8 +125,6 @@ public class MemberController extends HttpServlet {
 	private void findPassword(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		request.getRequestDispatcher("/member/findPassword").forward(request, response);
 	}
-
-	/* /member/memberInfo */
 
 	private void findId(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
 		request.getRequestDispatcher("/member/findId").forward(request, response);
