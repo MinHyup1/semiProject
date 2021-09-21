@@ -149,6 +149,17 @@ public class MemberService {
 		return member;
 	}
 
+	public Member findUserId(String userName, String email, String tell) {
+		Connection conn = template.getConnection();
+		Member member = null;
+		try {
+			member = memberDao.findUserId(userName, email, tell, conn);
+		} finally {
+			template.close(conn);
+		}
+		return member;
+	}
+
 	
 	
 	

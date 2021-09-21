@@ -95,6 +95,9 @@ public class MemberController extends HttpServlet {
 		case "findId" : 
 			findId(request,response);
 			break;
+		case "findId-info" : 
+			findIdInfo(request,response);
+			break;
 		case "findPassword" : 
 			findPassword(request,response);
 			break;
@@ -110,6 +113,7 @@ public class MemberController extends HttpServlet {
 		
 		}
 	}
+
 	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		Member member =(Member) request.getSession().getAttribute("authentication");//멤버객체에 authentication를 집어넣는다
 		String userId = member.getId();
@@ -117,6 +121,7 @@ public class MemberController extends HttpServlet {
 		memberService.deleteMember(userId);//삭제 진행
 		logout(request, response);//로그아웃 사용해 세션 끊고 인덱스로 이동
 	}
+
 
 	private void memberInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		request.getRequestDispatcher("/member/memberInfo").forward(request, response);
@@ -128,6 +133,38 @@ public class MemberController extends HttpServlet {
 
 	private void findId(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
 		request.getRequestDispatcher("/member/findId").forward(request, response);
+		
+	}
+	
+	private void findIdInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String userName = request.getParameter("username");
+		String email = request.getParameter("email");
+		String tell = request.getParameter("tell");
+		
+		Member member = memberService.findUserId(userName, email, tell);
+		Member memberEmail = memberService.selectMemberByEmail(email);
+		Member memberTell = memberService.selectMemberByPhone(tell);
+		
+		if(memberEmail == null) {
+			request.setAttribute("msg", "존재하지 않는 이메일 입니다."); 
+			request.setAttribute("url", "/member/loginPage");
+			request.getRequestDispatcher("/error/result").forward(request, response);
+			return;
+		} else if(memberTell == null) {
+			request.setAttribute("msg", "존재하지 않는 휴대폰 번호 입니다."); 
+			request.setAttribute("url", "/member/loginPage");
+			request.getRequestDispatcher("/error/result").forward(request, response);
+		} else if(memberEmail != null && memberTell != null && member == null) {
+			request.setAttribute("msg", "존재하지 않는 이름 입니다."); 
+			request.setAttribute("url", "/member/loginPage");
+			request.getRequestDispatcher("/error/result").forward(request, response);
+		}
+		
+		if(member != null) {
+			request.getSession().setAttribute("authentication", member);
+			request.getRequestDispatcher("/member/checkId").forward(request, response);
+		}
+		
 		
 	}
 
