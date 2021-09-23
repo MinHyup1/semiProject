@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.semi.common.code.ErrorCode;
 import com.kh.semi.common.exception.HandlableException;
 import com.kh.semi.common.exception.PageNotFoundException;
+import com.kh.semi.member.validator.ChangeForm;
 import com.kh.semi.member.validator.JoinForm;
 
 
@@ -75,6 +76,12 @@ public class ValidatorFilter implements Filter {
 			JoinForm joinForm = new JoinForm(httpRequest);
 			if (!joinForm.test()) { //joinForm의 테스트의 결과가 false라면(validator를 통과하지 못했을 때), 밑의 경로로 리다이렉트 하도록 지정
 				redirectUrl = "/member/joinPage";
+			}
+			break;
+		case "memberInfo":
+			ChangeForm changeForm = new ChangeForm(httpRequest);
+			if (!changeForm.test()) { //joinForm의 테스트의 결과가 false라면(validator를 통과하지 못했을 때), 밑의 경로로 리다이렉트 하도록 지정
+				redirectUrl = "/member/memberInfo";
 			}
 			break;
 		}
