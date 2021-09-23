@@ -28,6 +28,14 @@
 	<filter-name>validatorFilter</filter-name>
 	<url-pattern>/*</url-pattern>
   </filter-mapping>
+  <filter>
+	<filter-name>authorizationFilter</filter-name>
+	<filter-class>com.kh.semi.common.filter.AuthorizationFilter</filter-class>
+  </filter>
+  <filter-mapping>
+	<filter-name>authorizationFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+  </filter-mapping>
   
   <error-page>
     <error-code>404</error-code>
