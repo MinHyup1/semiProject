@@ -28,11 +28,11 @@
 					<button type="button" class="btn-toggle-fullwidth"><i class="far fa-arrow-alt-circle-left"></i></button>
 				</div>
 				<div class="navbar-btn navbar-btn-right">
-				<!-- href 부분 멤버로 수정 -->
+				<!-- 로그인하면 login, 회원가입 버튼 사라지도록 -->
 				<c:if test="${empty authentication}">
 					<a href="/member/loginPage" class="btn btn-success update-pro" title="" target="" > <span>login</span></a>
-				</c:if>	
 					<a href="/member/joinPage" class="btn btn-success update-pro" title="" target="" > <span>회원가입</span></a>
+				</c:if>	
 				</div><!-- 로그아웃 버튼 추가 예정 -->
 				<c:if test="${not empty authentication}">
 				<div id="navbar-menu">
@@ -54,7 +54,7 @@
 						<li class="dropdown"> <!-- dropdown open -->
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-user-circle"></i>  <span>${authentication.nick}</span>  <i class="fas fa-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="/member/memberInfo"><i class="far fa-user"></i> <span>My Profile</span></a></li>
+								<li><a href="/member/changeForm"><i class="far fa-user"></i> <span>My Profile</span></a></li>
 								<li><a href="/member/logout"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
 							</ul>
 						</li>
