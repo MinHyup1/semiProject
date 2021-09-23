@@ -97,6 +97,7 @@ public class MemberDao {
 		PreparedStatement pstm = null;
 		String query = "insert into member(user_code, id, password, name, nick, phone, address, email, gender)"
 						+ " values(member_user_code.nextval,?,?,?,?,?,?,?,?)";
+		
 
 		try {
 			pstm = conn.prepareStatement(query);
@@ -137,6 +138,30 @@ public class MemberDao {
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, password);
 			pstm.setString(2, userId);
+			res = pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+		return res;
+	}
+	
+	public int updateMember(Member member, Connection conn) {
+		int res = 0;
+		PreparedStatement pstm = null;
+		String query = "update member set password = ?,nick = ?, phone = ?, address = ?, email = ? "
+				+ " where id = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, member.getPassword());
+			pstm.setString(2, member.getNick());
+			pstm.setString(3, member.getPhone());
+			pstm.setString(4, member.getAddress());
+			pstm.setString(5, member.getEmail());
+			pstm.setString(6, member.getId());
+
 			res = pstm.executeUpdate();
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
@@ -255,8 +280,6 @@ public class MemberDao {
 	}
 	
 	
-	
-	
 	private Member convertAllToMember(ResultSet rset) throws SQLException {
 		Member member = new Member();
 		member.setUserCode(rset.getString("user_code"));
@@ -295,6 +318,8 @@ public class MemberDao {
 		}
 		return member;
 	}
+
+
 
 	
 	

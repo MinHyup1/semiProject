@@ -107,17 +107,62 @@ public class MemberController extends HttpServlet {
 			break;
 		case "delete" : 
 			delete(request,response);
+			break;		
+		case "changeForm" : 
+			changeForm(request,response);
 			break;
-			
+		case "change":
+			change(request,response);
+			break;
 		default: throw new PageNotFoundException();  //우리가 만든 예외처리 클래스 넣어주기
 		
 		}
 	}
 
-	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		Member member =(Member) request.getSession().getAttribute("authentication");//멤버객체에 authentication를 집어넣는다
+	private void change(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+
+		Member member = new Member();
+		member = (Member) request.getSession().getAttribute("authentication");
 		String userId = member.getId();
-		System.out.println("맴버아이디 제발 : "+member.getId());//출력 후 확인
+		String password = request.getParameter("password");
+		String nick = request.getParameter("nick");
+		String phone = request.getParameter("phone");
+		String postCode = request.getParameter("postCode");
+		String address1 = request.getParameter("address1");
+		String address2 = request.getParameter("address2");
+		String email = request.getParameter("email");
+		String gender = request.getParameter("gender");
+
+		// 받아 온 정보들 member에 넣어주기
+		
+		member.setId(userId);
+		member.setPassword(password);
+		member.setNick(nick);
+		member.setPhone(phone);
+		member.setAddress(postCode, address1, address2);
+		member.setEmail(email);
+		member.setGender(gender);
+		
+		//request.getSession().setAttribute("persistUser", member);
+		memberService.UpdateMember(member);
+		
+		//response.sendRedirect("/member/loginPage");
+
+		request.setAttribute("msg", "회원 수정이 완료되었습니다."); 
+		request.setAttribute("url", "/member/");
+		System.out.println("회원수정 완료!");
+		request.getRequestDispatcher("/index").forward(request, response);
+			
+	}
+
+	private void changeForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		request.getRequestDispatcher("/member/memberInfo").forward(request, response);
+		}
+
+	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String userId =((Member) request.getSession().getAttribute("authentication")).getId();//멤버객체에 authentication를 집어넣는다
+		//String userId = member.getId();
+		System.out.println("맴버아이디 제발 : "+userId);//출력 후 확인
 		memberService.deleteMember(userId);//삭제 진행
 		logout(request, response);//로그아웃 사용해 세션 끊고 인덱스로 이동
 	}
@@ -248,7 +293,7 @@ public class MemberController extends HttpServlet {
 
 		request.setAttribute("msg", "회원가입이 완료되었습니다."); 
 		request.setAttribute("url", "/member/loginPage");
-		request.getRequestDispatcher("/error/result").forward(request, response);
+		//request.getRequestDispatcher("/index").forward(request, response);
 		System.out.println("회원가입 완료!");
 
 		

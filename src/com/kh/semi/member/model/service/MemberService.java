@@ -84,6 +84,25 @@ public class MemberService {
 		}
 		return res;
 	}
+	
+	public int UpdateMember(Member member) {
+		Connection conn = template.getConnection();
+		int res = 0;
+		
+		try {
+			res = memberDao.updateMember(member, conn);
+			template.commit(conn);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			template.close(conn);
+		}
+		return res;
+		
+	}
+
+
 
 	public int updatePassword(String userId, String password) {
 		Connection conn = template.getConnection();
@@ -160,8 +179,6 @@ public class MemberService {
 		return member;
 	}
 
-	
-	
 	
 	
 	

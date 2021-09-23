@@ -54,7 +54,7 @@
 						<li class="dropdown"> <!-- dropdown open -->
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-user-circle"></i>  <span>${authentication.nick}</span>  <i class="fas fa-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="/member/memberInfo"><i class="far fa-user"></i> <span>My Profile</span></a></li>
+								<li><a href="/member/changeForm"><i class="far fa-user"></i> <span>My Profile</span></a></li>
 								<li><a href="/member/logout"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
 							</ul>
 						</li>
