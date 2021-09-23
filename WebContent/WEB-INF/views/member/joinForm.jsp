@@ -3,14 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link href='${contextPath}/resources/css/member/joinForm.css' rel='stylesheet'/>
-<script src='${contextPath}/resources/js/member/joinForm.js'></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 <div id="wrapper">
-<form action="" id="joinForm">
+<form action="/member/join" method="post" id="frm_join" name="checkJoin">
 	<table border=1 width="1000" height="500" bordercolor="gray" cellspacing=0>
 		<tr class="bTag">
 			<td class="bTag" colspan="2" align="center"><b>회원가입</b>
@@ -21,53 +22,97 @@
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 아이디</td>
-			<td class="inputInfo" width="500"><input type="text" name="id" maxlength="20" required>
-				(영문소문자/숫자, 5 ~ 11 글자) <input class="check" type="button" value="중복체크"></td>
+			<td class="inputInfo" width="500">
+				<input type="text" size="30" name="userId" id="userId" maxlength="20" placeholder="영문소문자 or 영문소문자+숫자, 5~11 글자"
+				 	<c:if test="${empty joinFailed.userId}">
+				 		value = "${joinForm.userId}"
+				 	</c:if>
+				required />
+				<input class="check" id="btnIdCheck" type="button" value="중복체크" />
+				<span id="idCheck"  class="valid-msg" >
+				</span>	
+			</td>
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 비밀번호</td>
-			<td class="inputInfo" width="500"><input type="password" name="password" required>
-				(특수문자+영어+숫자, 8 ~ 20 글자)</td>
+			<td class="inputInfo" width="500">
+				<input type="password" size="30" name="password" id="password" placeholder="특수문자+영어+숫자, 8글자 이상" 
+					<c:if test="${empty joinFailed.password}">
+						value = "${joinForm.password}"
+					</c:if>
+				required />
+				<span id="pwCheck" class="valid-msg">
+				</span>	
+			</td>
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 비밀번호 확인</td>
-			<td class="inputInfo" width="500"><input type="password" name="passwordCheck" required>
+			<td class="inputInfo" width="500">
+				<input type="password" size="30" name="passwordCheck" id="passwordCheck" required />
 			</td>
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 이름</td>
-			<td width="500"><input type="text" name="userName" required></td>
+			<td width="500">
+				<input type="text" size="30" name="name" id="name" required />
+				<span id="nameCheck" class="valid-msg"></span>
+			</td>
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 닉네임</td>
-			<td class="inputInfo" width="500"><input type="text" name="nick" required> (2글자 이상)
-				<input class="check" type="button" value="중복체크"></td>
+			<td class="inputInfo" width="500">
+				<input type="text" size="30" name="nick" id="nick" placeholder="2글자 이상" 
+					<c:if test="${empty joinFailed.nick}">
+						value = "${joinForm.nick}"
+					</c:if>
+				required />
+				<input class="check" id="btnNickCheck" type="button" value="중복체크" />
+				<span id="nickCheck" class="valid-msg">
+				</span>	
+			</td>
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 휴대전화</td>
 			<td width="500">
-				<input type="text" name="tell" maxlength="20" required>
-				<input class="check" type="button" value="중복체크"></td>
+				<input type="text" size="30" name="phone" id="phone" maxlength="20" placeholder="숫자만 입력, 9~11 자리" 
+					<c:if test="${empty joinFailed.phone}">
+                		value = "${joinForm.phone}"
+                	</c:if>
+				required />
+				<input class="check" id="btnPhoneCheck" type="button" value="중복체크" />
+				<span  id="phoneCheck" class="valid-msg">
+				</span>	
+			</td>
 		</tr>
 		<tr>
 			<td width="200" rowspan="3" align="center" class="title">주소</td>
 			<td width="200" class="code">
-				<input type="text" size="6" name="addressCode1">
-			     -
-			    <input type="text" size="6" name="addressCode2">
-				<input class="check" type="button" value="우편번호 검색"></td>
+			    <input type="text" size="15" name="postCode" id="postCode" />
+				<input class="check" type="button" value="우편번호 검색" onclick="postCodeSearch()" />
+			</td>
 		</tr>
 		<tr>
-			<td class="inputInfo code ad"><input type="text" size="50" name="address1"> 기본주소</td>
+			<td class="inputInfo code ad">
+				<input type="text" size="50" name="address1" id="address1" /> 기본주소
+			</td>
 		</tr>
 		<tr>
-			<td class="inputInfo ad"><input type="text" size="50" name="address2">
-				나머지주소(선택입력가능)</td>
+			<td class="inputInfo ad">
+				<input type="text" size="50" name="address2" id="address2" /> 나머지주소(선택입력가능)
+			</td>
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 이메일</td>
-			<td width="500"><input type="email" size="50" name="email" maxlength="20" required>
-				<input class="check" type="button" value="중복체크"></td>
+			<td width="500">
+				<input type="email" size="30" name="email" id="email" maxlength="20"
+					<c:if test="${empty joinFailed.email}">
+                		value = "${joinForm.email}"
+                	</c:if>
+				required />
+				<input class="check" id="btnEmailCheck" type="button" value="중복체크" />
+				<span  id="emailCheck" class="valid-msg">
+				</span>		
+			</td>
 		</tr>
 	</table>
 
@@ -76,13 +121,17 @@
 			<li class="checkBox check01">
 				<ul class="clearfix">
 					<li>이용약관, 개인정보 수집 및 이용에 모두 동의합니다.</li>
-					<li class="checkAllBtn"><input type="checkbox" id="allCheckList" name="chkAll" onclick="allCheck(event)"></li>
+					<li class="checkAllBtn">
+						<input type="checkbox" id="allCheckList" name="chkAll" onclick="allCheck(event)">
+					</li>
 				</ul>
 			</li>
 			<li class="checkBox check02">
 				<ul class="clearfix">
 					<li>이용약관 동의(필수)</li>
-					<li class="checkBtn"><input type="checkbox" class="checkList" id="agree1" name="chk" onclick="checkList(event)"></li>
+					<li class="checkBtn">
+						<input type="checkbox" class="checkList" id="agree1" name="chk" onclick="checkList(event)">
+					</li>
 				</ul> <textarea name="" id="">제 1 조 (목적)
 이 약관은 {MEDIBOOK}(이하 "사이트"라 합니다)에서 제공하는 인터넷서비스(이하 "서비스"라 합니다)의 이용 조건 및 절차에 관한 기본적인 사항을 규정함을 목적으로 합니다.
  
@@ -186,7 +235,9 @@
 			<li class="checkBox check03">
 				<ul class="clearfix">
 					<li>개인정보 수집 및 이용에 대한 안내(필수)</li>
-					<li class="checkBtn"><input type="checkbox" class="checkList" id="agree2" name="chk" onclick="checkList(event)"></li>
+					<li class="checkBtn">
+						<input type="checkbox" class="checkList" id="agree2" name="chk" onclick="checkList(event)">
+					</li>
 				</ul> <textarea name="" id="">
 1. 개인정보의 처리 목적
 
@@ -234,13 +285,13 @@
 		</ul>
 		
 		<div class="footBtwrap">
-			<a class="ok" href="#"><button class="fpmgBt1">회원가입</button></a>
-			<a class="cancel" href="#"><button class="fpmgBt2">가입취소</button></a>
+			<a><input type="submit" value="회원가입" class="fpmgBt1" /></a>
+			<a href="/member/joinCancel"><input type="button" value="가입취소" class="fpmgBt2" /></a>
 		</div>
 </form>
 </div>
 
-
+<script src='${contextPath}/resources/js/member/joinForm.js'></script>
 
 </body>
 </html>

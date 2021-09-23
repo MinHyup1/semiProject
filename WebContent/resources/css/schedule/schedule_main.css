@@ -132,14 +132,14 @@
 
 .form_title{
 	display: flex;
-	height: 4vh;
+	height: 35px;
 	width: 70%;
 	margin-bottom: 20px;
 	align-items: center;
 	justify-content: center;
 	color: rgba(255,255,255,0.8);
 	font-weight: 600;
-	font-size: 2vmin;
+	font-size: 18px;
 	background-color: #5cb85c;
 	border-radius: 100px;
 }
@@ -149,12 +149,13 @@
 }
 
 .schedule_list>table{
-	font-size: 2vmin;
+	font-size: 15px;
 	line-height: 2.5;
 	width: 100%;
 }
 
 .schedule_table th{
+	font-size: 17px;
 	text-align: center;
 }
 
@@ -166,9 +167,9 @@
 
 .schedule_table td>div{
 	display: inline-block;
-	width: 2vw;
-	height: 2vw;
+	width: 28px;
+	height: 28px;
 	border-radius: 100px;
 	background-color: orange;
-	margin: 0 1vw 0 0.5vw;
+	margin: 5px 1vw 5px 0.5vw;
 }

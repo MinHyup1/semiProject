@@ -3,47 +3,52 @@
   <display-name>semiProject</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
-   </welcome-file-list>
-   
-   <filter>
-   	<filter-name>encodingFilter</filter-name>
-   	<filter-class>com.kh.semi.common.filter.EncodingFilter</filter-class>
-   </filter>
-   <filter-mapping>
-   	<filter-name>encodingFilter</filter-name>
-   	<url-pattern>/*</url-pattern>
-   </filter-mapping>
-   
-   <filter>
-   	<filter-name>wrapperFilter</filter-name>
-   	<filter-class>com.kh.semi.common.filter.WrapperFilter</filter-class>
-   </filter>
-   <filter-mapping>
-   	<filter-name>wrapperFilter</filter-name>
-   	<url-pattern>/*</url-pattern>
-   </filter-mapping>
-   
+  </welcome-file-list>
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>com.kh.semi.common.filter.EncodingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>wrapperFilter</filter-name>
+    <filter-class>com.kh.semi.common.filter.WrapperFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>wrapperFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+	<filter-name>validatorFilter</filter-name>
+	<filter-class>com.kh.semi.common.filter.ValidatorFilter</filter-class>
+  </filter>
+  <filter-mapping>
+	<filter-name>validatorFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+  </filter-mapping>
   
-   
-   <!-- 어플리케이션 내부에서 발생한 예외나, 응답 상태코드에 따라 원하는 에러페이지를 지정
-   		ex) 응답 상태 코드가 404일 경우 사용자에게 보여줄 페이지 지정
-   		PageNotFoundException 이 발생할 경우 사용자에게 보여줄 페이지 지정
-    -->
-   <error-page>
-   	<error-code>404</error-code>
-   	<location>/WEB-INF/views/error/404.jsp</location>
-   </error-page>
-   
-   <error-page>
-   	<exception-type>com.kh.semi.common.exception.PageNotFoundException</exception-type>
-  	<location>/WEB-INF/views/error/404.jsp</location>
-   </error-page>
-   
-   <error-page>
-   	<exception-type>com.kh.semi.common.exception.HandlableException</exception-type>
-   	<location>/exception-handler</location>
-   </error-page>
-   
-   
-  
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/views/error/404.jsp</location>
+  </error-page>
+  <error-page>
+    <exception-type>com.kh.semi.common.exception.PageNotFoundException</exception-type>
+    <location>/WEB-INF/views/error/404.jsp</location>
+  </error-page>
+  <error-page>
+    <exception-type>com.kh.semi.common.exception.HandlableException</exception-type>
+    <location>/exception-handler</location>
+  </error-page>
+  <servlet>
+    <description></description>
+    <display-name>ScheduleController</display-name>
+    <servlet-name>ScheduleController</servlet-name>
+    <servlet-class>com.kh.semi.schedule.controller.ScheduleController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ScheduleController</servlet-name>
+    <url-pattern>/ScheduleController</url-pattern>
+  </servlet-mapping>
 </web-app>

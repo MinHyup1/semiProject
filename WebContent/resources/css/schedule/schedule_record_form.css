@@ -1,0 +1,164 @@
+@charset "UTF-8";
+/* .main{
+	min-width: 1000px;
+	overflow: scroll;
+} */
+
+.main-content{
+	display: flex;
+	position: relative;
+	min-width: 1200px;
+}
+
+
+.wrap_calendar{
+	height: 100%;
+	width: 60%;
+}
+
+.wrap_form{
+	display: flex;
+	flex-wrap: wrap;
+	position: relative;
+	justify-content: center;
+	margin-top: 25px;
+	height: 100%;
+	width: 40%;
+}
+
+.form_title{
+	display: flex;
+	height: 35px;
+	width: 70%;
+	margin-bottom: 20px;
+	align-items: center;
+	justify-content: center;
+	color: rgba(255,255,255,0.8);
+	font-weight: 600;
+	font-size: 18px;
+	background-color: #5cb85c;
+	border-radius: 100px;
+}
+
+.input_list{
+	padding: 20px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: grey;
+	border-radius: 10px;
+	width: 85%;
+}
+
+.input_form>label{
+	display: block;
+	line-height: 2.5;
+}
+
+.input_form>label>input{
+	height: 30px;
+	border-width: 1px;
+	border-color: #8c8c8c;
+	border-radius: 5px;
+}
+
+input[type=date]{
+	width: 160px;
+}
+
+input[type=text]{
+	width: 60%;
+}
+
+input[type=text]::placeholder{
+	text-align: center;
+	color: #b3b3b3;
+}
+
+.input_form>.search_btn{
+	line-height: 1.5;
+	margin: 15px 0 15px 0;
+}
+
+.input_form>.add_btn{
+	line-height: 1.5;
+	margin: 25px 0 10px 0;
+}
+
+.input_form button{
+	border-radius: 3px;
+	border-color: #b3b3b3;
+	background-color: #b3b3b3;
+	color: #e6e6e6;
+}
+
+.input_form button:hover{
+	border-color: #79c0de;
+	background-color: #79c0de;
+	color: #e6e6e6;
+}
+
+.input_form>div{
+	margin-bottom: 11px;
+}
+
+button[type="button"]{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: bold;
+}
+
+.input_form>.added-notice{
+	margin-bottom: 0;
+}
+
+.added-notice>label{
+	margin-bottom: 13px;
+}
+
+.added-notice>label>input{
+	height: 30px;
+	border-width: 1px;
+	border-color: #8c8c8c;
+	border-radius: 5px;
+}
+
+.action_icons{
+	width: 100px;
+	position: absolute;
+	right: 7.5%;
+	top: 100%;
+	display: flex;
+	justify-content: space-between;
+	font-size: 25px;
+	color: #3287B2;
+	font-weight: bold;
+}
+
+button[form="input_form"]{
+	border-style: none;
+	background: none;
+}
+
+/* .schedule_list>table{
+	font-size: 2vmin;
+	line-height: 2.5;
+	width: 100%;
+}
+
+.schedule_table th{
+	text-align: center;
+}
+
+.schedule_table td{
+	border: none;
+	display: flex;
+	align-items: center;
+}
+
+.schedule_table td>div{
+	display: inline-block;
+	width: 2vw;
+	height: 2vw;
+	border-radius: 100px;
+	background-color: orange;
+	margin: 0 1vw 0 0.5vw;
+} */

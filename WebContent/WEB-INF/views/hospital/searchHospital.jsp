@@ -98,8 +98,6 @@
 
 </head>
 <body>
-
-
 <div class="main">
  <div>
  	<div class="search_title_wrapper">

@@ -15,15 +15,15 @@ button{height: 50px;width: 150px;}
 		<h5>회원님의 아이디 찾기가 완료되었습니다.</h5>
 		<form action="find" method="POST" class="form">
 			<div style="min-height: 110px;">
-			이름:이기정<br>
-			이메일 : dlrlwjd1313@naver.com<br>
-			휴대폰 번호 : 01029116322<br>
-			아이디 : dlrlwjd1313<br>
+			이름: ${authentication.name}<br>
+			이메일 : ${authentication.email}<br>
+			휴대폰 번호 : ${authentication.phone}<br>
+			아이디 : ${authentication.id}<br>
 			</div>
 			<br>
 			</form>
 			<span>
-		<button  id="btn_login" onclick="location.href='page-login.html'">로그인 </button>
+		<button  id="btn_login" onclick="location.href='loginPage.jsp'">로그인 </button>
 		<button style="background-color:lightgray;"onclick="location.href='findPassword.html'"  >비밀번호 찾기 </button>
 		</span><br>
 	</div>  

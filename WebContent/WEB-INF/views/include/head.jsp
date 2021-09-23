@@ -21,16 +21,20 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="brand">
-				<a href="메인화면.jsp"><i class="fas fa-plus-square"></i> MEDIBOOK</a>
+				<a href="${contextPath}/index"><i class="fas fa-plus-square"></i> MEDIBOOK</a> <!-- href 수정 -->
 			</div>
 			<div class="container-fluid">
 				<div class="navbar-btn">
 					<button type="button" class="btn-toggle-fullwidth"><i class="far fa-arrow-alt-circle-left"></i></button>
 				</div>
 				<div class="navbar-btn navbar-btn-right">
-					<a class="btn btn-success update-pro" title="" target="" href="로그인페이지.jsp"> <span>login</span></a>
-					<a class="btn btn-success update-pro" title="" target="" href="회원가입페이지.jsp"> <span>회원가입</span></a>
+				<!-- href 부분 멤버로 수정 -->
+				<c:if test="${empty authentication}">
+					<a href="/member/loginPage" class="btn btn-success update-pro" title="" target="" > <span>login</span></a>
+				</c:if>	
+					<a href="/member/joinPage" class="btn btn-success update-pro" title="" target="" > <span>회원가입</span></a>
 				</div><!-- 로그아웃 버튼 추가 예정 -->
+				<c:if test="${not empty authentication}">
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
@@ -48,14 +52,15 @@
 							</ul>
 						</li>
 						<li class="dropdown"> <!-- dropdown open -->
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-user-circle"></i>  <span>user-name</span>  <i class="fas fa-chevron-down"></i></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-user-circle"></i>  <span>${authentication.nick}</span>  <i class="fas fa-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="개인정보수정.jsp"><i class="far fa-user"></i> <span>My Profile</span></a></li>
-								<li><a href="로그아웃"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+								<li><a href="/member/memberInfo"><i class="far fa-user"></i> <span>My Profile</span></a></li>
+								<li><a href="/member/logout"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
 							</ul>
 						</li>
 					</ul>
 				</div>
+				</c:if>
 			</div>
 		</nav>
 		<!-- END NAVBAR -->
@@ -64,10 +69,10 @@
 			<div class="sidebar-scroll">
 				<nav>
 					<ul class="nav asdasd">
-						<li><a href="/test/searchHos?active=T" class="" data-loc="searchHosp"><i class="fas fa-hospital"></i> <span>병원 검색</span></a></li>
+						<li><a href="/test/searchHos" class="" data-loc="searchHosp"><i class="fas fa-hospital"></i> <span>병원 검색</span></a></li>
 						<li><a href="/test/searchPharm" class="" data-loc="searchPharm"><i class="fas fa-vial"></i> <span>약국 검색</span></a></li>
 						<li><a href="/test/searchMedi" class="" data-loc="searchMedi"><i class="fas fa-pills"></i> <span>의약품 검색</span></a></li>
-						<li><a href="/test/schedule" class="" data-loc="schedule"><i class="far fa-calendar-check"></i> <span>진료 스케줄</span></a></li>
+						<li><a href="${contextPath}/schedule/schedule-main" class="" data-loc="schedule"><i class="far fa-calendar-check"></i> <span>진료 스케줄</span></a></li> <!-- href 수정 -->
 						<li><a href="/test/board" class="" data-loc="board"><i class="fas fa-list"></i> <span>게시판</span></a></li>
 					</ul>
 				</nav>
@@ -84,7 +89,6 @@
 				}
 			});
 		})
-		
 		</script>
 		<!-- END LEFT SIDEBAR -->
 		<!-- MAIN -->
