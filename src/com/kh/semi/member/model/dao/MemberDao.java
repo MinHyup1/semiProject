@@ -254,6 +254,31 @@ public class MemberDao {
 		return member;
 	}
 	
+	public Member findUserPassword(String userId, String userName, String email, String tell, Connection conn) {
+		Member member = null;
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = "select * from member where id = ? and name = ? and email = ? and phone = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, userId);
+			pstm.setString(2, userName);
+			pstm.setString(3, email);
+			pstm.setString(4, tell);
+			rset = pstm.executeQuery();
+			
+			if(rset.next()) {
+				member = convertAllToMember(rset);
+			}
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return member;
+	}
+	
 	
 	
 	
@@ -295,6 +320,8 @@ public class MemberDao {
 		}
 		return member;
 	}
+
+
 
 	
 	

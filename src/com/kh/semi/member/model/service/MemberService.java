@@ -160,6 +160,17 @@ public class MemberService {
 		return member;
 	}
 
+	public Member findUserPassword(String userId, String userName, String email, String tell) {
+		Connection conn = template.getConnection();
+		Member member = null;
+		try {
+			member = memberDao.findUserPassword(userId, userName, email, tell, conn);
+		} finally {
+			template.close(conn);
+		}
+		return member;
+	}
+
 	
 	
 	

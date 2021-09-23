@@ -28,11 +28,11 @@
 					<button type="button" class="btn-toggle-fullwidth"><i class="far fa-arrow-alt-circle-left"></i></button>
 				</div>
 				<div class="navbar-btn navbar-btn-right">
-				<!-- href 부분 멤버로 수정 -->
+				<!-- 로그인하면 login, 회원가입 버튼 사라지도록 -->
 				<c:if test="${empty authentication}">
 					<a href="/member/loginPage" class="btn btn-success update-pro" title="" target="" > <span>login</span></a>
-				</c:if>	
 					<a href="/member/joinPage" class="btn btn-success update-pro" title="" target="" > <span>회원가입</span></a>
+				</c:if>	
 				</div><!-- 로그아웃 버튼 추가 예정 -->
 				<c:if test="${not empty authentication}">
 				<div id="navbar-menu">
