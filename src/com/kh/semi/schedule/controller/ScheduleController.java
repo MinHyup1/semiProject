@@ -40,7 +40,7 @@ public class ScheduleController extends HttpServlet {
 		case "medicine-notice-form": //복용 알림 작성페이지 이동
 			medicineNoticeForm(request, response);
 			break;
-		case "dose-notice-register": //진료 알림 등록
+		case "dose-notice-register": //복용 알림 등록
 			doseNoticeRegister(request, response);
 			break;
 		default: throw new PageNotFoundException();
