@@ -110,6 +110,9 @@ html {
 }
 
 .btn-primary {
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
 	background-color: #00AAFF;
 	border-color: #00a0f0;
 	color: #fff;
@@ -122,6 +125,11 @@ html {
 	width: 100%;
 	margin-bottom: 10px;
 }
+
+.btn-block:active{
+	background-color: #027ede;
+}
+
 
 button {
 	font-family: inherit;

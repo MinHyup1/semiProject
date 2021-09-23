@@ -101,7 +101,9 @@ public class MemberController extends HttpServlet {
 		case "findPassword" : 
 			findPassword(request,response);
 			break;
-			
+		case "findPassword-info" : 
+			findPasswordInfo(request,response);
+			break;
 		case "memberInfo" : 
 			memberInfo(request,response);
 			break;
@@ -118,6 +120,7 @@ public class MemberController extends HttpServlet {
 		
 		}
 	}
+	
 
 	private void change(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 
@@ -175,14 +178,54 @@ public class MemberController extends HttpServlet {
 	private void findPassword(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		request.getRequestDispatcher("/member/findPassword").forward(request, response);
 	}
+	
+	private void findPasswordInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String userId = request.getParameter("userId");
+		String userName = request.getParameter("userName");
+		String email = request.getParameter("email");
+		String tell = request.getParameter("tell");
+		
+		Member member = memberService.findUserPassword(userId, userName, email, tell);
+		Member memberId = memberService.selectMemberById(userId);
+		Member memberEmail = memberService.selectMemberByEmail(email);
+		Member memberTell = memberService.selectMemberByPhone(tell);
+		
+		if(memberId == null) {
+			request.setAttribute("msg", "존재하지 않는 아이디 입니다.~~~"); 
+			request.setAttribute("url", "/member/findPassword");
+			request.getRequestDispatcher("/error/result").forward(request, response);
+			return;
+		} else if(memberEmail == null) {
+			request.setAttribute("msg", "존재하지 않는 이메일 입니다."); 
+			request.setAttribute("url", "/member/findPassword");
+			request.getRequestDispatcher("/error/result").forward(request, response);
+			return;
+		} else if(memberTell == null) {
+			request.setAttribute("msg", "존재하지 않는 휴대폰 번호 입니다."); 
+			request.setAttribute("url", "/member/findPassword");
+			request.getRequestDispatcher("/error/result").forward(request, response);
+			return;
+		} else if(memberId != null && memberEmail != null && memberTell != null && member == null) {
+			request.setAttribute("msg", "존재하지 않는 이름 입니다."); 
+			request.setAttribute("url", "/member/findPassword");
+			request.getRequestDispatcher("/error/result").forward(request, response);
+			return;
+		} else if(member != null){
+			request.getSession().setAttribute("authentication", member);
+			request.getRequestDispatcher("/member/checkpassword").forward(request, response);
+			return;
+		}
+	}
 
-	private void findId(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+	/* /member/memberInfo */
+
+	private void findId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/member/findId").forward(request, response);
 		
 	}
 	
 	private void findIdInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userName = request.getParameter("username");
+		String userName = request.getParameter("userName");
 		String email = request.getParameter("email");
 		String tell = request.getParameter("tell");
 		
@@ -192,25 +235,24 @@ public class MemberController extends HttpServlet {
 		
 		if(memberEmail == null) {
 			request.setAttribute("msg", "존재하지 않는 이메일 입니다."); 
-			request.setAttribute("url", "/member/loginPage");
+			request.setAttribute("url", "/member/findId");
 			request.getRequestDispatcher("/error/result").forward(request, response);
 			return;
 		} else if(memberTell == null) {
 			request.setAttribute("msg", "존재하지 않는 휴대폰 번호 입니다."); 
-			request.setAttribute("url", "/member/loginPage");
+			request.setAttribute("url", "/member/findId");
 			request.getRequestDispatcher("/error/result").forward(request, response);
+			return;
 		} else if(memberEmail != null && memberTell != null && member == null) {
 			request.setAttribute("msg", "존재하지 않는 이름 입니다."); 
-			request.setAttribute("url", "/member/loginPage");
+			request.setAttribute("url", "/member/findId");
 			request.getRequestDispatcher("/error/result").forward(request, response);
-		}
-		
-		if(member != null) {
+			return;
+		} else if(member != null) {
 			request.getSession().setAttribute("authentication", member);
 			request.getRequestDispatcher("/member/checkId").forward(request, response);
+			return;
 		}
-		
-		
 	}
 
 	private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
