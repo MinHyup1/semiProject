@@ -290,6 +290,7 @@ map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 //마커를 표시할 위치와 title 객체 배열입니다 
 var positions = [
     {
+    	content: '<div>카카오</div>', 
         title: '카카오', 
         latlng: new kakao.maps.LatLng(37.56700, 126.97877)
     },
