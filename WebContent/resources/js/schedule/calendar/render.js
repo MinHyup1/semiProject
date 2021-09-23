@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 let addMedicineNotice = function() {
 	let timeInp = document.createElement('label');
-	timeInp.innerHTML = "<input type='time' name='dose_notice' required> ";
+	timeInp.innerHTML = "<input type='time' class='time' name='dose_notice' required> ";
 	
 	let trashIcon = document.createElement('i');
 	trashIcon.className = 'fas fa-trash';
@@ -174,7 +174,7 @@ let addMedicineNotice = function() {
 
 let addVisitNotice = function(e) {
 	let dateTimeInp = document.createElement('label');
-	dateTimeInp.innerHTML = "<input type='datetime-local' name='visit_notice_date' required> ";
+	dateTimeInp.innerHTML = "<input type='datetime-local' class='dateTime' name='visit_notice_date' required> ";
 	
 	let trashIcon = document.createElement('i');
 	trashIcon.className = 'fas fa-trash';
