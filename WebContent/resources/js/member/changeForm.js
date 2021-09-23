@@ -89,7 +89,7 @@
    			} 
    		})
 
-   		document.querySelector('#memberInfo').addEventListener('submit', e => {
+   		document.querySelector('#frm_memberInfo').addEventListener('submit', e => {
    			
    			let pwReg = /(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Zㄱ-힣0-9])(?=.{8,})/;
 
@@ -104,8 +104,6 @@
 				alert("비밀번호가 일치하지 않습니다.");
 			}
 
-			
-   			
 			if(confirmNick != nick.value){
    				e.preventDefault();
 				//alert("닉네임 중복 검사를 통과하지 않았습니다.");
@@ -128,6 +126,7 @@
   
 
    	})();
+
 	//주소검색 api활용
 	function postCodeSearch(){
 		new daum.Postcode({

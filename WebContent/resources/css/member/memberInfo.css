@@ -7,7 +7,7 @@
 	table {
 		border: 1px solid #ddd;
 		background-color: #fff;
-		width: 80%;
+		width: 100%;
 		margin : 0 auto;
 		margin-bottom: 20px;
 	}
@@ -33,6 +33,9 @@
 		margin-left: 10px; 
 	}
 	
+	input::placeholder {
+	 font-size: 8px;
+	}
 
 	* {
 		margin: 0;
@@ -41,7 +44,7 @@
 	}
 	
 	body {
-		min-width: 715px;
+		min-width: 800px;
 		background-color: #f7f7f7;
 	}
 	
@@ -66,16 +69,16 @@
 	}
 	
 	#out {
-		left: 20%;
-		width: 20%;
+		left: 33%;
+		width: 23%;
 	}
 	
 	#modify{
-		left: 12%;
+		left: 15%;
 	}
 	
 	#cancel{
-		left: 7%;
+		left: 11%;
 	}
 	
 	.fpmgBt1, .fpmgBt2{
@@ -104,7 +107,7 @@
 		display: block;
 		width: 40%;
 		height: 30px;
-		font-size: 1vh;
+		font-size: 0.8vw;
 		text-align: center;
 		line-height: 30px;
 		background-color: lightgray;
@@ -127,5 +130,21 @@
 	 	border-top: none;
 	}
 	
+	.valid-msg {
+		display: block;
+		color: red;
+		font-size: 10px;
+	}
+	
+	#frm_memberInfo {
+		width: 80%;
+		margin: 0 auto;
+	}
+	
+	.fixedSpan{
+		font-size: 14px;
+		color: #4D4C4C;
+		margin-left: 10px;
+	}
 	
 	

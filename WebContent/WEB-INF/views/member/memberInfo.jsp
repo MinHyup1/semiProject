@@ -4,14 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href='${contextPath}/resources/css/member/memberInfo.css' rel='stylesheet'/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link href='${contextPath}/resources/css/member/memberInfo.css' rel='stylesheet'/>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
 <div id="wrapper">
-<form action="/member/change" id="memberInfo">
+<form action="/member/change" method="post" id="frm_memberInfo">
 	<table border=1 width="1000" height="500" bordercolor="gray" cellspacing=0>
 		<tr class="bTag">
 			<td class="bTag" colspan="2" align="center"><b>회원정보수정</b>
@@ -22,7 +22,8 @@
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 아이디</td>
-			<td class="inputInfo" width="500"><span style="font-size: 18px">${authentication.id}</span>
+			<td width="500">
+				<span class="fixedSpan">${authentication.id}</span>
 			</td>
 		</tr>
 		<tr>
@@ -44,30 +45,34 @@
 			</td>
 		<tr>
 			<td width="200" align="center" class="title" >* 이름</td>
-			<td width="500"><span>${authentication.name}</span></td>
+			<td width="500">
+				<span class="fixedSpan">${authentication.name}</span>
+			</td>
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 닉네임</td>
-			<td class="inputInfo" width="500"><input type="text" size="30" name="nick" id="nick" placeholder="2글자 이상" 
+			<td class="inputInfo" width="500">
+				<input type="text" size="30" name="nick" id="nick" placeholder="2글자 이상" 
 					<c:if test="${empty joinFailed.nick}">
-						value = "${changeForm.nick}"
+						value = "${joinForm.nick}"
 					</c:if>
 				required />
 				<input class="check" id="btnNickCheck" type="button" value="중복체크" />
 				<span id="nickCheck" class="valid-msg">
-				</span>
+				</span>	
+			</td>
 		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 휴대전화</td>
 			<td width="500">
 				<input type="text" size="30" name="phone" id="phone" maxlength="20" placeholder="숫자만 입력, 9~11 자리" 
 					<c:if test="${empty joinFailed.phone}">
-                		value = "${changeForm.phone}"
+                		value = "${joinForm.phone}"
                 	</c:if>
 				required />
-					<input class="check" id="btnPhoneCheck" type="button" value="중복체크" />
-					<span  id="phoneCheck" class="valid-msg">
-					</span>	
+				<input class="check" id="btnPhoneCheck" type="button" value="중복체크" />
+				<span  id="phoneCheck" class="valid-msg">
+				</span>	
 			</td>
 		</tr>
 		<tr>
@@ -101,15 +106,16 @@
 			</td>
 		</tr>
 	</table>
-
 		<div class="footBtwrap">
-			<a id="modify" href="https://www.naver.com/"><button class="fpmgBt1">회원정보수정</button></a>
-			<a id="cancel" href="#"><button class="fpmgBt2" onclick="location.href='/index'">취소</button></a>
-			<a id="out" "><button class="fpmgBt3" onclick="location.href='/member/delete'">회원탈퇴</button></a>
+			<a id="modify"><input type="submit" value="회원정보수정" class="fpmgBt1"></a>
+			<a id="cancel"><input type="button" value="취소" class="fpmgBt2"></a>
+			<a href="/member/delete" id="out"><input type="submit" value="회원탈퇴" class="fpmgBt3"></a>
 		</div>
 	
 </form>
 </div>
+
 <script src='${contextPath}/resources/js/member/changeForm.js'></script>
+
 </body>
 </html>
