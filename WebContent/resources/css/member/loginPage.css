@@ -126,11 +126,6 @@ html {
 	margin-bottom: 10px;
 }
 
-.btn-block:active{
-	background-color: #027ede;
-}
-
-
 button {
 	font-family: inherit;
 	text-transform: none;
