@@ -87,15 +87,20 @@
 		}
 		
 		if(document.querySelectorAll('.time')) {
+			if(!dose_start.value || !dose_end.value) {
+				e.preventDefault();
+				document.querySelector('#dose_start').required = true;
+				document.querySelector('#dose_end').required = true;
+			}
+			
 			document.querySelectorAll('.time').forEach(element => {
 				if(!timeReg.test(element.value)) {
 					e.preventDefault();
-					document.querySelector('#"timeCheck"').innerHTML = '복용 알림시간 설정에 잘못된 입력이 있습니다.';
+					document.querySelector('#timeCheck').innerHTML = '복용 알림시간 설정에 잘못된 입력이 있습니다.';
 					return;
 				}
 			})
 		}
-		
 	})
 	
 	
