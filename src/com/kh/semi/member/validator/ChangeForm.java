@@ -19,6 +19,7 @@ public class ChangeForm {
 	private String email;
 	private String gender;
 	
+	
 	private HttpServletRequest request;
 	private MemberService memberService = new MemberService();
 	private Map<String, String> failedAttribute = new HashMap<String, String>(); //어떤 속성에 대해서 통과하지 못했는지 체크하기 위한 맵 생성
@@ -32,6 +33,7 @@ public class ChangeForm {
 		this.address = request.getParameter("address");
 		this.email = request.getParameter("email");
 		this.gender = request.getParameter("gender");
+
 	}
 	
 	public boolean test() {
