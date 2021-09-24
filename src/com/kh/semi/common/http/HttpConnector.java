@@ -51,6 +51,8 @@ public class HttpConnector {
 		return responseBody;
 	}
 	
+	
+	
 	public JsonElement getAsJson(String url, Map<String,String> headers) {
 		
 		JsonElement responseBody = null;
@@ -90,6 +92,20 @@ public class HttpConnector {
 			HttpURLConnection conn = getConnection(url, "POST");
 			setHeaders(headers, conn);
 			setBody(body, conn);
+			responseBody = getResponseBody(conn);
+		} catch (IOException e) {
+			throw new HandlableException(ErrorCode.HTTP_CONNECT_ERROR,e);
+		}
+		
+		return responseBody;
+	}
+	public String post(String url, Map<String,String> headers) {
+		
+		String responseBody = "";
+		
+		try {
+			HttpURLConnection conn = getConnection(url, "POST");
+			setHeaders(headers, conn);
 			responseBody = getResponseBody(conn);
 		} catch (IOException e) {
 			throw new HandlableException(ErrorCode.HTTP_CONNECT_ERROR,e);

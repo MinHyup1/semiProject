@@ -249,7 +249,17 @@
 	</div></div>
  		</div>
  		
- 		<div class="hospital_list">병원 주소 목록</div>
+ 		<div class="hospital_list">
+ 		
+ 		<ul class="listWrap">
+ 			<span>병원주소 목록</span>
+ 			<li></li>
+ 			<li></li>
+ 			<li></li>
+ 		</ul>
+ 		
+ 		
+ 		</div>
  	</div>
  	<div>
  		
