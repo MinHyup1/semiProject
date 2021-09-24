@@ -371,10 +371,15 @@ public class MemberController extends HttpServlet {
 	private void checkNick(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String nick = request.getParameter("nick");
 		Member member = memberService.selectMemberByNick(nick);
-	
+		
+		HttpSession session = request.getSession();
+		Member userNick = (Member)session.getAttribute("authentication");
+		
 		if(member == null) {
 			response.getWriter().print("available");
-		}else {
+		} else if(nick.equals(userNick.getNick())) {
+			response.getWriter().print("available");
+		} else {
 			response.getWriter().print("disable");
 		}
 	}
@@ -383,9 +388,14 @@ public class MemberController extends HttpServlet {
 		String phone = request.getParameter("phone");
 		Member member = memberService.selectMemberByPhone(phone);
 		
+		HttpSession session = request.getSession();
+		Member userPhone = (Member)session.getAttribute("authentication");
+		
 		if(member == null) {
 			response.getWriter().print("available");
-		}else {
+		} else if(phone.equals(userPhone.getPhone())){
+			response.getWriter().print("available");
+		} else {
 			response.getWriter().print("disable");
 		}
 	}
@@ -394,9 +404,14 @@ public class MemberController extends HttpServlet {
 		String email = request.getParameter("email");
 		Member member = memberService.selectMemberByEmail(email);
 		
+		HttpSession session = request.getSession();
+		Member userEmail = (Member)session.getAttribute("authentication");
+		
 		if(member == null) {
 			response.getWriter().print("available");
-		}else {
+		} else if(email.equals(userEmail.getEmail())) {
+			response.getWriter().print("available");
+		} else {
 			response.getWriter().print("disable");
 		}
 		
