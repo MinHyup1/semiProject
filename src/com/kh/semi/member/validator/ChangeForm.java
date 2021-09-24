@@ -62,11 +62,11 @@ public class ChangeForm {
 		
 		//실패했다면, 실패한 속성 값들 세션에 넣어주기(세션에 넣어줘야 재요청이 들어왔을 때도 값을 가져와서 사용가능)
 		if(!res) {
-			request.getSession().setAttribute("joinFailed", failedAttribute);
-			request.getSession().setAttribute("joinForm", this); //사용자가 입력한 파라미터 값이 joinForm에 있기 때문에 그 값들도 담아주기(this는 여기 있는 joinForm에 있는 값들을 뜻함..?)
+			request.getSession().setAttribute("changeFailed", failedAttribute);
+			request.getSession().setAttribute("changeForm", this); //사용자가 입력한 파라미터 값이 joinForm에 있기 때문에 그 값들도 담아주기(this는 여기 있는 joinForm에 있는 값들을 뜻함..?)
 		}else { //잘 통과했을 경우에는 지워주기
-			request.getSession().removeAttribute("joinFailed");
-			request.getSession().removeAttribute("joinForm");
+			request.getSession().removeAttribute("changeFailed");
+			request.getSession().removeAttribute("changeForm");
 		}
 		
 		

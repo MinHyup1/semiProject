@@ -19,7 +19,7 @@
 								<div class="logo text-center"><p>MEDIBOOK</p></div>
 							</div>
 								<div class="form-group">
-									<a id="custom-login-btn" href="javascript:loginWithKakao()"><button class="btn btn-lg kakao" href="/member/index">카카오톡 간편 로그인</button></a>
+									<a id="custom-login-btn" href="javascript:loginWithKakao()"><button id='kakao-login-btn'class="btn btn-lg kakao">카카오톡 간편 로그인</button></a>
 								</div>
 								<a id="or">또는</a>
 							<form class="form-auth-small" action="/member/login" method="post">
@@ -38,7 +38,6 @@
 							</form>
 						</div>
 					</div>
-
 					<div class="clearfix"></div>
 				</div>
 			</div>
@@ -46,14 +45,12 @@
 	</div>
   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
-        // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+         // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
         Kakao.init('cfb699a7c2c194f945a6a34a6be6daa5');
 
         // SDK 초기화 여부를 판단합니다.
         console.log(Kakao.isInitialized());
-        
-    </script>
-<script type="text/javascript">
+/* 로그인 */
   function loginWithKakao() {
     Kakao.Auth.login({
       success: function(authObj) {
@@ -64,6 +61,24 @@
       },
     })
   }
+ 
+
+  </script>
+
+
+<button class="api-btn" onclick="kakaoLogout()">로그아웃</button>
+<!-- 로그아웃 -->
+<script type="text/javascript">
+  function kakaoLogout() {
+    if (!Kakao.Auth.getAccessToken()) {
+      alert('Not logged in.')
+      return
+    }
+    Kakao.Auth.logout(function() {
+      alert('logout ok\naccess token -> ' + Kakao.Auth.getAccessToken())
+    })
+  }
 </script>
+
 </body>
 </html>

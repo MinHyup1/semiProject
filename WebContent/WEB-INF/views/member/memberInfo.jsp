@@ -108,8 +108,8 @@
 	</table>
 		<div class="footBtwrap">
 			<a id="modify"><input type="submit" value="회원정보수정" class="fpmgBt1"></a>
-			<a id="cancel"><input type="button" value="취소" class="fpmgBt2"></a>
-			<a href="/member/delete" id="out"><input type="submit" value="회원탈퇴" class="fpmgBt3"></a>
+			<a href="/member/changeCancel" id="cancel"><input type="button" value="취소" class="fpmgBt2"></a>
+			<a href="/member/delete" id="out"><input type="button" value="회원탈퇴" class="fpmgBt3"></a>
 		</div>
 	
 </form>
