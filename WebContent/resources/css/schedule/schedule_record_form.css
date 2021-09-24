@@ -49,6 +49,13 @@
 	width: 85%;
 }
 
+.valid-msg{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	display:block;
+	color:red;   
+	font-size:11px;
+}
+
 .input_form>label{
 	display: block;
 	line-height: 2.5;

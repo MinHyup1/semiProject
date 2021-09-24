@@ -20,11 +20,11 @@ public class JDBCTemplate {
 	private JDBCTemplate() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			File file = new File("../semiProject/Wallet_semiproject.zip");
-	        String rootPath = file.getCanonicalPath();
-			String url = "jdbc:oracle:thin:@semiproject_high?TNS_ADMIN=" + rootPath + "\"";
-
-			//String url = "jdbc:oracle:thin:@semiproject_high?TNS_ADMIN=C:/CODE/e_servlet/Wallet_semiproject"; //(소은 컴퓨터 경로)
+			//File file = new File("../semiProject/Wallet_semiproject.zip");
+	        //String rootPath = file.getCanonicalPath();
+			//String url = "jdbc:oracle:thin:@semiproject_high?TNS_ADMIN="+rootPath; //테스트 아직 못해봄(09.16)
+			String url = "jdbc:oracle:thin:@semiproject_high?TNS_ADMIN=C:/CODE/e_servlet/Wallet_semiproject"; //(소은 컴퓨터 경로)
+			//String url = "jdbc:oracle:thin:@semiproject_high?TNS_ADMIN=C:/MEDIBOOK/SemiProject/semiProject/Wallet_semiproject"; //(륜수 컴퓨터 경로)
 			String user = "ADMIN";
 			String password = "Qwer1234qwer";
 			final String CONN_FACTORY_CLASS_NAME = "oracle.jdbc.pool.OracleDataSource";
@@ -62,9 +62,6 @@ public class JDBCTemplate {
 			pds.setInactiveConnectionTimeout(10);
 
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 

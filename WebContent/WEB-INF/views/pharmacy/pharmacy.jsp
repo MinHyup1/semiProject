@@ -13,7 +13,7 @@
       justify-content: space-between;
       width:320px;
       height:320px;
-   }
+   } 
    
 </style>
 </head>

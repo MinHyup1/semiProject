@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.semi.common.code.ErrorCode;
 import com.kh.semi.common.exception.HandlableException;
 import com.kh.semi.common.exception.PageNotFoundException;
+import com.kh.semi.member.validator.ChangeForm;
 import com.kh.semi.member.validator.JoinForm;
+import com.kh.semi.schedule.validator.ScheduleForm;
 
 
 //모든 validator처리(우리의 실수로 나타나는 오류 처리?)를 여기서 하도록 코드 작성
@@ -54,6 +56,9 @@ public class ValidatorFilter implements Filter {
 			case "member":
 				redirectUrl = memberValidation(httpRequest, uriArr); //redirectUrl을 받아와서
 				break;
+			case "schedule":
+				redirectUrl = scheduleValidation(httpRequest, uriArr); //redirectUrl을 받아와서
+				break;
 			}
 			
 			if(redirectUrl != null) { //redirectUrl이 null이 아니라면,
@@ -63,6 +68,20 @@ public class ValidatorFilter implements Filter {
 		}
 		
 		chain.doFilter(request, response);
+	}
+
+	private String scheduleValidation(HttpServletRequest httpRequest, String[] uriArr) {
+		String redirectUrl = null;
+		
+		switch (uriArr[2]) {
+		case "schedule-register":
+			ScheduleForm scheduleForm = new ScheduleForm(httpRequest);
+			if (!scheduleForm.test()) {
+				redirectUrl = "/schedule/schedule-main";
+			}
+			break;
+		}
+		return redirectUrl;
 	}
 
 	private String memberValidation(HttpServletRequest httpRequest, String[] uriArr) {
@@ -75,6 +94,12 @@ public class ValidatorFilter implements Filter {
 			JoinForm joinForm = new JoinForm(httpRequest);
 			if (!joinForm.test()) { //joinForm의 테스트의 결과가 false라면(validator를 통과하지 못했을 때), 밑의 경로로 리다이렉트 하도록 지정
 				redirectUrl = "/member/joinPage";
+			}
+			break;
+		case "memberInfo":
+			ChangeForm changeForm = new ChangeForm(httpRequest);
+			if (!changeForm.test()) { //joinForm의 테스트의 결과가 false라면(validator를 통과하지 못했을 때), 밑의 경로로 리다이렉트 하도록 지정
+				redirectUrl = "/member/memberInfo";
 			}
 			break;
 		}

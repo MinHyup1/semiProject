@@ -34,15 +34,29 @@ public class ScheduleController extends HttpServlet {
 		case "visit-notice-form": //진료 알림 작성페이지 이동
 			visitNoticeForm(request, response);
 			break;
+		case "visit-notice-register": //진료 알림 등록
+			visitNoticeRegister(request, response);
+			break;
 		case "medicine-notice-form": //복용 알림 작성페이지 이동
 			medicineNoticeForm(request, response);
+			break;
+		case "dose-notice-register": //복용 알림 등록
+			doseNoticeRegister(request, response);
 			break;
 		default: throw new PageNotFoundException();
 		}
 		
 	}
 
-	private void scheduleRegister(HttpServletRequest request, HttpServletResponse response) {
+	private void doseNoticeRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+
+	private void visitNoticeRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+
+	private void scheduleRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
 

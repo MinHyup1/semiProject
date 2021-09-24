@@ -9,6 +9,7 @@ public enum ErrorCode {
 	AUTENTICATION_FAILED_ERROR("유효하지 않은 인증입니다."),
 	UNAUTORIZED_PAGE_ERROR("접근 권한이 없는 페이지입니다."),
 	FAILED_FILE_UPLOAD_ERROR("파일업로드에 실패하였습니다."),
+	NOT_MEMBER_ERROR("로그인 후 사용해주세요.", "/member/loginPage"),
 	
 	REDIRECT("");
 	

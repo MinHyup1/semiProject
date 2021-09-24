@@ -110,6 +110,9 @@ html {
 }
 
 .btn-primary {
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
 	background-color: #00AAFF;
 	border-color: #00a0f0;
 	color: #fff;
