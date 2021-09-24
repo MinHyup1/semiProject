@@ -6,6 +6,7 @@ public class Medical {
 
 	private String historyId;
 	private String scheduleId;
+	private Date scheduleDate;
 	private String scheduleName;
 	private String hospCode;
 	private Date regDate;
@@ -28,6 +29,14 @@ public class Medical {
 
 	public void setScheduleId(String scheduleId) {
 		this.scheduleId = scheduleId;
+	}
+	
+	public Date getScheduleDate() {
+		return scheduleDate;
+	}
+
+	public void setScheduleDate(Date scheduleDate) {
+		this.scheduleDate = scheduleDate;
 	}
 
 	public String getScheduleName() {
@@ -56,8 +65,8 @@ public class Medical {
 
 	@Override
 	public String toString() {
-		return "Medical [historyId=" + historyId + ", scheduleId=" + scheduleId + ", scheduleName=" + scheduleName
-				+ ", hospCode=" + hospCode + ", regDate=" + regDate + "]";
+		return "Medical [historyId=" + historyId + ", scheduleId=" + scheduleId + ", scheduleDate=" + scheduleDate
+				+ ", scheduleName=" + scheduleName + ", hospCode=" + hospCode + ", regDate=" + regDate + "]";
 	}
-	
+
 }

@@ -86,7 +86,7 @@
 			})
 		}
 		
-		if(document.querySelectorAll('.time')) {
+		if(document.querySelectorAll('.time').length != 0) {
 			if(!dose_start.value || !dose_end.value) {
 				e.preventDefault();
 				document.querySelector('#dose_start').required = true;
