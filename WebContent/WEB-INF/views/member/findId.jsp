@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html class="fullscreen-bg">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -10,22 +10,29 @@
 
 </head>
 <body>
-<div id="wrapper">
-		<h1>아이디 찾기</h1>
-		<form action="/member/findId-info" method="POST" class="form">
-			<div>
-				<label>이름</label>
-				<input type="text" id="username" name="username" maxlength="20" placeholder="username" required>
+	<div id="wrapper">
+		<div class="vertical-align-wrap">
+			<div class="vertical-align-middle">
+				<div class="auth-box">
+					<h1>아이디 찾기</h1>
+					<form action="/member/findId-info" method="POST" class="idform">
+						<div>
+							<label>이름</label>
+							<input type="text" id="userName" name="userName" size="23" maxlength="20" placeholder="username" required>
+						</div>
+						<div>
+							<label>이메일</label>
+							<input type="email" id="email" name="email" size="23" maxlength="20" placeholder="email" required>
+						</div>
+						<div>
+							<label>휴대폰 번호</label>
+							<input type="tel" id="tell" name="tell" size="23" maxlength="20" placeholder="tell" required>
+						</div>
+						<button type="submit">확인</button>
+					</form>
+				</div>
 			</div>
-			<div>
-				<label>이메일</label>
-				<input type="email" id="email" name="email" maxlength="20" placeholder="email" required>
-			</div>			<div>
-				<label>휴대폰 번호</label>
-				<input type="tel" id="tell" name="tell" maxlength="20" placeholder="tell" required>
-			</div>
-			<button style="height: 50px;width: 315px; background:lightblue;border: none;" type="submit" id="btn_login" >확인 </button>
-		</form>
-	</div>  
+		</div>
+	</div>
 </body>
 </html>
