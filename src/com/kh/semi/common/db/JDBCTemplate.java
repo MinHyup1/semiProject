@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.w3c.dom.DOMConfiguration;
+
 import oracle.ucp.jdbc.PoolDataSource;
 import oracle.ucp.jdbc.PoolDataSourceFactory;
 
@@ -21,10 +23,8 @@ public class JDBCTemplate {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
-			
-			File file = new File("../Wallet_semiproject"); String rootPath =
-			file.getCanonicalPath().replace("\\", "/");
-			System.out.println("file.getCanonicalPath : " + rootPath);
+			File file = new File("../Wallet_semiproject");
+			String rootPath = file.getCanonicalPath().replace("\\", "/");
 			
 			String url = "jdbc:oracle:thin:@semiproject_high?TNS_ADMIN=" + rootPath; // 테스트 아직 못해봄(09.16)
 			

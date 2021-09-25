@@ -95,8 +95,8 @@ public class MemberDao {
 	public int insertMember(Member member, Connection conn) {
 		int res = 0;
 		PreparedStatement pstm = null;
-		String query = "insert into member(user_code, id, password, name, nick, phone, address, email, gender)"
-						+ " values(member_user_code.nextval,?,?,?,?,?,?,?,?)";
+		String query = "insert into member(user_code, id, password, name, nick, phone, address, email, gender, kakaonum)"
+						+ " values(member_user_code.nextval,?,?,?,?,?,?,?,?,?)";
 		
 
 		try {
@@ -109,6 +109,7 @@ public class MemberDao {
 			pstm.setString(6, member.getAddress());
 			pstm.setString(7, member.getEmail());
 			pstm.setString(8, member.getGender());
+			pstm.setInt(9, member.getKakaoNum());
 			
 			res = pstm.executeUpdate();
 		} catch (SQLException e) {
@@ -343,6 +344,7 @@ public class MemberDao {
 		}
 		return member;
 	}
+
 
 
 
