@@ -61,7 +61,50 @@ public class ScheduleService {
 		
 	}
 	
-	public String insertScheduleList(Connection conn, String userCode) {
+	public void insertDoseNoticeOnly(String userCode, Map<String, Object> dtoMap) {
+		Connection conn = template.getConnection();
+		
+		try {
+			String scheduleId = insertScheduleList(conn, userCode);
+			
+			Prescription prescription = (Prescription) dtoMap.get("prescription");
+			String prescriptionId = insertPrescription(conn, prescription, scheduleId);
+			
+			Timestamp[] doseNoticeDateTimes = (Timestamp[]) dtoMap.get("doseNoticeDateTimes");
+			insertDoseNoticeList(conn, doseNoticeDateTimes, prescriptionId);
+			
+			// 처방 약이 있다면, medicine_record에 insert 하고, prescription_list의 has_medicine Y로 바꾸기
+			if(dtoMap.get("medicine") != null) {
+				
+			}
+			
+			template.commit(conn);
+		} catch (Exception e) {
+			template.rollback(conn);
+			throw e;
+		} finally {
+			template.close(conn);
+		}
+	}
+	
+	public void insertVisitNoticeOnly(String userCode, Visit visit) {
+		Connection conn = template.getConnection();
+		
+		try {
+			String scheduleId = insertScheduleList(conn, userCode);
+			scheduleDao.insertVisitNotice(conn, visit);
+			scheduleDao.updateHasVisitNotice(conn, scheduleId);
+			
+			template.commit(conn);
+		} catch (Exception e) {
+			template.rollback(conn);
+			throw e;
+		} finally {
+			template.close(conn);
+		}
+	}
+	
+	private String insertScheduleList(Connection conn, String userCode) {
 		scheduleDao.insertScheduleList(conn, userCode);
 		return scheduleDao.getCurrentScheduleId(conn);
 	}
@@ -81,5 +124,9 @@ public class ScheduleService {
 		scheduleDao.insertDoseNotice(conn, doseNoticeDateTimes);
 		scheduleDao.updateHasDoseNotice(conn, prescriptionId);
 	}
+
+	
+
+	
 	
 }
