@@ -21,7 +21,7 @@ public class HospitalDao {
 		PreparedStatement pstm = null;
 		int res = 0;
 		String query = "insert into HOSPITAL_INFO(HOSP_CODE, HOSP_TREAT, HOSP_TELL, HOSP_NAME, HOSP_URL"
-				+ ", HOSP_URL, HOSP_ADDRESS, HOSP_XPOS, HOSP_YPOS) values(HOSPITAL_CODE.NEXTVAL,?,?,?,?,?,?,?)";
+				+ ", HOSP_ADDRESS, HOSP_XPOS, HOSP_YPOS) values(HOSPITAL_CODE.NEXTVAL,?,?,?,?,?,?,?)";
 		
 		try {
 			
@@ -39,18 +39,10 @@ public class HospitalDao {
 			}
 			
 		} catch (SQLException e) {
-		 throw new HandlableException(ErrorCode.DATABASE_ACCESS_ERROR);
+		 	e.printStackTrace();
 		}finally {
 			template.close(pstm);
 		}
-				
-		
-		
-		
-		
-		
-		
-		
 		
 		return res;
 	}
