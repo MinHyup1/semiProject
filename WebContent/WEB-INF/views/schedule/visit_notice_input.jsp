@@ -21,7 +21,7 @@
 						<form action="schedule/visit-notice-register" method="post" class="input_form" id="input_form">
 							<span id="scheduleDateCheck" class="valid-msg"></span>
 							<label>알림 날짜 : <input type="date" class='standard_date' id="schedule_date" name="schedule_date" value='${param.date}' autofocus required></label>
-							<label class="search_btn">진료 병원 : <input type="text" name="hospital" placeholder="진료 병원을 기록해보세요" disabled> <button type="button" onclick="">검색</button></label>
+							<label class="search_btn">진료 병원 : <input type="text" name="hospital" placeholder="진료 병원을 기록해보세요" readonly> <button type="button" onclick="">검색</button></label>
 							<span id="timeCheck" class="valid-msg"></span>
 							<label>알림 시간 : <input type="time" class='time' name="visit_notice_time" required></label>
 						</form>

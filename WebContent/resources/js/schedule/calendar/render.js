@@ -156,6 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 
 let addMedicineNotice = function() {
+	let times = document.querySelector('input[type=number]').value;
 	let timeInp = document.createElement('label');
 	timeInp.innerHTML = "<input type='time' class='time' name='dose_notice' required> ";
 	
@@ -163,10 +164,15 @@ let addMedicineNotice = function() {
 	trashIcon.className = 'fas fa-trash';
 	
 	trashIcon.addEventListener('click', (e) => {
+		document.querySelector('input[type=number]').value -= 1;
 		e.target.parentElement.remove();
 	})
 	
 	timeInp.appendChild(trashIcon);
+	
+	if(times < 24) {
+		document.querySelector('input[type=number]').value = times - 1 + 2;
+	}
 	
 	document.querySelector('.input_form').appendChild(timeInp);
 	

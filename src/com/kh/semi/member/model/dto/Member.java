@@ -43,7 +43,9 @@ public class Member {
 	private String address;
 	private String email;
 	private String gender;
-	
+	private int kakaoNum;
+
+
 	public Member() {
 		// TODO Auto-generated constructor stub
 	}
@@ -119,12 +121,22 @@ public class Member {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
+	public int getKakaoNum() {
+		return kakaoNum;
+	}
+
+	public void setKakaoNum(int kakaoNum) {
+		this.kakaoNum = kakaoNum;
+	}
 
 	@Override
 	public String toString() {
 		return "Member [userCode=" + userCode + ", id=" + id + ", password=" + password + ", name=" + name + ", nick="
-				+ nick + ", phone=" + phone + ", address=" + address + ", email=" + email + ", gender=" + gender + "]";
+				+ nick + ", phone=" + phone + ", address=" + address + ", email=" + email + ", gender=" + gender
+				+ ", kakaoNum=" + kakaoNum + "]";
 	}
+
 
 	
 

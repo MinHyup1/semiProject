@@ -1,0 +1,150 @@
+@charset "UTF-8";
+
+	#wrapper {
+		margin-top: 40px;
+	}
+
+	table {
+		border: 1px solid #ddd;
+		background-color: #fff;
+		width: 100%;
+		margin : 0 auto;
+		margin-bottom: 20px;
+	}
+	
+	.title {
+		font-size: 16px;
+		background-color: #f7f7f7;
+		color: #4D4C4C;
+	}
+	
+	b {
+		color: #4D4C4C;
+		font-size: 22px;
+		font-weight: bolder;
+	}
+	
+	.inputInfo, .check{
+		font-size: 13px;
+		color: #4D4C4C;
+	}
+	
+	input {
+		margin-left: 10px; 
+	}
+	
+	input::placeholder {
+	 font-size: 8px;
+	}
+
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box
+	}
+	
+	body {
+		min-width: 800px;
+		background-color: #f7f7f7;
+	}
+	
+	a {
+		text-decoration: none;
+	}
+
+	.footBtwrap {
+		display: flex;
+		position: relative;
+		justify-content: center;
+		width: 80%;
+		margin: 0 auto;
+		margin-top: 15px;
+		margin-bottom: 15px;
+	}
+	
+	.footBtwrap>a {
+		position: relative;
+		width: 30%;
+		height: 60px;
+	}
+	
+	#out {
+		left: 33%;
+		width: 23%;
+	}
+	
+	#modify{
+		left: 15%;
+	}
+	
+	#cancel{
+		left: 11%;
+	}
+	
+	.fpmgBt1, .fpmgBt2{
+		display: block;
+		width: 80%;
+		height: 100%;
+		font-size: 20px;
+		text-align: center;
+		line-height: 60px;
+		border: 0;
+		border-radius: 5px;
+	}
+	
+	.fpmgBt1 {
+		background-color: #00AAFF;
+		color: #fff;
+	}
+	
+	.fpmgBt2 {
+		background-color: #fff;
+		color:#888;
+		border: 1.5px solid #ddd;
+	}
+
+	.fpmgBt3 {
+		display: block;
+		width: 40%;
+		height: 30px;
+		font-size: 0.8vw;
+		text-align: center;
+		line-height: 30px;
+		background-color: lightgray;
+		color:gray;
+		border: 1px;
+		border-radius: 5px;
+	}
+
+	.aTag {
+		color: #4D4C4C;
+		font-size: 6px;
+		border-top: none;
+	}
+
+	.bTag, .code{
+		border-bottom: none;
+	}
+	
+	.ad {
+	 	border-top: none;
+	}
+	
+	.valid-msg {
+		display: block;
+		color: red;
+		font-size: 10px;
+	}
+	
+	#frm_kakaoInfo {
+		width: 80%;
+		margin: 0 auto;
+	}
+	
+	.fixedSpan{
+		font-size: 14px;
+		color: #4D4C4C;
+		margin-left: 10px;
+	}
+	
+	

@@ -23,7 +23,7 @@
 		<tr>
 			<td width="200" align="center" class="title">* 아이디</td>
 			<td class="inputInfo" width="500">
-				<input type="text" size="30" name="userId" id="userId" maxlength="20" placeholder="영문소문자 or 영문소문자+숫자, 5~11 글자"
+				<input type="text" size="30" name="userId" id="userId" maxlength="30" placeholder="영문소문자 or 영문소문자+숫자, 5~11 글자"
 				 	<c:if test="${empty joinFailed.userId}">
 				 		value = "${joinForm.userId}"
 				 	</c:if>
@@ -104,7 +104,7 @@
 		<tr>
 			<td width="200" align="center" class="title">* 이메일</td>
 			<td width="500">
-				<input type="email" size="30" name="email" id="email" maxlength="20"
+				<input type="email" size="30" name="email" id="email"
 					<c:if test="${empty joinFailed.email}">
                 		value = "${joinForm.email}"
                 	</c:if>

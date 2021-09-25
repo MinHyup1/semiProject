@@ -53,6 +53,9 @@ public class MemberController extends HttpServlet {
 		case "login" : //세미 사용 코드
 			login(request,response);
 			break;
+		case "kakaoLogin" : //세미 사용 코드
+			kakaoLogin(request,response);
+			break;
 		case "logout" ://세미 사용 코드
 			logout(request,response);
 			break;
@@ -85,9 +88,6 @@ public class MemberController extends HttpServlet {
 			break;
 		case "join-impl" : 
 			joinImpl(request,response);
-			break;
-		case "mypage" : 
-			mypage(request,response);
 			break;		
 		case "findId" : 
 			findId(request,response);
@@ -101,32 +101,59 @@ public class MemberController extends HttpServlet {
 		case "findPassword-info" : 
 			findPasswordInfo(request,response);
 			break;
-		case "memberInfo" : 
-			memberInfo(request,response);
+		case "kakaoChange" : 
+			kakaoChange(request,response);
 			break;
 		case "delete" : 
 			delete(request,response);
-			break;		
+			break;
 		case "changeForm" : 
 			changeForm(request,response);
 			break;
 		case "change":
 			change(request,response);
 			break;
-		case "changeCancel":
-			changeCancel(request,response);
+		case "kakaoMemberForm" : 
+			kakaoMemberForm(request,response);
 			break;
-			
 		default: throw new PageNotFoundException();  //우리가 만든 예외처리 클래스 넣어주기
 		
 		}
 	}
 	
 
-	private void changeCancel(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		request.setAttribute("msg", "회원 수정이 취소되었습니다. 메인페이지로 이동합니다.");
+	private void kakaoMemberForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/member/kakaoMemberInfo").forward(request, response);
+		}
+
+	//카카오톡 로그인 멤버가 회원수정하는 코드
+	private void kakaoChange(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Member member = new Member();
+		member = (Member) request.getSession().getAttribute("authentication");
+		String userId = member.getId(); //아이디 고정
+		String password = member.getPassword(); //비밀번호 고정
+		String nick = request.getParameter("nick");
+		String phone = request.getParameter("phone");
+		String postCode = request.getParameter("postCode");
+		String address1 = request.getParameter("address1");
+		String address2 = request.getParameter("address2");
+		String email = request.getParameter("email");
+		String gender = request.getParameter("gender");
+
+		member.setId(userId);
+		member.setPassword(password);
+		member.setNick(nick);
+		member.setPhone(phone);
+		member.setAddress(postCode, address1, address2);
+		member.setEmail(email);
+		member.setGender(gender);
+		
+		memberService.UpdateMember(member);
+		
+		request.setAttribute("msg", "회원 수정이 완료되었습니다."); 
 		request.setAttribute("url", "/index");
-		request.getRequestDispatcher("/error/result").forward(request, response);		
+		request.getRequestDispatcher("/error/result").forward(request, response);
 	}
 
 	private void change(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
@@ -152,10 +179,7 @@ public class MemberController extends HttpServlet {
 		member.setEmail(email);
 		member.setGender(gender);
 		
-		//request.getSession().setAttribute("persistUser", member);
 		memberService.UpdateMember(member);
-		
-		//response.sendRedirect("/member/loginPage");
 
 		request.setAttribute("msg", "회원 수정이 완료되었습니다."); 
 		request.setAttribute("url", "/member/loginPage");
@@ -174,11 +198,6 @@ public class MemberController extends HttpServlet {
 		System.out.println("맴버아이디 제발 : "+userId);//출력 후 확인
 		memberService.deleteMember(userId);//삭제 진행
 		logout(request, response);//로그아웃 사용해 세션 끊고 인덱스로 이동
-	}
-
-
-	private void memberInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		request.getRequestDispatcher("/member/memberInfo").forward(request, response);
 	}
 
 	private void findPassword(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
@@ -222,8 +241,6 @@ public class MemberController extends HttpServlet {
 			return;
 		}
 	}
-
-	/* /member/memberInfo */
 
 	private void findId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/member/findId").forward(request, response);
@@ -273,12 +290,12 @@ public class MemberController extends HttpServlet {
 			request.setAttribute("msg", "존재하지 않는 아이디 입니다."); 
 			request.setAttribute("url", "/member/loginPage");
 			request.getRequestDispatcher("/error/result").forward(request, response);
-			return;
+			//return;
 		} else if(memberId != null && member == null) {
 			request.setAttribute("msg", "비밀번호가 일치하지 않습니다."); 
 			request.setAttribute("url", "/member/loginPage");
 			request.getRequestDispatcher("/error/result").forward(request, response);
-			return;
+			//return;
 		}
 		
 		//로그인 성공시 authentication 라는 이름으로 세션에 사용자 정보 담아놓기
@@ -289,6 +306,46 @@ public class MemberController extends HttpServlet {
 			response.sendRedirect("/index");
 		}
 	}
+	
+	//카카오 로그인 구현
+	private void kakaoLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String kakaoId = request.getParameter("kakaoEmail"); //카카오 이메일을 아이디로 넣을 예정
+		String kakaoNick = request.getParameter("kakaoNick");
+		System.out.println(kakaoId); //확인용
+		System.out.println(kakaoNick); //확인용
+		Member kakaoUser = memberService.selectMemberById(kakaoId); //아이디 존재하는지 체크
+
+		Member kakaoMember = new Member();
+		HttpSession session = request.getSession();
+
+		if (kakaoUser == null) { //아이디가 존재하지 않는다면,
+			System.out.println("카카오 로그인 성공");
+			kakaoMember.setEmail(kakaoId);
+			kakaoMember.setId(kakaoId);
+			kakaoMember.setPassword("kakaoMember!!"); //비밀번호 고정시켜놓기
+			kakaoMember.setNick(kakaoNick);
+			kakaoMember.setKakaoNum(1); //혹시 나중에 쓸 수도 있어서 테이블 하나 추가해서 넣어놓음
+			
+			memberService.insertMember(kakaoMember);
+			
+			session.setAttribute("authentication", kakaoMember);
+			
+			request.setAttribute("msg", "카카오 연동 회원가입이 완료되었습니다. 나머지 정보를 입력하여 주세요."); 
+			request.setAttribute("url", "/member/kakaoMemberForm"); //나머지 정보 입력하도록 이동시킴
+			request.getRequestDispatcher("/error/result").forward(request, response);
+			return;
+		} else {
+			kakaoMember = memberService.selectMemberById(kakaoId); //멤버정보 불러와서
+			session.setAttribute("authentication", kakaoMember); //attribute에 넣기
+			
+			request.setAttribute("msg", "카카오 연동 로그인이 완료되었습니다."); 
+			request.setAttribute("url", "/index");
+			request.getRequestDispatcher("/error/result").forward(request, response);
+		}
+
+	}
+
 
 	private void loginPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/member/loginPage").forward(request, response);
@@ -302,11 +359,6 @@ public class MemberController extends HttpServlet {
 
 	private void joinPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/member/joinPage").forward(request, response);
-		
-	}
-
-	private void mypage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/member/mypage").forward(request, response);
 		
 	}
 	
