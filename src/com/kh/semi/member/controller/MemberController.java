@@ -116,11 +116,21 @@ public class MemberController extends HttpServlet {
 		case "kakaoMemberForm" : 
 			kakaoMemberForm(request,response);
 			break;
+		case "changeCancel" : //세미 사용 코드(가입취소)
+			changeCancel(request,response);
+			break;
 		default: throw new PageNotFoundException();  //우리가 만든 예외처리 클래스 넣어주기
 		
 		}
 	}
 	
+
+	private void changeCancel(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("msg", "회원수정이 취소되었습니다. 메인페이지로 이동합니다.");
+		request.setAttribute("url", "/index");
+		request.getRequestDispatcher("/error/result").forward(request, response);
+		
+	}
 
 	private void kakaoMemberForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/member/kakaoMemberInfo").forward(request, response);
