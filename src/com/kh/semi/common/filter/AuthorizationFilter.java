@@ -33,7 +33,7 @@ public class AuthorizationFilter implements Filter {
 		if(uriArr.length != 0) {
 			switch (uriArr[1]) {
 			case "member":
-				//memberAuthorize(httpRequest, httpResponse, uriArr);
+				memberAuthorize(httpRequest, httpResponse, uriArr);
 				break;
 			case "schedule":
 				scheduleAuthorize(httpRequest, httpResponse, uriArr);
@@ -85,33 +85,66 @@ public class AuthorizationFilter implements Filter {
 		
 	}
 
-	/*
-	 * private void memberAuthorize(HttpServletRequest httpRequest,
-	 * HttpServletResponse httpResponse, String[] uriArr) {
-	 * 
-	 * HttpSession session = httpRequest.getSession();
-	 * 
-	 * switch (uriArr[2]) {
-	 * case "join-impl":
-	 * String serverToken = (String)session.getAttribute("persistToken");
-	 * String clientToken = httpRequest.getParameter("persistToken");
-	 * 
-	 * if(serverToken == null || !serverToken.equals(clientToken)) {
-	 * throw new HandlableException(ErrorCode.AUTHENTICATION_FAILED_ERROR);
-	 * }
-	 * break;
-	 * case "mypage":
-	 * if(session.getAttribute("authentication") == null) {
-	 * throw new
-	 * HandlableException(ErrorCode.REDIRECT.setURL("/member/login-form"));
-	 * }
-	 * break;
-	 * default:
-	 * break;
-	 * }
-	 * 
-	 * }
-	 */
+	
+	  private void memberAuthorize(HttpServletRequest httpRequest,
+	  HttpServletResponse httpResponse, String[] uriArr) {
+	  
+	  HttpSession session = httpRequest.getSession();
+	  
+	  switch (uriArr[2]) {
+	  case "changeForm":
+	  if(session.getAttribute("authentication") == null) {
+	  throw new
+	  HandlableException(ErrorCode.REDIRECT.setURL("/member/loginPage"));
+	  }
+	  case "delete":
+	  if(session.getAttribute("authentication") == null) {
+	  throw new
+	  HandlableException(ErrorCode.REDIRECT.setURL("/member/loginPage"));
+	  }
+	  case "change":
+	  if(session.getAttribute("authentication") == null) {
+	  throw new
+	  HandlableException(ErrorCode.REDIRECT.setURL("/member/loginPage"));
+	  }
+	  case "id-check":
+	  if(session.getAttribute("authentication") == null) {
+	  throw new
+	  HandlableException(ErrorCode.REDIRECT.setURL("/member/login-form"));
+	  }
+	  break;
+	  case "nickName-check":
+	  if(session.getAttribute("authentication") == null) {
+	  throw new
+	  HandlableException(ErrorCode.REDIRECT.setURL("/member/loginPage"));
+	  }
+	  case "phone-check":
+	  if(session.getAttribute("authentication") == null) {
+	  throw new
+	  HandlableException(ErrorCode.REDIRECT.setURL("/member/loginPage"));
+	  }
+	  case "email-check":
+	  if(session.getAttribute("authentication") == null) {
+	  throw new
+	  HandlableException(ErrorCode.REDIRECT.setURL("/member/loginPage"));
+	  }
+	  case "kakaoChange":
+	  if(session.getAttribute("authentication") == null) {
+	  throw new
+	  HandlableException(ErrorCode.REDIRECT.setURL("/member/loginPage"));
+	  }
+	  case "kakaoMemberForm":
+	  if(session.getAttribute("authentication") == null) {
+	  throw new
+	  HandlableException(ErrorCode.REDIRECT.setURL("/member/loginPage"));
+	  }
+	  break;
+	  default:
+	  break;
+	  }
+	  
+	  }
+	 
 
 	public void init(FilterConfig fConfig) throws ServletException {
 		// TODO Auto-generated method stub
