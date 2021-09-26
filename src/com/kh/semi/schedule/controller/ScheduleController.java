@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
+import com.google.gson.Gson;
+import com.kh.semi.common.code.ErrorCode;
+import com.kh.semi.common.exception.HandlableException;
 import com.kh.semi.common.exception.PageNotFoundException;
 import com.kh.semi.member.model.dto.Member;
 import com.kh.semi.schedule.model.dto.Medical;
@@ -29,7 +32,8 @@ import com.kh.semi.schedule.model.service.ScheduleService;
 public class ScheduleController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ScheduleService scheduleService = new ScheduleService();
-       
+	private static Gson gson = new Gson();
+	
     public ScheduleController() {
         super();
         // TODO Auto-generated constructor stub
@@ -60,9 +64,115 @@ public class ScheduleController extends HttpServlet {
 		case "dose-notice-register": //복용 알림 등록
 			doseNoticeRegister(request, response);
 			break;
+		case "get-schedule": //사용자별 등록된 스케줄 DB에서 가져오기
+			getSchedule(request, response);
+			break;
 		default: throw new PageNotFoundException();
 		}
 		
+	}
+
+	private void getSchedule(HttpServletRequest request, HttpServletResponse response) {
+		Member member = (Member) request.getSession().getAttribute("authentication");
+		Map<String, Object> scheduleMap =  scheduleService.selectScheduleByUser(member.getUserCode());
+		
+		if(scheduleMap.size() == 0) {
+			try {
+				response.getWriter().print(false);
+			} catch (IOException e) {
+				throw new HandlableException(ErrorCode.FAILED_GET_SCHEDULE);
+			}
+		}
+		
+		List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
+		
+		List<Medical> medicalList = (List<Medical>) scheduleMap.get("medicalList");
+		List<Prescription> prescriptionList = (List<Prescription>) scheduleMap.get("prescriptionList");
+		List<Visit> visitList = (List<Visit>) scheduleMap.get("visitList");
+		
+		if(medicalList.size() != 0) {
+			for (int i = 0; i < medicalList.size(); i++) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				Medical medical = medicalList.get(i);
+				map.put("id", medical.getHistoryId());
+				map.put("groupId", medical.getScheduleId());
+				map.put("start", medical.getScheduleDate().toString());
+				map.put("title", medical.getScheduleName());
+				map.put("background", "purple");
+				map.put("color", "white");
+				map.put("hospital", medical.getHospCode());
+				map.put("kind", "medical");
+				datas.add(map);
+			}
+		}
+		
+		if(prescriptionList.size() != 0) {
+			for (int i = 0; i < prescriptionList.size(); i++) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				Prescription prescription = prescriptionList.get(i);
+				map.put("id", prescription.getPrescriptionId());
+				map.put("groupId", prescription.getScheduleId());
+				map.put("start", prescription.getStartDate().toString());
+				//map.put("end", prescription.getEndDate().toString() + "T12:00:00");
+				map.put("allDay", true);
+				map.put("title", prescription.getPrescriptionName());
+				map.put("background", "orange");
+				map.put("color", "white");
+				map.put("pharm", prescription.getPharmCode());
+				map.put("has_medicine", prescription.getHasMedicine());
+				map.put("times", prescription.getTimesPerDay());
+				map.put("has_notice", prescription.getHasDoseNotice());
+				map.put("kind", "'prescription'");
+				datas.add(map);
+			}
+		}
+		
+		if(visitList.size() != 0) {
+			for (int i = 0; i < visitList.size(); i++) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				Visit visit = visitList.get(i);
+				map.put("id", visit.getVisitNoticeCode());
+				map.put("groupId", visit.getScheduleId());
+				map.put("start", getDateStringFromTimestamp(visit.getNoticeDate()));
+				//map.put("startTime", getTimeStringFromTimestamp(visit.getNoticeDate()));
+				map.put("allDay", true);
+				map.put("title", visit.getNoticeName());
+				map.put("background", "green");
+				map.put("color", "white");
+				map.put("hospital", visit.getHospCode());
+				map.put("kind", "visit");
+				datas.add(map);
+			}
+		}
+		
+		String responseBody = gson.toJson(datas);
+		try {
+			response.addHeader("Content-Type", "text/html; charset=utf-8");
+			response.getWriter().print(responseBody);
+		} catch (IOException e) {
+			throw new HandlableException(ErrorCode.FAILED_GET_SCHEDULE);
+		}
+	}
+	
+	private String getDateStringFromTimestamp(Timestamp dateTime) {
+		int year = dateTime.getYear() + 1900;
+		int month = dateTime.getMonth() + 1;
+		int date = dateTime.getDate();
+		
+		String mm = month < 10 ? "0" + month : String.valueOf(month);
+		String dd = date < 10 ? "0" + date : String.valueOf(date);
+		
+		return year + "-" + mm + "-" + dd;
+ 	}
+	
+	private String getTimeStringFromTimestamp(Timestamp dateTime) {
+		int hours = dateTime.getHours();
+		int minutes = dateTime.getMinutes();
+		
+		String hh = hours < 10 ? "0" + hours : String.valueOf(hours);
+		String mi = minutes < 10 ? "0" + minutes : String.valueOf(minutes);
+		
+		return hh + ":" + mi + ":00";
 	}
 
 	//복용 알림 등록

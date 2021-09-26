@@ -6,11 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.kh.semi.common.db.JDBCTemplate;
 import com.kh.semi.common.exception.DataAccessException;
 import com.kh.semi.schedule.model.dto.Medical;
 import com.kh.semi.schedule.model.dto.Prescription;
+import com.kh.semi.schedule.model.dto.Schedule;
 import com.kh.semi.schedule.model.dto.Visit;
 
 import oracle.sql.ARRAY;
@@ -221,7 +224,146 @@ public class ScheduleDao {
 		}
 	}
 
+	public List<Schedule> selectScheduleListByUser(Connection conn, String userCode) {
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = "select * from schedule_list where user_code = ?";
+		List<Schedule> scheduleList = new ArrayList<Schedule>();
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, userCode);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				scheduleList.add(parseResultSetToSchedule(rset));
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return scheduleList;
+	}
+
+	public Medical selectMedicalHistoryByScheduleId(Connection conn, String scheduleId) {
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = "select * from medical_history where schedule_id = ?";
+		Medical medical = null;
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, scheduleId);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				medical = parseResultSetToMedical(rset);
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return medical;
+	}
 	
+	public Prescription selectPrescriptionListByScheduleId(Connection conn, String scheduleId) {
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = "select * from prescription_list where schedule_id = ?";
+		Prescription prescription = null;
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, scheduleId);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				prescription = parseResultSetToPrescription(rset);
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return prescription;
+	}
+	
+	public List<Visit> selectVisitNoticeByScheduleId(Connection conn, String scheduleId) {
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = "select * from visit_notice where schedule_id = ?";
+		List<Visit> visitList = new ArrayList<Visit>();
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, scheduleId);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				visitList.add(parseResultSetToVisit(rset));
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return visitList;
+	}
+
+	
+
+	
+
+	private Schedule parseResultSetToSchedule(ResultSet rset) throws SQLException {
+		Schedule schedule = new Schedule();
+		schedule.setScheduleId(rset.getString("schedule_id"));
+		schedule.setUserCode(rset.getString("user_code"));
+		schedule.setHasMedicalRecord(rset.getString("has_medical_record"));
+		schedule.setHasPrescription(rset.getString("has_prescription"));
+		schedule.setHasVisitNotice(rset.getString("has_visit_notice"));
+		schedule.setRegDate(rset.getDate("reg_date"));
+		return schedule;
+	}
+
+	private Medical parseResultSetToMedical(ResultSet rset) throws SQLException {
+		Medical medical = new Medical();
+		medical.setHistoryId(rset.getString("history_id"));
+		medical.setScheduleId(rset.getString("schedule_id"));
+		medical.setScheduleDate(rset.getDate("schedule_date"));
+		medical.setScheduleName(rset.getString("schedule_name"));
+		medical.setHospCode(rset.getString("hosp_code"));
+		medical.setRegDate(rset.getDate("reg_date"));
+		return medical;
+	}
+
+	private Prescription parseResultSetToPrescription(ResultSet rset) throws SQLException {
+		Prescription prescription = new Prescription();
+		prescription.setPrescriptionId(rset.getString("prescription_id"));
+		prescription.setScheduleId(rset.getString("schedule_id"));
+		prescription.setPrescriptionName(rset.getString("prescription_name"));
+		prescription.setStartDate(rset.getDate("start_date"));
+		prescription.setEndDate(rset.getDate("end_date"));
+		prescription.setPharmCode(rset.getString("pharm_code"));
+		prescription.setHasMedicine(rset.getString("has_medicine"));
+		prescription.setTimesPerDay(rset.getInt("times_per_day"));
+		prescription.setHasDoseNotice(rset.getInt("has_dose_notice"));
+		prescription.setRegDate(rset.getDate("reg_date"));
+		return prescription;
+	}
+
+	private Visit parseResultSetToVisit(ResultSet rset) throws SQLException {
+		Visit visit = new Visit();
+		visit.setVisitNoticeCode(rset.getString("visit_notice_code"));
+		visit.setScheduleId(rset.getString("schedule_id"));
+		visit.setNoticeName(rset.getString("notice_name"));
+		visit.setHospCode(rset.getString("hosp_code"));
+		visit.setNoticeDate(rset.getTimestamp("notice_date"));
+		visit.setIsNoticed(rset.getString("is_noticed"));
+		visit.setRegDate(rset.getDate("reg_date"));
+		return visit;
+	}
 	
 	
 }
