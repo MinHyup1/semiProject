@@ -1,5 +1,5 @@
 (()=>{
-	fetch('/schedule/get-schedule')
+	fetch('/schedule/get-schedule', {method: 'POST'})
 	.then(response => {
 		if(response) {
 			return response.json();
@@ -20,4 +20,4 @@
 	
 }
 
-getSchedule();*/
+await getSchedule();*/

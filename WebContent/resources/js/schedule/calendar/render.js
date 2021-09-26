@@ -3,7 +3,8 @@
 	var prevSelected = undefined;
 	var standardDate = new Date(); /* 일정 날짜로 선택된 날짜 */
 	var scheduleDate; /* standard 날짜의 셀 */
-	var scheduleList = JSON.parse(sessionStorage.getItem('schedule'));
+	var scheduleList = sessionStorage.getItem('schedule');
+	console.dir(scheduleList);
 
 document.addEventListener('DOMContentLoaded', function() {
     //var initialLocaleCode = 'ko';
@@ -143,20 +144,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       ]*/
     });
-
-	/*calendar.addEvent(
+	calendar.addEvent(
 		event = {
-				id: 'list_id',
-				groupId: 'schedule_id',
-				start: '2021-09-02',
+				"id": 'list_id',
+				"groupId": 'schedule_id',
+				"start": '2021-09-02',
 				//end: '2021-09-02',
 				//allDay: true,
-				title: '진료 알림',
-				backgroundColor: 'green',
-				color: 'white',
-				hospital: '병원'
+				"title": '진료 알림',
+				"backgroundColor": 'green',
+				"color": 'white',
+				"hospital": '병원'
 			}
-	);*/
+	);
 	
     calendar.render();
 	
