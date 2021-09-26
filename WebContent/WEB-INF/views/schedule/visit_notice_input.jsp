@@ -39,6 +39,19 @@
 	</div>
 <script type="text/javascript">
 	selectedMenu = 'schedule';
+	
+	let today = new Date();
+	let tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1);
+	let yyyy = tomorrow.getFullYear();
+	let mm = tomorrow.getMonth()+1;
+	let dd = tomorrow.getDate();
+	
+	if(dd < 10) dd = '0' + dd;
+	if(mm < 10) mm = '0' + mm;
+	
+	let minDate = yyyy + '-' + mm + '-' + dd;
+	
+	document.querySelector('.standard_date').min = minDate;
 </script>
 <script src='${contextPath}/resources/js/schedule/scheduleForm.js'></script>
 </body>

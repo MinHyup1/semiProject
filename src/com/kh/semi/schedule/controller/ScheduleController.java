@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +22,7 @@ import com.kh.semi.common.exception.PageNotFoundException;
 import com.kh.semi.member.model.dto.Member;
 import com.kh.semi.schedule.model.dto.Medical;
 import com.kh.semi.schedule.model.dto.Prescription;
+import com.kh.semi.schedule.model.dto.Visit;
 import com.kh.semi.schedule.model.service.ScheduleService;
 
 @WebServlet("/schedule/*")
@@ -65,12 +67,55 @@ public class ScheduleController extends HttpServlet {
 
 	//복용 알림 등록
 	private void doseNoticeRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String doseStartStr = request.getParameter("dose_start");
+		String doseEndStr = request.getParameter("dose_end");
+		String pharm = request.getParameter("pharm");
+		String[] medicine = request.getParameterValues("");
+		int doseTimes = Integer.parseInt(request.getParameter("dose_times"));
+		String[] doseNotice = request.getParameterValues("dose_notice");
+
+		Date doseStart = parseStringToDate(doseStartStr);
+		Date doseEnd = parseStringToDate(doseEndStr);
+		Map<String, Object> dtoMap = new HashMap<String, Object>();
 		
+		Member member = (Member) request.getSession().getAttribute("authentication");
+		
+		Prescription prescription = new Prescription();
+		prescription.setPrescriptionName(createPrescriptionName(pharm, medicine, doseNotice));
+		prescription.setStartDate(doseStart);
+		prescription.setEndDate(doseEnd);
+		//prescrition.setPharmCode();
+		prescription.setTimesPerDay(doseTimes);
+		dtoMap.put("prescription", prescription);
+		
+		// dose_notice_list
+		Timestamp[] doseNoticeDateTimes = createDoseNoticeDateTimes(doseStartStr, doseEndStr, doseNotice);
+		dtoMap.put("doseNoticeDateTimes", doseNoticeDateTimes);
+		
+		// medicine_list
+		if(medicine != null) {
+			
+		}
+		
+		scheduleService.insertDoseNoticeOnly(member.getUserCode(), dtoMap);
 	}
 
 	//진료 알림 등록
 	private void visitNoticeRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String scheduleDate = request.getParameter("schedule_date");
+		String hospital = request.getParameter("hospital");
+		String visitTime = request.getParameter("visit_notice_time");
+		Calendar noticeCalendar = addHourMinute(createCalendarFromString(scheduleDate), visitTime);
+		Timestamp noticeDateTime = new Timestamp(noticeCalendar.getTime().getTime());
 		
+		Member member = (Member) request.getSession().getAttribute("authentication");
+		
+		Visit visit = new Visit();
+		visit.setNoticeName(createVisitName(hospital));
+		//visit.setHospCode(hospCode);
+		visit.setNoticeDate(noticeDateTime);
+		
+		scheduleService.insertVisitNoticeOnly(member.getUserCode(), visit);
 	}
 
 	//진료 일정 기록
@@ -78,86 +123,92 @@ public class ScheduleController extends HttpServlet {
 		Date scheduleDate = parseStringToDate(request.getParameter("schedule_date"));
 		String hospital = request.getParameter("hospital");
 		String pharm = request.getParameter("pharm");
-		String[] medicine = request.getParameterValues("abc");
+		String[] medicine = request.getParameterValues("");
 		String doseStartStr = request.getParameter("dose_start");
 		String doseEndStr = request.getParameter("dose_end");
 		int doseTimes = Integer.parseInt(request.getParameter("dose_times"));
 		String[] visitNotice = request.getParameterValues("visit_notice_date");
 		String[] doseNotice = request.getParameterValues("dose_notice");
+		
 		Date doseStart = null;
 		Date doseEnd = null;
-		Timestamp[] doseNoticeDateTimes = null;
+		
+		Member member = (Member) request.getSession().getAttribute("authentication");
+		Map<String, Object> dtoMap = new HashMap<String, Object>();
 		
 		if(doseStartStr.length() != 0) {
 			doseStart = parseStringToDate(doseStartStr);
 		}
-		
 		if(doseEndStr.length() != 0) {
 			doseEnd = parseStringToDate(doseEndStr);
 		}
 		
-		if(doseNotice != null) {
-			doseNoticeDateTimes = createDoseNoticeDateTimes(doseStartStr, doseEndStr, doseNotice);
-		}
-		
-		/*
-		 * System.out.println(doseStart);
-		 * System.out.println(doseEnd);
-		 * System.out.println((Days.daysBetween(doseStart, doseEnd)).getDays());
-		 * System.out.println(doseStart.withTimeAtStartOfDay());
-		 * System.out.println(doseEnd.withTimeAtStartOfDay());
-		 * System.out.println((Days.daysBetween(doseStart.withTimeAtStartOfDay(),
-		 * doseEnd.withTimeAtStartOfDay())).getDays());
-		 */
-		Member member = (Member) request.getSession().getAttribute("authentication");
-		String scheduleId = scheduleService.insertScheduleList(member.getUserCode());
-		
-		
-		if(hospital != null) {
+		// Medical_history
+		if(hospital.length() != 0) {
 			Medical medical = new Medical();
-			medical.setScheduleId(scheduleId);
 			medical.setScheduleDate(scheduleDate);
 			medical.setScheduleName(createScheduleName(hospital));
 			//medical.setHospCode();
-			scheduleService.insertMedicalHistory(medical);
+			dtoMap.put("medical", medical);
 		}
 		
-		
-		
-		if (pharm != null || medicine != null || doseStart != null
-				|| doseEnd != null /* || doseTimes != 0 */ || doseNotice != null) {
-			Prescription prescrition = new Prescription();
-			prescrition.setScheduleId(scheduleId);
-			prescrition.setPrescriptionName(createPrescriptionName(pharm, medicine, doseNotice));
-			prescrition.setStartDate(doseStart);
-			prescrition.setEndDate(doseEnd);
-			//prescrition.setPharmCode();
-			//prescrition.setHasMedicine(hasMedicine);
-			prescrition.setTimesPerDay(doseTimes);
-			if(doseNotice != null) {
-				prescrition.setHasDoseNotice(1);
+		// prescription_list
+		if (pharm.length() != 0 || medicine != null || doseStart != null
+				|| doseEnd != null || doseTimes != 0 || doseNotice != null) {
+			
+			if(doseStart == null && doseEnd == null) {
+				doseStart = scheduleDate;
+				doseEnd = scheduleDate;
 			}
-			scheduleService.insertPrescription(prescrition, doseNoticeDateTimes);
+			
+			Prescription prescription = new Prescription();
+			prescription.setPrescriptionName(createPrescriptionName(pharm, medicine, doseNotice));
+			prescription.setStartDate(doseStart);
+			prescription.setEndDate(doseEnd);
+			//prescrition.setPharmCode();
+			prescription.setTimesPerDay(doseTimes);
+			dtoMap.put("prescription", prescription);
+			
+			// dose_notice_list
+			if(doseNotice != null) {
+				Timestamp[] doseNoticeDateTimes = createDoseNoticeDateTimes(doseStartStr, doseEndStr, doseNotice);
+				dtoMap.put("doseNoticeDateTimes", doseNoticeDateTimes);
+			}
+			
+			// medicine_list
+			
 		}
 		
+		// visit_notice
+		if(visitNotice != null) {
+			List<Visit> visitList = new ArrayList<Visit>();
+			Timestamp[] visitNoticeDateTimes = createVisitNoticeDateTimes(visitNotice);
+			
+			for (int i = 0; i < visitNoticeDateTimes.length; i++) {
+				Visit visit = new Visit();
+				visit.setNoticeName(createVisitName(hospital));
+				//visit.setHospCode(hospCode);
+				visit.setNoticeDate(visitNoticeDateTimes[i]);
+				visitList.add(visit);
+			}
+			dtoMap.put("visitList", visitList);
+		}
 		
-		/*
-		 * System.out.println("진료 날짜 : " + scheduleDate);
-		 * System.out.println("진료 병원 : " + hospital);
-		 * System.out.println("처방 약국 : " + pharm);
-		 * System.out.println("처방 약 : " + Arrays.toString(medicine));
-		 * System.out.println("복용 시작 : " + doseStart);
-		 * System.out.println("복용 종료 : " + doseEnd);
-		 * System.out.println("복용 횟수 : " + doseTimes);
-		 * System.out.println("진료 알림 : " + Arrays.toString(visitNotice));
-		 * System.out.println("복용 알림 : " + Arrays.toString(doseNotice));
-		 */
-		 
-		 
-		 
-		
+		scheduleService.insertMainSchedule(member.getUserCode(), dtoMap);
 	}
 	
+	private Timestamp[] createVisitNoticeDateTimes(String[] visitNotice) {
+		Timestamp[] noticeDateTimes = new Timestamp[visitNotice.length];
+		
+		for (int i = 0; i < noticeDateTimes.length; i++) {
+			String[] dateTimeArr = visitNotice[i].split("T");
+			Calendar calendar = createCalendarFromString(dateTimeArr[0]);
+			calendar = addHourMinute(calendar, dateTimeArr[1]);
+			noticeDateTimes[i] = new Timestamp(calendar.getTime().getTime());
+		}
+		return noticeDateTimes;
+	}
+
 	private Timestamp[] createDoseNoticeDateTimes(String doseStart, String doseEnd, String[] doseNotice) {
 		DateTime startDateTime = parseStringToDateTime(doseStart);
 		DateTime endDateTime = parseStringToDateTime(doseEnd);
@@ -168,47 +219,11 @@ public class ScheduleController extends HttpServlet {
 		for (int i = 0; i <= period; i++) {
 			for (int j = 0; j < doseNotice.length; j++) {
 				Calendar calendar = createFewDaysLaterCalendarFromString(doseStart, i);
-				String[] timeArr = doseNotice[j].toString().split(":");
-				calendar.set(Calendar.HOUR, Integer.parseInt(timeArr[0]));
-				calendar.set(Calendar.MINUTE, Integer.parseInt(timeArr[1]));
+				calendar = addHourMinute(calendar, doseNotice[j]);
 				timeList.add(new Timestamp(calendar.getTime().getTime()));
 			}
 		}
 		return timeList.toArray(new Timestamp[0]);
-	}
-
-	private String createPrescriptionName(String pharm, String[] medicine, String[] doseNotice) {
-		String name = "";
-		
-		if(medicine != null) {
-			if(medicine.length > 1) {
-				name = medicine[0] + "외" + medicine.length + " ";
-			}else {
-				name = medicine[0] + " ";
-			}
-		}else if(pharm != null) {
-			name = pharm + " ";
-		}else {
-			name = "뵥용약";
-		}
-		
-		if(doseNotice != null) {
-			name += "처방";
-		}else {
-			name += "복용 얄림";
-		}
-		return name;
-	}
-	
-	private String createScheduleName(String hospital) {
-		if(hospital == null) {
-			return "병원 진료";
-		}
-		return hospital + "진료";
-	}
-	
-	private DateTime parseDateToDateTime(Date date) {
-		return new DateTime(date.getYear(), date.getMonth()+1, date.getDate(), 0, 0, 0);
 	}
 	
 	private DateTime parseStringToDateTime(String dateStr) {
@@ -220,6 +235,13 @@ public class ScheduleController extends HttpServlet {
 	private Date parseStringToDate(String dateStr) {
 		Date date = new Date(createCalendarFromString(dateStr).getTime().getTime());
 		return date;
+	}
+	
+	private Calendar addHourMinute(Calendar calendar, String timeStr) {
+		String[] timeArr = timeStr.split(":");
+		calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArr[0]));
+		calendar.set(Calendar.MINUTE, Integer.parseInt(timeArr[1]));
+		return calendar;
 	}
 	
 	private Calendar createCalendarFromString(String dateStr) {
@@ -234,6 +256,43 @@ public class ScheduleController extends HttpServlet {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1])-1, Integer.parseInt(dateArr[2]) + days);
 		return calendar;
+	}
+	
+	private String createVisitName(String hospital) {
+		if(hospital.length() != 0) {
+			return "병원 진료 예약 알림";
+		}
+		return hospital + "진료 예약 알림";
+	}
+	
+	private String createPrescriptionName(String pharm, String[] medicine, String[] doseNotice) {
+		String name = "";
+		
+		if(medicine != null) {
+			if(medicine.length > 1) {
+				name = medicine[0] + "외" + medicine.length + " ";
+			}else {
+				name = medicine[0] + " ";
+			}
+		}else if(pharm.length() != 0) {
+			name = pharm + " 약";
+		}else {
+			name = "약 ";
+		}
+		
+		if(doseNotice == null) {
+			name += "처방 및 복용";
+		}else {
+			name += "복용 알림";
+		}
+		return name;
+	}
+	
+	private String createScheduleName(String hospital) {
+		if(hospital.length() == 0) {
+			return "병원 진료";
+		}
+		return hospital + "진료";
 	}
 
 	private void medicineNoticeForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

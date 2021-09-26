@@ -1,6 +1,7 @@
 package com.kh.semi.schedule.model.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Visit {
 
@@ -8,7 +9,7 @@ public class Visit {
 	private String scheduleId;
 	private String noticeName;
 	private String hospCode;
-	private Date noticeDate;
+	private Timestamp noticeDate;
 	private String isNoticed;
 	private Date regDate;
 	
@@ -48,11 +49,11 @@ public class Visit {
 		this.hospCode = hospCode;
 	}
 
-	public Date getNoticeDate() {
+	public Timestamp getNoticeDate() {
 		return noticeDate;
 	}
 
-	public void setNoticeDate(Date noticeDate) {
+	public void setNoticeDate(Timestamp noticeDate) {
 		this.noticeDate = noticeDate;
 	}
 

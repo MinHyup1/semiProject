@@ -179,8 +179,19 @@ let addMedicineNotice = function() {
 };
 
 let addVisitNotice = function(e) {
+	let today = new Date();
+	let tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1);
+	let yyyy = tomorrow.getFullYear();
+	let mm = tomorrow.getMonth()+1;
+	let dd = tomorrow.getDate();
+	
+	if(dd < 10) dd = '0' + dd;
+	if(mm < 10) mm = '0' + mm;
+	
+	let minDate = yyyy + '-' + mm + '-' + dd + 'T00:00';
+	
 	let dateTimeInp = document.createElement('label');
-	dateTimeInp.innerHTML = "<input type='datetime-local' class='dateTime' name='visit_notice_date' required> ";
+	dateTimeInp.innerHTML = "<input type='datetime-local' class='dateTime' name='visit_notice_date' min='" + minDate + "' required> ";
 	
 	let trashIcon = document.createElement('i');
 	trashIcon.className = 'fas fa-trash';
