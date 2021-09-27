@@ -3,6 +3,8 @@
 	var prevSelected = undefined;
 	var standardDate = new Date(); /* 일정 날짜로 선택된 날짜 */
 	var scheduleDate; /* standard 날짜의 셀 */
+	var scheduleList = sessionStorage.getItem('schedule');
+	console.dir(scheduleList);
 
 document.addEventListener('DOMContentLoaded', function() {
     //var initialLocaleCode = 'ko';
@@ -15,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	
     calendar = new FullCalendar.Calendar(calendarEl, {
 		
-		initialDate: standardDate,
+	  initialDate: standardDate,
 		
 	  headerToolbar: {
         left: 'today',
@@ -29,12 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
       buttonText: {
     	today: 'today'  
       },
-      /*initialDate: new Date(),*/
-      //locale: 'ko',
-      //buttonIcons: false, // show the prev/next text
-      //weekNumbers: true,
-      //navLinks: true, // can click day/week names to navigate views
-      //editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
 	  
 	  dateClick: function(info) {
@@ -49,13 +45,49 @@ document.addEventListener('DOMContentLoaded', function() {
 		info.dayEl.style.backgroundColor = '#c9d7e8';
 	  },
 	  
-
-	  /* event는 등록된 일정을 의미한다. */
-	  /*eventMouseEnter: function(info) {
-		info.el.style.backgroundColor = 'yellow';
-	  },*/
-		
-      events: [
+	  eventClick: function(info) {
+		console.dir("id : " + info.event.id);
+		console.dir("groupId : " + info.event.groupId);
+		console.dir("start : " + info.event.start);
+		console.dir("end : " + info.event.end);
+		console.dir("title : " + info.event.title);
+		console.dir("color : " + info.event.color);
+		console.dir("backgroundColor : " + info.event.backgroundColor);
+		console.dir("hospital : " + info.event.extendedProps.hospital);
+	  },
+	  events: scheduleList
+	  
+      /*events: [
+		{
+			id: 'list_id',
+			groupId: 'schedule_id',
+			start: '2021-09-21T10:30:00',
+			end: '2021-09-25T17:39:15',
+			allDay: true,
+			//startTime: '10:30:00',
+			//endTime: '17:39:15',
+			title: '복용 알림',
+			backgroundColor: 'purple',
+			color: 'white'
+		},
+		{
+			id: 'list_id',
+			groupId: 'schedule_id',
+			start: '2021-09-07',
+			allDay: true,
+			title: '병원 진료',
+			backgroundColor: 'orange',
+			color: 'white'
+		},
+		{
+			id: 'list_id',
+			groupId: 'schedule_id',
+			start: '2021-09-07',
+			allDay: true,
+			title: '병원 진료',
+			backgroundColor: 'grey',
+			color: 'white'
+		},
         {
           title: 'All Day Event',
           start: '2020-09-01'
@@ -110,9 +142,22 @@ document.addEventListener('DOMContentLoaded', function() {
           url: 'http://google.com/',
           start: '2020-09-28'
         }
-      ]
+      ]*/
     });
-
+	calendar.addEvent(
+		event = {
+				"id": 'list_id',
+				"groupId": 'schedule_id',
+				"start": '2021-09-02',
+				//end: '2021-09-02',
+				//allDay: true,
+				"title": '진료 알림',
+				"backgroundColor": 'green',
+				"color": 'white',
+				"hospital": '병원'
+			}
+	);
+	
     calendar.render();
 	
 	if(!document.querySelector('.select_menu')) {

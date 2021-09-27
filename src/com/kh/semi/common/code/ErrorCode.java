@@ -10,6 +10,7 @@ public enum ErrorCode {
 	UNAUTORIZED_PAGE_ERROR("접근 권한이 없는 페이지입니다."),
 	FAILED_FILE_UPLOAD_ERROR("파일업로드에 실패하였습니다."),
 	NOT_MEMBER_ERROR("로그인 후 사용해주세요.", "/member/loginPage"),
+	FAILED_GET_SCHEDULE("스케줄을 가져올 수 없습니다.\r문의 후 사용해주세요.", "/index"),
 	
 	REDIRECT("");
 	

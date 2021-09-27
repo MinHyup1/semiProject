@@ -2,6 +2,8 @@ package com.kh.semi.schedule.model.service;
 
 import java.sql.Connection;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +11,7 @@ import com.kh.semi.common.db.JDBCTemplate;
 import com.kh.semi.schedule.model.dao.ScheduleDao;
 import com.kh.semi.schedule.model.dto.Medical;
 import com.kh.semi.schedule.model.dto.Prescription;
+import com.kh.semi.schedule.model.dto.Schedule;
 import com.kh.semi.schedule.model.dto.Visit;
 
 public class ScheduleService {
@@ -104,6 +107,46 @@ public class ScheduleService {
 		}
 	}
 	
+	public Map<String, Object> selectScheduleByUser(String userCode) {
+		Connection conn = template.getConnection();
+		Map<String, Object> scheduleMap = new HashMap<String, Object>();
+		List<Medical> medicalList = new ArrayList<Medical>();
+		List<Prescription> prescriptionList = new ArrayList<Prescription>();
+		List<Visit> visitList = new ArrayList<Visit>();
+		
+		try {
+			List<Schedule> scheduleList = scheduleDao.selectScheduleListByUser(conn, userCode);
+			Schedule schedule = null;
+			String scheduleId = "";
+			
+			for (int i = 0; i < scheduleList.size(); i++) {
+				schedule = scheduleList.get(i);
+				scheduleId = schedule.getScheduleId();
+				
+				if(schedule.getHasMedicalRecord().equals("Y")) {
+					medicalList.add(scheduleDao.selectMedicalHistoryByScheduleId(conn, scheduleId));
+				}
+				
+				if(schedule.getHasPrescription().equals("Y")) {
+					prescriptionList.add(scheduleDao.selectPrescriptionListByScheduleId(conn, scheduleId));
+				}
+				
+				if(schedule.getHasVisitNotice().equals("Y")) {
+					List<Visit> visitByScheduleId = scheduleDao.selectVisitNoticeByScheduleId(conn, scheduleId);
+					for (int j = 0; j < visitByScheduleId.size(); j++) {
+						visitList.add(visitByScheduleId.get(j));
+					}
+				}
+			}
+			scheduleMap.put("medicalList", medicalList);
+			scheduleMap.put("prescriptionList", prescriptionList);
+			scheduleMap.put("visitList", visitList);
+		} finally {
+			template.close(conn);
+		}
+		return scheduleMap;
+	}
+	
 	private String insertScheduleList(Connection conn, String userCode) {
 		scheduleDao.insertScheduleList(conn, userCode);
 		return scheduleDao.getCurrentScheduleId(conn);
@@ -124,9 +167,5 @@ public class ScheduleService {
 		scheduleDao.insertDoseNotice(conn, doseNoticeDateTimes);
 		scheduleDao.updateHasDoseNotice(conn, prescriptionId);
 	}
-
-	
-
-	
 	
 }
