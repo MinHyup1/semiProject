@@ -58,7 +58,7 @@
     display: inline-block;
 }
 
-.d_search_box .last_search input.input_l_s1 {
+.d_search_box .last_search input.searchByName {
     text-align: center;
     width: 80px;
     height: auto;
@@ -74,6 +74,23 @@
     text-indent: 0;
     cursor: pointer;
     }
+ button.searchByName{
+  text-align: center;
+    width: 80px;
+    height: auto;
+    padding: 3px 0 3px 0;
+    background: #0080c0;
+    border-top: none;
+    border-right: 1px solid #5c90a6;
+    border-bottom: 1px solid #5c90a6;
+    border-left: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    text-indent: 0;
+    cursor: pointer;
+ }
+
     
 .input_l_s2 {
     text-align: center;
@@ -239,12 +256,43 @@
 			<div class="last_search">
 				<div class="title">기관명</div>
 				<div class="sb_con">
-					<input name="yadm_nm" id="yadm_nm" onkeypress="if(event.keyCode == 13){$('#cpage').val(1); go_search(1); return false;}" class="input_l_t1" title="기관명 적기">
-					<input type="button" value="검색" onclick="go_search(1);" class="input_l_s1">
-					<input type="button" value="초기화" onclick="frmReset1();" class="input_l_s2">
+					<form action="/HospitalController/searchByName" method="get">
+					<input type ="text"  name="input"id="input"  class="input_l_t1" title="기관명 적기">
+					<button class="searchByName" >검색</button>
+					</form>
+					
+					<input type="button" value="초기화" onclick="go_search()" class="input_l_s2">
+					
+					
 				</div>
 			</div>
+			<script type="text/javascript">//병원 이름으로 검색
 			
+			function go_search() {
+			
+				let input = document.querySelector('#input').value;
+				console.dir(input);
+				searchHospital(input);
+			}
+			
+			let searchHospital = async (input) => {
+				try{
+					let response = fetch('/HospitalController/searchByName?input=' + input)
+					.then(response => {
+						console.dir(response)
+					})
+						
+				}catch (error) {
+					console.dir(error);
+				}
+				
+				
+			}
+			
+			
+			
+			
+			</script>
 		</div>
 	</div></div>
  		</div>
@@ -253,10 +301,34 @@
  		
  		<ul class="listWrap">
  			<span>병원주소 목록</span>
- 			<li></li>
- 			<li></li>
- 			<li></li>
- 		</ul>
+		 	<table border="1">
+				<th>NO.</th>
+				<th>의료기관</th>
+				<th>기관명</th>
+				<th>주소</th>
+				<th>전화</th>
+				<th>홈페이지</th>
+				<c:forEach var="i" begin="0" step="1" end="${siez -1}" varStatus="status">
+				<tr><!-- 첫번째 줄 시작 -->
+				    <td>${status.count}</td>
+				    <td>의료기관</td>
+				    <td>${requestScope.hospList[i].hospName}</td>
+				    <td>${requestScope.hospList[i].address}</td>
+				    <td>${requestScope.hospList[i].hospTell}</td>
+				    <td>
+				    <c:choose>
+				    	<c:when test="${requestScope.hospList[i].hospUrl == '-'}">
+					    	<p style="align-content: center;">-</p></td>
+				    	</c:when>
+				    	<c:otherwise>
+				    		<a href="${requestScope.hospList[i].hospUrl}" target='_blank'>
+					   		 ${requestScope.hospList[i].hospUrl}</a></td>
+					   	</c:otherwise>
+				    </c:choose>
+				</tr><!-- 첫번째 줄 끝 -->
+ 			</c:forEach>
+ 			 </table>
+ 		
  		
  		
  		</div>
