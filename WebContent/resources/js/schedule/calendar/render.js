@@ -126,10 +126,10 @@ let rendMedicalToTable = async (event) => {
 	document.querySelector('.schedule_table>tbody').innerHTML = '';
 	
 	let date = document.createElement('td');
-	date.innerHTML = '<label>진료 날짜 : <input type="date" value=' + datas[0].schedule_date + ' readonly></label>';
+	date.innerHTML = '<label>진료 날짜 : <input type="date" value=' + datas.schedule_date + ' readonly></label>';
 	
 	let hospital = document.createElement('td');
-	hospital.innerHTML = '<label>진료 병원 : <input type="text" value=' + datas[0].hospital + ' readonly></label>';
+	hospital.innerHTML = '<label>진료 병원 : <input type="text" value=' + datas.hospital + ' readonly></label>';
 	
 	document.querySelector('.schedule_table>tbody').append(date);
 	document.querySelector('.schedule_table>tbody').append(hospital);
@@ -137,13 +137,47 @@ let rendMedicalToTable = async (event) => {
 	document.querySelector('.edit').href += '/medical';
 }
 
-let rendPrescriptionToTable = (event) => {
+let rendPrescriptionToTable = async (event) => {
 	let prescriptionId = event.id;
 	
 	let response = await fetch('/schedule/get-prescription?prescriptionId=' + prescriptionId);
 	let datas = await response.json();
 	console.dir(datas);
-	document.querySelector('.schedule_table>tbody').innerHTML = '';
+	let tbody = document.querySelector('.schedule_table>tbody')
+	tbody.innerHTML = '';
+	
+	let start = document.createElement('td');
+	start.innerHTML = '<label>복용 시작일 : <input type="date" value=' + datas.start + ' readonly></label>';
+	
+	let end = document.createElement('td');
+	end.innerHTML = '<label>복용 시작일 : <input type="date" value=' + datas.end + ' readonly></label>';
+	
+	let pharm = document.createElement('td');
+	pharm.innerHTML = '<label>처방 약국 : <input type="text" readonly></label>';
+	
+	if(datas.pharm) {
+		pharm.innerHTML = '<label>처방 약국 : <input type="text" value=' + datas.pharm + ' readonly></label>';
+	}
+	
+	tbody.append(start);
+	tbody.append(end);
+	tbody.append(pharm);
+	
+	if(datas.medicine) {}//추후 추가
+	
+	let times = document.createElement('td');
+	times.innerHTML = "<label>1일 복용 횟수 : <input type='number' style='width:40px' value=" + datas.timesPerDay + " readonly> 회</label>";
+	tbody.append(times);
+	
+	if(datas.doseTime) {
+		datas.doseTime.forEach(time => {
+			let timeTd = document.createElement('td');
+			timeTd.innerHTML = '<label><input type="time" value=' + time + ' readonly></label>';
+			tbody.append(timeTd);
+		})
+	}
+	document.querySelector('.action_icons').style.visibility = 'visible';
+	document.querySelector('.edit').href += '/prescription';
 }
 
 let rendVisitToTable = (event) => {
@@ -151,6 +185,7 @@ let rendVisitToTable = (event) => {
 }
 
 var rendScheduleTable = function () {
+	document.querySelector('.action_icons').style.visibility = 'hidden';
 	rendEventToTable(scheduleArray);
 }
 

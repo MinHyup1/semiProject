@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.kh.semi.common.db.JDBCTemplate;
 import com.kh.semi.schedule.model.dao.ScheduleDao;
@@ -168,11 +169,12 @@ public class ScheduleService {
 			prescMap.put("prescription", prescription);
 			
 			if(prescription.getHasDoseNotice() != 0) {
-				List<String> doseNoticeTimeList = scheduleDao.selectDoseNoticeTimeById(conn, prescription.getPrescriptionId());
+				Set<String> doseNoticeTimeSet = scheduleDao.selectDoseNoticeTimeById(conn, prescription.getPrescriptionId());
+				prescMap.put("timeSet", doseNoticeTimeSet);
 			}
 			
 			if(prescription.getHasMedicine().equals("Y")) {
-				
+				//약 검색 해결되면 진행 prescMap.put("medicine", medicineList);
 			}
 			
 		} finally {

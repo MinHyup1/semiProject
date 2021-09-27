@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -101,22 +102,38 @@ public class ScheduleController extends HttpServlet {
 	private void getPrescription(HttpServletRequest request, HttpServletResponse response) {
 		String prescriptionId = request.getParameter("prescriptionId");
 		Map<String, Object> prescMap = scheduleService.selectPrescriptionById(prescriptionId);
+		request.getSession().setAttribute("currentSchedule", prescMap);
+		Prescription prescription = (Prescription) prescMap.get("prescription");
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("start", prescription.getStartDate().toString());
+		map.put("end", prescription.getEndDate().toString());
+		map.put("pharm", prescription.getPharmCode());
+		map.put("timesPerDay", prescription.getTimesPerDay());
+		
+		if(prescMap.get("timeSet") != null) map.put("doseTime", (Set<String>) prescMap.get("timeSet"));
+		if(prescMap.get("medicine") != null) map.put("medicine", (List<String>) prescMap.get("medicine"));
+		String responseBody = gson.toJson(map);
+		System.out.println(responseBody);
+		try {
+			response.getWriter().print(responseBody);
+		} catch (IOException e) {
+			throw new HandlableException(ErrorCode.FAILED_GET_SCHEDULE);
+		}
 	}
 
 	private void getMedical(HttpServletRequest request, HttpServletResponse response) {
 		String historyId = request.getParameter("historyId");
 		Medical medical = scheduleService.selectMedicalById(historyId);
 		request.getSession().setAttribute("currentSchedule", medical);
-		List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("schedule_date", medical.getScheduleDate().toString());
 		map.put("hospital", medical.getHospCode()); //병원 검색 완성 시 병원 조회 후 넣기
-		datas.add(map);
 		
 		//key에 대한 value가 null이면 자동으로 json에서 빠지게 된다.
-		String responseBody = gson.toJson(datas);
+		String responseBody = gson.toJson(map);
+		System.out.println(responseBody);
 		try {
 			response.getWriter().print(responseBody);
 		} catch (IOException e) {
