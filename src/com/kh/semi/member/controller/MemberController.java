@@ -50,80 +50,82 @@ public class MemberController extends HttpServlet {
 		String[] uriArr = request.getRequestURI().split("/");
 		
 		switch (uriArr[uriArr.length-1]) {
-		case "login" : //세미 사용 코드
+		case "login" : //로그인 처리 코드
 			login(request,response);
 			break;
-		case "kakaoLogin" : //세미 사용 코드
+		case "kakaoLogin" : //카카오 로그인 처리 코드
 			kakaoLogin(request,response);
 			break;
-		case "logout" ://세미 사용 코드
+		case "logout" ://로그아웃 코드
 			logout(request,response);
 			break;
-		case "loginPage" : //세미 사용 코드
+		case "loginPage" : //로그인 페이지로 이동
 			loginPage(request,response);
 			break;
-		case "joinPage": //세미 사용 코드
+		case "joinPage": //회원가입 페이지로 이동
 			joinPage(request,response);
 			break;
-		case "basicJoin": //세미 사용 코드
+		case "basicJoin": //일반회원가입 폼으로 이동
 			basicJoin(request,response);
 			break;
-		case "join" :   //join-form.jsp에서 가입버튼 누르면 url을 member/join으로 호출하니까 여기로 넘어옴 //세미 사용 코드
+		case "join" :   //회원가입 진행
 			join(request,response);
 			break;
-		case "joinCancel" : //세미 사용 코드(가입취소)
+		case "joinCancel" : //가입 취소
 			joinCancel(request,response);
 			break;
-		case "id-check" : //joinForm.js에서 id-check로 보내줌 //세미 사용 코드
+		case "id-check" : //아이디 중복 체크
 			checkId(request,response);
 			break;
-		case "nickName-check" : //joinForm.js에서 nick-check로 보내줌 //세미 사용 코드
+		case "nickName-check" : //닉네임 중복 체크
 			checkNick(request,response);
 			break;
-		case "phone-check" : //joinForm.js에서 phone-check로 보내줌 //세미 사용 코드
+		case "phone-check" : //핸드폰번호 중복 체크
 			checkPhone(request,response);
 			break;
-		case "email-check" : //joinForm.js에서 email-check로 보내줌 //세미 사용 코드
+		case "email-check" : //이메일 중복 체크
 			checkEmail(request,response);
 			break;
 		case "join-impl" : 
 			joinImpl(request,response);
 			break;		
-		case "findId" : 
+		case "findId" : //아이디 찾기
 			findId(request,response);
 			break;
-		case "findId-info" : 
+		case "findId-info" : //아이디 찾기 정보 제공 페이지
 			findIdInfo(request,response);
 			break;
-		case "findPassword" : 
+		case "findPassword" : //비밀번호 찾기
 			findPassword(request,response);
 			break;
-		case "findPassword-info" : 
+		case "findPassword-info" : //비밀번호 찾기 정보제공
 			findPasswordInfo(request,response);
 			break;
-		case "kakaoChange" : 
+		case "kakaoChange" : //카카오톡 회원 정보 수정
 			kakaoChange(request,response);
 			break;
-		case "delete" : 
+		case "delete" : //회원탈퇴
 			delete(request,response);
 			break;
-		case "changeForm" : 
+		case "changeForm" : //일반회원 정보 수정 페이지로 이동
 			changeForm(request,response);
 			break;
-		case "change":
+		case "change": //회원정보수정 처리
 			change(request,response);
 			break;
-		case "kakaoMemberForm" : 
+		case "kakaoMemberForm" : //카카오톡 회원정보수정 페이지로 이동
 			kakaoMemberForm(request,response);
 			break;
-		case "changeCancel" : //세미 사용 코드(가입취소)
+		case "changeCancel" : //회원정보수정 취소
 			changeCancel(request,response);
 			break;
+
 		default: throw new PageNotFoundException();  //우리가 만든 예외처리 클래스 넣어주기
 		
 		}
 	}
 	
+
 
 	private void changeCancel(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("msg", "회원수정이 취소되었습니다. 메인페이지로 이동합니다.");
@@ -142,7 +144,6 @@ public class MemberController extends HttpServlet {
 		Member member = new Member();
 		member = (Member) request.getSession().getAttribute("authentication");
 		String userId = member.getId(); //아이디 고정
-		String password = member.getPassword(); //비밀번호 고정
 		String nick = request.getParameter("nick");
 		String phone = request.getParameter("phone");
 		String postCode = request.getParameter("postCode");
@@ -152,7 +153,6 @@ public class MemberController extends HttpServlet {
 		String gender = request.getParameter("gender");
 
 		member.setId(userId);
-		member.setPassword(password);
 		member.setNick(nick);
 		member.setPhone(phone);
 		member.setAddress(postCode, address1, address2);
@@ -333,7 +333,6 @@ public class MemberController extends HttpServlet {
 			System.out.println("카카오 로그인 성공");
 			kakaoMember.setEmail(kakaoId);
 			kakaoMember.setId(kakaoId);
-			kakaoMember.setPassword("kakaoMember!!"); //비밀번호 고정시켜놓기
 			kakaoMember.setNick(kakaoNick);
 			kakaoMember.setKakaoNum(1); //혹시 나중에 쓸 수도 있어서 테이블 하나 추가해서 넣어놓음
 			
