@@ -97,8 +97,9 @@ public class ScheduleController extends HttpServlet {
 				map.put("id", medical.getHistoryId());
 				map.put("groupId", medical.getScheduleId());
 				map.put("start", medical.getScheduleDate().toString());
+				map.put("allDay", true);
 				map.put("title", medical.getScheduleName());
-				map.put("background", "purple");
+				map.put("backgroundColor", "purple");
 				map.put("color", "white");
 				map.put("hospital", medical.getHospCode());
 				map.put("kind", "medical");
@@ -113,16 +114,16 @@ public class ScheduleController extends HttpServlet {
 				map.put("id", prescription.getPrescriptionId());
 				map.put("groupId", prescription.getScheduleId());
 				map.put("start", prescription.getStartDate().toString());
-				//map.put("end", prescription.getEndDate().toString() + "T12:00:00");
-				map.put("allDay", true);
+				map.put("end", prescription.getEndDate().toString() + "T23:59:59");
+				if(prescription.getStartDate().toString().equals(prescription.getEndDate().toString())) map.put("allDay", true);
 				map.put("title", prescription.getPrescriptionName());
-				map.put("background", "orange");
+				map.put("backgroundColor", "orange");
 				map.put("color", "white");
 				map.put("pharm", prescription.getPharmCode());
 				map.put("has_medicine", prescription.getHasMedicine());
 				map.put("times", prescription.getTimesPerDay());
 				map.put("has_notice", prescription.getHasDoseNotice());
-				map.put("kind", "'prescription'");
+				map.put("kind", "prescription");
 				datas.add(map);
 			}
 		}
@@ -134,11 +135,10 @@ public class ScheduleController extends HttpServlet {
 				map.put("id", visit.getVisitNoticeCode());
 				map.put("groupId", visit.getScheduleId());
 				map.put("start", getDateStringFromTimestamp(visit.getNoticeDate()));
-				//map.put("startTime", getTimeStringFromTimestamp(visit.getNoticeDate()));
-				map.put("allDay", true);
 				map.put("title", visit.getNoticeName());
-				map.put("background", "green");
+				map.put("backgroundColor", "green");
 				map.put("color", "white");
+				map.put("noticeTime", getTimeStringFromTimestamp(visit.getNoticeDate()));
 				map.put("hospital", visit.getHospCode());
 				map.put("kind", "visit");
 				datas.add(map);

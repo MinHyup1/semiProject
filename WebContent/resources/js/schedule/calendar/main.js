@@ -10,6 +10,7 @@ var FullCalendar = (function (exports) {
 	var changeMonth = function(_this) {
 		let currentMonth = _this.el.children[0].children[1].innerText;
 		parseMonth(currentMonth);
+		rendScheduleTable();
 	}
 	
 	var parseMonth = function(currentMonth) {

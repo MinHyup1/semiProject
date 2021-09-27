@@ -1,13 +1,17 @@
-(function() {
-	var calendar;
+let getSchedule = async () => {
+	let response = await fetch('/schedule/get-schedule');
+	var datas = await response.json();
+	return datas;
+};
+
+var scheduleArray;
+
+(async () => {
+	
+	scheduleArray =  await getSchedule();
 	var prevSelected = undefined;
 	var standardDate = new Date(); /* 일정 날짜로 선택된 날짜 */
 	var scheduleDate; /* standard 날짜의 셀 */
-	var scheduleList = sessionStorage.getItem('schedule');
-	console.dir(scheduleList);
-
-document.addEventListener('DOMContentLoaded', function() {
-    //var initialLocaleCode = 'ko';
     var localeSelectorEl = document.getElementById('locale-selector');
     var calendarEl = document.getElementById('calendar');
 	
@@ -15,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		standardDate = document.querySelector('.standard_date').value;
 	}
 	
-    calendar = new FullCalendar.Calendar(calendarEl, {
+    var calendar = new FullCalendar.Calendar(calendarEl, {
 		
 	  initialDate: standardDate,
 		
@@ -40,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
 				return;
 			}
 		}
-		/*alert('Date : ' + info.dateStr);*/
 		prevSelected = info.dayEl
 		info.dayEl.style.backgroundColor = '#c9d7e8';
 	  },
@@ -51,114 +54,17 @@ document.addEventListener('DOMContentLoaded', function() {
 		console.dir("start : " + info.event.start);
 		console.dir("end : " + info.event.end);
 		console.dir("title : " + info.event.title);
-		console.dir("color : " + info.event.color);
+		console.dir("color : " + info.event.textColor);
 		console.dir("backgroundColor : " + info.event.backgroundColor);
-		console.dir("hospital : " + info.event.extendedProps.hospital);
+		console.dir("kind : " + info.event.extendedProps.kind);
 	  },
-	  events: scheduleList
+	  initialEvents: scheduleArray,
 	  
-      /*events: [
-		{
-			id: 'list_id',
-			groupId: 'schedule_id',
-			start: '2021-09-21T10:30:00',
-			end: '2021-09-25T17:39:15',
-			allDay: true,
-			//startTime: '10:30:00',
-			//endTime: '17:39:15',
-			title: '복용 알림',
-			backgroundColor: 'purple',
-			color: 'white'
-		},
-		{
-			id: 'list_id',
-			groupId: 'schedule_id',
-			start: '2021-09-07',
-			allDay: true,
-			title: '병원 진료',
-			backgroundColor: 'orange',
-			color: 'white'
-		},
-		{
-			id: 'list_id',
-			groupId: 'schedule_id',
-			start: '2021-09-07',
-			allDay: true,
-			title: '병원 진료',
-			backgroundColor: 'grey',
-			color: 'white'
-		},
-        {
-          title: 'All Day Event',
-          start: '2020-09-01'
-        },
-        {
-          title: 'Long Event',
-          start: '2020-09-07',
-          end: '2020-09-10'
-        },
-        {
-          groupId: 999,
-          title: 'Repeating Event',
-          start: '2020-09-09T16:00:00'
-        },
-        {
-          groupId: 999,
-          title: 'Repeating Event',
-          start: '2020-09-16T16:00:00'
-        },
-        {
-          title: 'Conference',
-          start: '2020-09-11',
-          end: '2020-09-13'
-        },
-        {
-          title: 'Meeting',
-          start: '2020-09-12T10:30:00',
-          end: '2020-09-12T12:30:00'
-        },
-        {
-          title: 'Lunch',
-          start: '2020-09-12T12:00:00'
-        },
-        {
-          title: 'Meeting',
-          start: '2020-09-12T14:30:00'
-        },
-        {
-          title: 'Happy Hour',
-          start: '2020-09-12T17:30:00'
-        },
-        {
-          title: 'Dinner',
-          start: '2020-09-12T20:00:00'
-        },
-        {
-          title: 'Birthday Party',
-          start: '2020-09-13T07:00:00'
-        },
-        {
-          title: 'Click for Google',
-          url: 'http://google.com/',
-          start: '2020-09-28'
-        }
-      ]*/
+      events: []
     });
-	calendar.addEvent(
-		event = {
-				"id": 'list_id',
-				"groupId": 'schedule_id',
-				"start": '2021-09-02',
-				//end: '2021-09-02',
-				//allDay: true,
-				"title": '진료 알림',
-				"backgroundColor": 'green',
-				"color": 'white',
-				"hospital": '병원'
-			}
-	);
-	
     calendar.render();
+
+	rendEventToTable(scheduleArray);
 	
 	if(!document.querySelector('.select_menu')) {
 		document.querySelectorAll('.fc-scrollgrid-sync-table>tbody>tr').forEach(e => {
@@ -194,11 +100,58 @@ document.addEventListener('DOMContentLoaded', function() {
 		console.dir(scheduleDate.style.backgroundColor);
 		scheduleDate.style.backgroundColor = '#ff6666';
 	});*/
-	
-	
-});
-
 })();
+
+var rendScheduleTable = function () {
+	rendEventToTable(scheduleArray);
+}
+
+let rendEventToTable = function (scheduleArray) {
+	
+	if(!document.querySelector('.select_menu')) return;
+	
+	currentSchedule = getSortedCurrentEvents(scheduleArray);
+	document.querySelector('.schedule_table>tbody').innerHTML = '';
+	
+	if(currentSchedule.length == 0) {
+		let th = document.createElement('th');
+		th.innerHTML = '등록된 일정이 없습니다.';
+		document.querySelector('.schedule_table>tbody').appendChild(th);
+		return;
+	}
+	
+	currentSchedule.forEach(element => {
+		let td = document.createElement('td');
+		td.innerHTML = "<div style='background-color: " + element.backgroundColor + "'></div>";
+		let text = document.createTextNode(element.start.substring(8, 10) + '일 ' + element.title);
+		
+		td.appendChild(text);
+		document.querySelector('.schedule_table>tbody').appendChild(td);
+		
+	})
+}
+
+let getSortedCurrentEvents = function(scheduleArray) {
+	let current = document.querySelector('.schedule_table>thead>tr>th').innerHTML;
+	let curYear = current.substring(0, 4);
+	let curMonth = current.substring(6, 8);
+	
+	let currentSchedule = scheduleArray.filter((element) => {
+		let year = element.start.substring(0, 4);
+		let month = element.start.substring(5, 7);
+		if(year == curYear && month == curMonth) {
+			return true;
+		}
+		return false;
+	});
+	
+	currentSchedule.sort((a, b)=>{
+		let aDate = new Date(a.start.substring(0, 10));
+		let bDate = new Date(b.start.substring(0, 10));
+		return aDate - bDate 
+	})
+	return currentSchedule;
+}
 
 let addMedicineNotice = function() {
 	let times = document.querySelector('input[type=number]').value;
