@@ -57,7 +57,7 @@
                      	<!-- 카카오톡 연동으로 로그인 한 회원에게 보여주는 회원정보수정 페이지  -->
                      	<c:if test="${authentication.password eq null}">
                      		<li><a href="/member/kakaoMemberForm"><i class="far fa-user"></i> <span>My Profile</span></a></li>
-                     		<li><a href="/member/logout"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+                     		<li><a href="/member/logout" onclick="kakaoLogout()"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
                      	</c:if>
                      	<!-- 일반회원으로 로그인 한 회원에게 보여주는 회원정보수정 페이지  -->
                      	<c:if test="${authentication.password != null}">
@@ -97,7 +97,31 @@
             }
          });
       })
+      
+      
       </script>
+        <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+        // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+        /* Kakao.init('cfb699a7c2c194f945a6a34a6be6daa5'); */
+		Kakao.init('8406376e4a3016276da81540af46ba74');
+        
+        // SDK 초기화 여부를 판단합니다.
+        console.log(Kakao.isInitialized());
+        
+    </script>
+
+<script type="text/javascript">
+    function kakaoLogout() {
+      if (!Kakao.Auth.getAccessToken()) {
+        alert('Not logged in.')
+        return
+      }
+      Kakao.Auth.logout(function() {
+        alert('logout ok\naccess token -> ' + Kakao.Auth.getAccessToken())
+      })
+    }
+  </script>
       <!-- END LEFT SIDEBAR -->
       <!-- MAIN -->
       <!-- <div class="main"> -->
