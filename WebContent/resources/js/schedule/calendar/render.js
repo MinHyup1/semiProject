@@ -4,7 +4,7 @@ let getSchedule = async () => {
 	return datas;
 };
 
-var scheduleArray;
+let scheduleArray;
 
 (async () => {
 	
