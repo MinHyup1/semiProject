@@ -29,8 +29,7 @@
 				 	</c:if>
 				required />
 				<input class="check" id="btnIdCheck" type="button" value="중복체크" />
-				<span id="idCheck"  class="valid-msg" >
-				</span>	
+				<span id="idCheck"  class="valid-msg" ></span>	
 			</td>
 		</tr>
 		<tr>
@@ -41,8 +40,7 @@
 						value = "${joinForm.password}"
 					</c:if>
 				required />
-				<span id="pwCheck" class="valid-msg">
-				</span>	
+				<span id="pwCheck" class="valid-msg"></span>	
 			</td>
 		</tr>
 		<tr>
@@ -67,8 +65,7 @@
 					</c:if>
 				required />
 				<input class="check" id="btnNickCheck" type="button" value="중복체크" />
-				<span id="nickCheck" class="valid-msg">
-				</span>	
+				<span id="nickCheck" class="valid-msg"></span>	
 			</td>
 		</tr>
 		<tr>
@@ -80,8 +77,7 @@
                 	</c:if>
 				required />
 				<input class="check" id="btnPhoneCheck" type="button" value="중복체크" />
-				<span  id="phoneCheck" class="valid-msg">
-				</span>	
+				<span  id="phoneCheck" class="valid-msg"></span>	
 			</td>
 		</tr>
 		<tr>
@@ -110,8 +106,7 @@
                 	</c:if>
 				required />
 				<input class="check" id="btnEmailCheck" type="button" value="중복체크" />
-				<span  id="emailCheck" class="valid-msg">
-				</span>		
+				<span  id="emailCheck" class="valid-msg"></span>		
 			</td>
 		</tr>
 	</table>
