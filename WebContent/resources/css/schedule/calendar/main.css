@@ -610,6 +610,12 @@ A HORIZONTAL event
 .fc-h-event .fc-event-main-frame {
     display: flex; /* for make fc-event-title-container expand */
   }
+
+/* 륜수 */
+.fc-event-time{
+	display: none;
+}
+
 .fc-h-event .fc-event-time {
     max-width: 100%; /* clip overflow on this element */
     overflow: hidden;

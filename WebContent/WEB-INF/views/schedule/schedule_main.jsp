@@ -5,7 +5,6 @@
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 <link href='${contextPath}/resources/css/schedule/calendar/main.css' rel='stylesheet'/>
 <script src='${contextPath}/resources/js/schedule/calendar/main.js'></script>
-<script async src='${contextPath}/resources/js/schedule/calendar/schedule-fetch.js'></script>
 <script defer src='${contextPath}/resources/js/schedule/calendar/render.js'></script>
 <script src='${contextPath}/resources/js/schedule/calendar/locales-all.js'></script>
 <link href='${contextPath}/resources/css/schedule/schedule_main.css' rel='stylesheet'/>
@@ -44,11 +43,12 @@
 								<th>2021.09월</th>
 							</thead>
 							<tbody>
-								<td>
-									<div></div>1일
-								</td>
+								<th>등록된 일정이 없습니다.</th>
 							</tbody>
 						</table>
+					</div>
+					<div class="action_icons">
+						<a href="${contextPath}/schedule/schedule-delete"><i class="fas fa-trash-alt"></i></i></a><a class="edit" href="${contextPath}/schedule/schedule-edit"><i class="fas fa-edit"></i></a>
 					</div>
 				</div>
 			</div>
