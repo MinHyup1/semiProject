@@ -20,10 +20,22 @@
 								<p class="joinInfo">회원가입</p>
 								<p class="lead">카카오톡으로 간편하게 회원가입 하세요.</p>
 							</div>
-							<form class="form-auth-small">
-								<div class="form-group">
-									<a><button class="btn btn-lg kakao" onclick="loginWithKakao()">카카오톡 간편 회원가입</button></a>
+														<form class="form-auth-small" name="kakaologin_frm" action="/member/kakaoLogin" method="post">
+								<div class="form-group" id="kakaoLogin">
+									<div class="kakaoBtn">
+										<!-- 카카오 정보 넣어줄 input 숨김처리로 넣어놓음 -->
+										<input type="hidden" name="kakaoEmail" id="kakaoEmail" />
+										<input type="hidden" name="kakaoNick" id="kakaoNick" />
+										<input type="hidden" name="kakaoGender" id="kakaoGender" />
+										<a href="javascript:loginWithKakao();" id="custom-login-btn">
+											<img src="../resources/img/kakao_login_medium_wide.png" />  <!-- 버튼 높이 조금 줄이고싶은데 실패함..  -->
+											<!-- <button class="btn btn-lg kakao">카카오톡 간편 로그인</button> -->
+										</a>
+									</div>
 								</div>
+							</form>
+							<form class="form-auth-small">
+								
 								<a id="or">또는</a>
 								<a><button formaction="/member/basicJoin" type="submit" class="btn btn-primary btn-lg btn-block">일반 회원가입</button></a>
 							</form>
@@ -35,8 +47,7 @@
 			</div>
 		</div>
 	</div>
-	
-	 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
         // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
         /* Kakao.init('cfb699a7c2c194f945a6a34a6be6daa5'); */
@@ -48,30 +59,31 @@
     </script>
     
 <script type="text/javascript">
-  
-  //const CLIENT_ID = "24bac85b97d9ea780242e6c5a1b32da3";
-  //const REDIRECT_URI =  "http://localhost:9090/member/loginPage";
-  //const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  
- 
+
   function loginWithKakao(){
 	  Kakao.Auth.login({
+		 
 	        success: function(authObj) {
 	          //로그인 성공시, API 호출
 	          Kakao.API.request({
 	            url: '/v2/user/me', //사용자 정보를 읽어들이는 고정된 url
 	            success: function(res) {
-	            	alert(JSON.stringify(res)); //<---- kakao.api.request 에서 불러온 결과값 json형태로 출력
-	                alert(JSON.stringify(authObj));  //<----Kakao.Auth.createLoginButton에서 불러온 결과값 json형태로 출력
-	                console.log(res.id);
-	                console.log(res.kaccount_email);
-	                console.log(res.properties['nickname']);
-	            	console.log(res);
-	            	console.log(authObj.access_token);
-	              
+	            
 					alert('로그인성공');
+					
+					const email = res.kakao_account.email;
+					const nick = res.properties.nickname;
+					const gender = res.kakao_account.gender;
+					
+					console.log(email);
+					console.log(nick);
+					console.log(gender);
+					
+					document.getElementById('kakaoEmail').value = email;
+					document.getElementById('kakaoNick').value = nick;
+					document.getElementById('kakaoGender').value = gender;
+					document.kakaologin_frm.submit();
 	              	//location.href="/index";
-	              	
 	        	}
 	          })
 	        },
