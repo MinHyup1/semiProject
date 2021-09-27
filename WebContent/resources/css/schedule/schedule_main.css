@@ -150,7 +150,7 @@
 
 .schedule_list>table{
 	font-size: 15px;
-	line-height: 2.5;
+	line-height: 3;
 	width: 100%;
 }
 
@@ -167,8 +167,8 @@
 
 .schedule_table td>div{
 	display: inline-block;
-	width: 28px;
-	height: 28px;
+	width: 25px;
+	height: 25px;
 	border-radius: 100px;
 	background-color: orange;
 	margin: 5px 1vw 5px 0.5vw;
