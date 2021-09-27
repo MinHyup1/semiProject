@@ -111,25 +111,22 @@
 
 <script type="text/javascript">
   function unlinkApp() {
-    Kakao.API.request({
-      url: '/v1/user/unlink',
-      success: function(res) {
-        alert('success: ' + JSON.stringify(res))
-      },
-      fail: function(err) {
-        alert('fail: ' + JSON.stringify(err))
-      },
-    })
-
       if (!Kakao.Auth.getAccessToken()) {
-        alert('Not logged in.')
         return
       }
       Kakao.Auth.logout(function() {
-        alert('logout ok\naccess token -> ' + Kakao.Auth.getAccessToken())
       })
     }
+  Kakao.API.request({
+      url: '/v1/user/unlink',
+      success: function(res) {
+      },
+      fail: function(err) {
+      },
+    })
+
   </script>
+
 
 
 <script src='${contextPath}/resources/js/member/changeForm.js'></script>
