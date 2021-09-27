@@ -147,6 +147,40 @@ public class ScheduleService {
 		return scheduleMap;
 	}
 	
+	public Medical selectMedicalById(String historyId) {
+		Connection conn = template.getConnection();
+		Medical medical = null;
+		
+		try {
+			medical = scheduleDao.selectMedicalById(conn, historyId);
+		} finally {
+			template.close(conn);
+		}
+		return medical;
+	}
+	
+	public Map<String, Object> selectPrescriptionById(String prescriptionId) {
+		Connection conn = template.getConnection();
+		Map<String, Object> prescMap = new HashMap<String, Object>();
+		
+		try {
+			Prescription prescription = scheduleDao.selectPrescriptionById(conn, prescriptionId);
+			prescMap.put("prescription", prescription);
+			
+			if(prescription.getHasDoseNotice() != 0) {
+				List<String> doseNoticeTimeList = scheduleDao.selectDoseNoticeTimeById(conn, prescription.getPrescriptionId());
+			}
+			
+			if(prescription.getHasMedicine().equals("Y")) {
+				
+			}
+			
+		} finally {
+			template.close(conn);
+		}
+		return prescMap;
+	}
+	
 	private String insertScheduleList(Connection conn, String userCode) {
 		scheduleDao.insertScheduleList(conn, userCode);
 		return scheduleDao.getCurrentScheduleId(conn);
@@ -167,5 +201,9 @@ public class ScheduleService {
 		scheduleDao.insertDoseNotice(conn, doseNoticeDateTimes);
 		scheduleDao.updateHasDoseNotice(conn, prescriptionId);
 	}
+
+	
+
+	
 	
 }

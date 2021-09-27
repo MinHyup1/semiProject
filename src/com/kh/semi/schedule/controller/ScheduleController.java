@@ -33,6 +33,7 @@ public class ScheduleController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ScheduleService scheduleService = new ScheduleService();
 	private static Gson gson = new Gson();
+	//private Member member = null;
 	
     public ScheduleController() {
         super();
@@ -40,9 +41,10 @@ public class ScheduleController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.addHeader("Content-Type", "text/html; charset=utf-8");
 		String[] uriArr = request.getRequestURI().split("/");
 		
-		switch (uriArr[uriArr.length-1]) {
+		switch (uriArr[2]) {
 		case "schedule-main": //메인페이지 이동
 			scheduleMain(request, response);
 			break;
@@ -67,9 +69,59 @@ public class ScheduleController extends HttpServlet {
 		case "get-schedule": //사용자별 등록된 스케줄 DB에서 가져오기
 			getSchedule(request, response);
 			break;
+		case "get-medical": //medical DB에서 가져오기
+			getMedical(request, response);
+			break;
+		case "get-prescription": //prescription DB에서 가져오기
+			getPrescription(request, response);
+			break;
+		case "get-visit": //visit DB에서 가져오기
+			//getVisit(request, response);
+			break;
+		case "schedule-edit": //스케줄 수정하기
+			editSchedule(request, response, uriArr);
+			break;
 		default: throw new PageNotFoundException();
 		}
 		
+	}
+
+	
+
+	private void editSchedule(HttpServletRequest request, HttpServletResponse response, String[] uriArr) throws ServletException, IOException {
+		switch(uriArr[3]) {
+		case "medical":
+			request.getRequestDispatcher("/schedule/medical_input").forward(request, response);
+		}
+		
+		
+		
+	}
+	
+	private void getPrescription(HttpServletRequest request, HttpServletResponse response) {
+		String prescriptionId = request.getParameter("prescriptionId");
+		Map<String, Object> prescMap = scheduleService.selectPrescriptionById(prescriptionId);
+		
+	}
+
+	private void getMedical(HttpServletRequest request, HttpServletResponse response) {
+		String historyId = request.getParameter("historyId");
+		Medical medical = scheduleService.selectMedicalById(historyId);
+		request.getSession().setAttribute("currentSchedule", medical);
+		List<Map<String, Object>> datas = new ArrayList<Map<String, Object>>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("schedule_date", medical.getScheduleDate().toString());
+		map.put("hospital", medical.getHospCode()); //병원 검색 완성 시 병원 조회 후 넣기
+		datas.add(map);
+		
+		//key에 대한 value가 null이면 자동으로 json에서 빠지게 된다.
+		String responseBody = gson.toJson(datas);
+		try {
+			response.getWriter().print(responseBody);
+		} catch (IOException e) {
+			throw new HandlableException(ErrorCode.FAILED_GET_SCHEDULE);
+		}
 	}
 
 	private void getSchedule(HttpServletRequest request, HttpServletResponse response) {
@@ -94,14 +146,13 @@ public class ScheduleController extends HttpServlet {
 			for (int i = 0; i < medicalList.size(); i++) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				Medical medical = medicalList.get(i);
+				//map.put("id", medical.getHistoryId());
 				map.put("id", medical.getHistoryId());
-				map.put("groupId", medical.getScheduleId());
 				map.put("start", medical.getScheduleDate().toString());
 				map.put("allDay", true);
 				map.put("title", medical.getScheduleName());
 				map.put("backgroundColor", "purple");
 				map.put("color", "white");
-				map.put("hospital", medical.getHospCode());
 				map.put("kind", "medical");
 				datas.add(map);
 			}
@@ -111,18 +162,14 @@ public class ScheduleController extends HttpServlet {
 			for (int i = 0; i < prescriptionList.size(); i++) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				Prescription prescription = prescriptionList.get(i);
+				//map.put("id", prescription.getPrescriptionId());
 				map.put("id", prescription.getPrescriptionId());
-				map.put("groupId", prescription.getScheduleId());
 				map.put("start", prescription.getStartDate().toString());
 				map.put("end", prescription.getEndDate().toString() + "T23:59:59");
 				if(prescription.getStartDate().toString().equals(prescription.getEndDate().toString())) map.put("allDay", true);
 				map.put("title", prescription.getPrescriptionName());
 				map.put("backgroundColor", "orange");
 				map.put("color", "white");
-				map.put("pharm", prescription.getPharmCode());
-				map.put("has_medicine", prescription.getHasMedicine());
-				map.put("times", prescription.getTimesPerDay());
-				map.put("has_notice", prescription.getHasDoseNotice());
 				map.put("kind", "prescription");
 				datas.add(map);
 			}
@@ -132,14 +179,13 @@ public class ScheduleController extends HttpServlet {
 			for (int i = 0; i < visitList.size(); i++) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				Visit visit = visitList.get(i);
+				//map.put("id", visit.getVisitNoticeCode());
 				map.put("id", visit.getVisitNoticeCode());
-				map.put("groupId", visit.getScheduleId());
 				map.put("start", getDateStringFromTimestamp(visit.getNoticeDate()));
+				map.put("allDay", true);
 				map.put("title", visit.getNoticeName());
 				map.put("backgroundColor", "green");
 				map.put("color", "white");
-				map.put("noticeTime", getTimeStringFromTimestamp(visit.getNoticeDate()));
-				map.put("hospital", visit.getHospCode());
 				map.put("kind", "visit");
 				datas.add(map);
 			}
@@ -147,7 +193,6 @@ public class ScheduleController extends HttpServlet {
 		
 		String responseBody = gson.toJson(datas);
 		try {
-			response.addHeader("Content-Type", "text/html; charset=utf-8");
 			response.getWriter().print(responseBody);
 		} catch (IOException e) {
 			throw new HandlableException(ErrorCode.FAILED_GET_SCHEDULE);

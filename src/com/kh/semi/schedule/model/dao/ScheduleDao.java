@@ -312,9 +312,55 @@ public class ScheduleDao {
 		return visitList;
 	}
 
+	public Medical selectMedicalById(Connection conn, String historyId) {
+		PreparedStatement pstm = null;
+		String query = "select * from medical_history where history_id = ?";
+		ResultSet rset = null;
+		Medical medical = null;
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, historyId);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				medical = parseResultSetToMedical(rset);
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return medical;
+	}
 	
+	public Prescription selectPrescriptionById(Connection conn, String prescriptionId) {
+		PreparedStatement pstm = null;
+		String query = "select * from prescription_list where prescription_id = ?";
+		ResultSet rset = null;
+		Prescription prescription = null;
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, prescriptionId);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				prescription = parseResultSetToPrescription(rset);
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return prescription;
+	}
 
-	
+	public List<String> selectDoseNoticeTimeById(Connection conn, String prescriptionId) {
+		
+		
+		return null;
+	}
 
 	private Schedule parseResultSetToSchedule(ResultSet rset) throws SQLException {
 		Schedule schedule = new Schedule();
@@ -364,6 +410,12 @@ public class ScheduleDao {
 		visit.setRegDate(rset.getDate("reg_date"));
 		return visit;
 	}
+
+	
+
+	
+
+	
 	
 	
 }

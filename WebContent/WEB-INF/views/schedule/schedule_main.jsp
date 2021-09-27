@@ -47,6 +47,9 @@
 							</tbody>
 						</table>
 					</div>
+					<div class="action_icons">
+						<a href="${contextPath}/schedule/schedule-delete"><i class="fas fa-trash-alt"></i></i></a><a class="edit" href="${contextPath}/schedule/schedule-edit"><i class="fas fa-edit"></i></a>
+					</div>
 				</div>
 			</div>
 		</div>
