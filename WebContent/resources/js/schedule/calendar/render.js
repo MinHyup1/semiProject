@@ -1,6 +1,6 @@
 let getSchedule = async () => {
 	let response = await fetch('/schedule/get-schedule');
-	var datas = await response.json();
+	let datas = await response.json();
 	return datas;
 };
 
@@ -14,6 +14,7 @@ let scheduleArray;
 	var scheduleDate; /* standard 날짜의 셀 */
     var localeSelectorEl = document.getElementById('locale-selector');
     var calendarEl = document.getElementById('calendar');
+	let originColor = undefined;
 	
 	if(!document.querySelector('.select_menu')) {
 		standardDate = document.querySelector('.standard_date').value;
@@ -47,19 +48,17 @@ let scheduleArray;
 		prevSelected = info.dayEl
 		info.dayEl.style.backgroundColor = '#c9d7e8';
 	  },
-	  
+	  eventMouseEnter: function(info) {
+		originColor = info.el.style.backgroundColor;
+		info.el.style.backgroundColor = 'grey';
+	  },
+	  eventMouseLeave: function(info) {
+		info.el.style.backgroundColor = originColor;
+	  },
 	  eventClick: function(info) {
-		console.dir("id : " + info.event.id);
-		console.dir("groupId : " + info.event.groupId);
-		console.dir("start : " + info.event.start);
-		console.dir("end : " + info.event.end);
-		console.dir("title : " + info.event.title);
-		console.dir("color : " + info.event.textColor);
-		console.dir("backgroundColor : " + info.event.backgroundColor);
-		console.dir("kind : " + info.event.extendedProps.kind);
+		scheduleClick(info.event);
 	  },
 	  initialEvents: scheduleArray,
-	  
       events: []
     });
     calendar.render();
@@ -79,6 +78,8 @@ let scheduleArray;
 	
 	document.querySelector('.fc-scrollgrid-sync-table>tbody').addEventListener('dblclick', e => {
 		/* 일정등록 선택 화면 뿌리기 */
+		if(e.target.className == 'fc-event-title fc-sticky') return;
+		if(e.target.className == 'fc-event-title-container') return;
 		if(document.querySelector('.select_menu')) {
 			document.querySelector('.select_menu').style.display = 'initial';
 		
@@ -95,6 +96,7 @@ let scheduleArray;
 		}
 	});
 	
+	
 	/*document.querySelector('.fc-button-group').addEventListener('click', e => {
 		console.dir(e);
 		console.dir(scheduleDate.style.backgroundColor);
@@ -102,13 +104,93 @@ let scheduleArray;
 	});*/
 })();
 
+let scheduleClick = async (event) => {
+	if(!document.querySelector('.select_menu')) return; //메인화면이 아니면 바로 return;
+	
+	let kind = event.extendedProps.kind;
+	if(kind == 'medical') {
+		rendMedicalToTable(event);
+	}else if(kind == 'prescription') {
+		rendPrescriptionToTable(event);
+	}else {
+		rendVisitToTable(event);
+	}
+}
+
+
+let rendMedicalToTable = async (event) => {
+	let historyId = event.id;
+	
+	let response = await fetch('/schedule/get-medical?historyId=' + historyId);
+	let datas = await response.json();
+	document.querySelector('.schedule_table>tbody').innerHTML = '';
+	
+	let date = document.createElement('td');
+	date.innerHTML = '<label>진료 날짜 : <input type="date" value=' + datas.schedule_date + ' readonly></label>';
+	
+	let hospital = document.createElement('td');
+	hospital.innerHTML = '<label>진료 병원 : <input type="text" value=' + datas.hospital + ' readonly></label>';
+	
+	document.querySelector('.schedule_table>tbody').append(date);
+	document.querySelector('.schedule_table>tbody').append(hospital);
+	document.querySelector('.action_icons').style.visibility = 'visible';
+	document.querySelector('.edit').href += '/medical';
+}
+
+let rendPrescriptionToTable = async (event) => {
+	let prescriptionId = event.id;
+	
+	let response = await fetch('/schedule/get-prescription?prescriptionId=' + prescriptionId);
+	let datas = await response.json();
+	console.dir(datas);
+	let tbody = document.querySelector('.schedule_table>tbody')
+	tbody.innerHTML = '';
+	
+	let start = document.createElement('td');
+	start.innerHTML = '<label>복용 시작일 : <input type="date" value=' + datas.start + ' readonly></label>';
+	
+	let end = document.createElement('td');
+	end.innerHTML = '<label>복용 시작일 : <input type="date" value=' + datas.end + ' readonly></label>';
+	
+	let pharm = document.createElement('td');
+	pharm.innerHTML = '<label>처방 약국 : <input type="text" readonly></label>';
+	
+	if(datas.pharm) {
+		pharm.innerHTML = '<label>처방 약국 : <input type="text" value=' + datas.pharm + ' readonly></label>';
+	}
+	
+	tbody.append(start);
+	tbody.append(end);
+	tbody.append(pharm);
+	
+	if(datas.medicine) {}//추후 추가
+	
+	let times = document.createElement('td');
+	times.innerHTML = "<label>1일 복용 횟수 : <input type='number' style='width:40px' value=" + datas.timesPerDay + " readonly> 회</label>";
+	tbody.append(times);
+	
+	if(datas.doseTime) {
+		datas.doseTime.forEach(time => {
+			let timeTd = document.createElement('td');
+			timeTd.innerHTML = '<label><input type="time" value=' + time + ' readonly></label>';
+			tbody.append(timeTd);
+		})
+	}
+	document.querySelector('.action_icons').style.visibility = 'visible';
+	document.querySelector('.edit').href += '/prescription';
+}
+
+let rendVisitToTable = (event) => {
+	
+}
+
 var rendScheduleTable = function () {
+	document.querySelector('.action_icons').style.visibility = 'hidden';
 	rendEventToTable(scheduleArray);
 }
 
 let rendEventToTable = function (scheduleArray) {
-	
-	if(!document.querySelector('.select_menu')) return;
+	if(!document.querySelector('.select_menu')) return; //메인화면이 아니면 바로 return;
 	
 	currentSchedule = getSortedCurrentEvents(scheduleArray);
 	document.querySelector('.schedule_table>tbody').innerHTML = '';

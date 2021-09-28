@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.kh.semi.common.db.JDBCTemplate;
 import com.kh.semi.common.exception.DataAccessException;
@@ -312,9 +314,78 @@ public class ScheduleDao {
 		return visitList;
 	}
 
+	public Medical selectMedicalById(Connection conn, String historyId) {
+		PreparedStatement pstm = null;
+		String query = "select * from medical_history where history_id = ?";
+		ResultSet rset = null;
+		Medical medical = null;
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, historyId);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				medical = parseResultSetToMedical(rset);
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return medical;
+	}
 	
+	public Prescription selectPrescriptionById(Connection conn, String prescriptionId) {
+		PreparedStatement pstm = null;
+		String query = "select * from prescription_list where prescription_id = ?";
+		ResultSet rset = null;
+		Prescription prescription = null;
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, prescriptionId);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				prescription = parseResultSetToPrescription(rset);
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return prescription;
+	}
 
-	
+	public Set<String> selectDoseNoticeTimeById(Connection conn, String prescriptionId) {
+		PreparedStatement pstm = null;
+		String query = "select * from dose_notice_list where prescription_id = ?";
+		ResultSet rset = null;
+		Set<String> timeSet = new HashSet<String>();
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, prescriptionId);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				Timestamp time = rset.getTimestamp("notice_time");
+				int hours = time.getHours();
+				int minutes = time.getMinutes();
+				
+				String hh = hours < 10 ? "0" + hours : String.valueOf(hours);
+				String mi = minutes < 10 ? "0" + minutes : String.valueOf(minutes);
+				String timeStr = hh + ":" + mi + ":00";
+				timeSet.add(timeStr);
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return timeSet;
+	}
 
 	private Schedule parseResultSetToSchedule(ResultSet rset) throws SQLException {
 		Schedule schedule = new Schedule();
@@ -364,6 +435,12 @@ public class ScheduleDao {
 		visit.setRegDate(rset.getDate("reg_date"));
 		return visit;
 	}
+
+	
+
+	
+
+	
 	
 	
 }

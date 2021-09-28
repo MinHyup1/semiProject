@@ -18,7 +18,7 @@
 				<div class="wrap_form">
 					<div class="form_title">복용 알림 등록</div>
 					<div class="input_list">
-						<form action="schedule/dose-notice-register" method="post" class="input_form" id="input_form">
+						<form action="/schedule/dose-notice-register" method="post" class="input_form" id="input_form">
 							<span id="startDateCheck" class="valid-msg"></span>
 							<label>복용 시작일 : <input type="date" class='standard_date' id="dose_start" name="dose_start" value='${param.date}' required></label>
 							<span id="endDateCheck" class="valid-msg"></span>

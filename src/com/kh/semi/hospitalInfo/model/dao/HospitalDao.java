@@ -2,7 +2,9 @@ package com.kh.semi.hospitalInfo.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.transform.Templates;
@@ -45,6 +47,47 @@ public class HospitalDao {
 		}
 		
 		return res;
+	}
+
+
+	public List<HospitalInfo> searchByHospitalName(Connection conn, String keyWord) {
+		
+		List<HospitalInfo> hospList = new ArrayList<HospitalInfo>();
+		HospitalInfo hosp = null;
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = "select * from HOSPITAL_INFO where HOSP_NAME like '%' || ? || '%'";
+				//select * from member where id like '%' || ? || '%'"
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1,keyWord);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				hosp = new HospitalInfo();
+				hosp.setHospCode(rset.getInt("HOSP_CODE"));
+				hosp.setHospTreat(rset.getString("HOSP_TREAT"));
+				hosp.setHospTell(rset.getString("HOSP_TELL"));
+				hosp.setHospName(rset.getString("HOSP_NAME"));
+				hosp.setHospUrl(rset.getString("HOSP_URL"));
+				hosp.setAddress(rset.getString("HOSP_ADDRESS"));
+				hosp.setxPos(rset.getString("HOSP_XPOS"));
+				hosp.setyPos(rset.getString("HOSP_YPOS"));
+				
+				hospList.add(hosp);
+				
+			}
+
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return hospList;
 	}
 
 

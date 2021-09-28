@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.kh.semi.common.db.JDBCTemplate;
 import com.kh.semi.schedule.model.dao.ScheduleDao;
@@ -147,6 +148,41 @@ public class ScheduleService {
 		return scheduleMap;
 	}
 	
+	public Medical selectMedicalById(String historyId) {
+		Connection conn = template.getConnection();
+		Medical medical = null;
+		
+		try {
+			medical = scheduleDao.selectMedicalById(conn, historyId);
+		} finally {
+			template.close(conn);
+		}
+		return medical;
+	}
+	
+	public Map<String, Object> selectPrescriptionById(String prescriptionId) {
+		Connection conn = template.getConnection();
+		Map<String, Object> prescMap = new HashMap<String, Object>();
+		
+		try {
+			Prescription prescription = scheduleDao.selectPrescriptionById(conn, prescriptionId);
+			prescMap.put("prescription", prescription);
+			
+			if(prescription.getHasDoseNotice() != 0) {
+				Set<String> doseNoticeTimeSet = scheduleDao.selectDoseNoticeTimeById(conn, prescription.getPrescriptionId());
+				prescMap.put("timeSet", doseNoticeTimeSet);
+			}
+			
+			if(prescription.getHasMedicine().equals("Y")) {
+				//약 검색 해결되면 진행 prescMap.put("medicine", medicineList);
+			}
+			
+		} finally {
+			template.close(conn);
+		}
+		return prescMap;
+	}
+	
 	private String insertScheduleList(Connection conn, String userCode) {
 		scheduleDao.insertScheduleList(conn, userCode);
 		return scheduleDao.getCurrentScheduleId(conn);
@@ -167,5 +203,9 @@ public class ScheduleService {
 		scheduleDao.insertDoseNotice(conn, doseNoticeDateTimes);
 		scheduleDao.updateHasDoseNotice(conn, prescriptionId);
 	}
+
+	
+
+	
 	
 }

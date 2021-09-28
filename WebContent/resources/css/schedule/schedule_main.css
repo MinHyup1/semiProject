@@ -123,6 +123,7 @@
 
 .wrap_form{
 	display: flex;
+	position: relative;
 	flex-wrap: wrap;
 	justify-content: center;
 	margin-top: 25px;
@@ -152,6 +153,10 @@
 	font-size: 15px;
 	line-height: 3;
 	width: 100%;
+	border-style: hidden;
+	box-shadow: 0 0 0 1px grey;
+	border-collapse: collapse;
+	border-radius: 9px;
 }
 
 .schedule_table th{
@@ -163,6 +168,7 @@
 	border: none;
 	display: flex;
 	align-items: center;
+	padding: 0 10px 0 10px;
 }
 
 .schedule_table td>div{
@@ -172,4 +178,24 @@
 	border-radius: 100px;
 	background-color: orange;
 	margin: 5px 1vw 5px 0.5vw;
+}
+
+.schedule_table input{
+	height: 30px;
+	border-width: 1px;
+	border-color: #8c8c8c;
+	border-radius: 5px;
+}
+
+.action_icons{
+	visibility: hidden;
+	width: 100px;
+	position: absolute;
+	right: 7.5%;
+	top: 100%;
+	display: flex;
+	justify-content: space-around;
+	font-size: 23px;
+	color: #3287B2;
+	font-weight: bold;
 }

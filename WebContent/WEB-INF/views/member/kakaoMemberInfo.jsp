@@ -12,7 +12,7 @@
 </head>
 <body>
 <div id="wrapper">
-<form action="/member/kakaoChange" method="post" id="frm_kakaoInfo">
+<form action="/member/kakaoChange" method="post" id="frm_memberInfo">
 	<table border=1 width="1000" height="500" bordercolor="gray" cellspacing=0>
 		<tr class="bTag">
 			<td class="bTag" colspan="2" align="center"><b>회원정보수정</b>

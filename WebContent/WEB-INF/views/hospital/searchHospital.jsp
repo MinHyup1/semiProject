@@ -58,7 +58,7 @@
     display: inline-block;
 }
 
-.d_search_box .last_search input.input_l_s1 {
+.d_search_box .last_search input.searchByName {
     text-align: center;
     width: 80px;
     height: auto;
@@ -74,6 +74,23 @@
     text-indent: 0;
     cursor: pointer;
     }
+ button.searchByName{
+  text-align: center;
+    width: 80px;
+    height: auto;
+    padding: 3px 0 3px 0;
+    background: #0080c0;
+    border-top: none;
+    border-right: 1px solid #5c90a6;
+    border-bottom: 1px solid #5c90a6;
+    border-left: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    text-indent: 0;
+    cursor: pointer;
+ }
+
     
 .input_l_s2 {
     text-align: center;
@@ -90,6 +107,30 @@
     font-size: 14px;
     text-indent: 0;
     cursor: pointer;
+}
+
+table.hospital_info_table {
+  border-collapse: separate;
+  border-spacing: 1px;
+  text-align: center;
+  line-height: 1.5;
+  margin: 20px 10px;
+}
+table.hospital_info_table th {
+  width: 155px;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  vertical-align: top;
+  color: #fff;
+  background: #ce4869 ;
+}
+table.hospital_info_table td {
+  width: 155px;
+  padding: 10px;
+  vertical-align: center;
+  border-bottom: 1px solid #ccc;
+  background: #eee;
 }
     
 
@@ -239,9 +280,12 @@
 			<div class="last_search">
 				<div class="title">기관명</div>
 				<div class="sb_con">
-					<input name="yadm_nm" id="yadm_nm" onkeypress="if(event.keyCode == 13){$('#cpage').val(1); go_search(1); return false;}" class="input_l_t1" title="기관명 적기">
-					<input type="button" value="검색" onclick="go_search(1);" class="input_l_s1">
-					<input type="button" value="초기화" onclick="frmReset1();" class="input_l_s2">
+					<form action="/HospitalController/searchByName" method="get">
+					<input type ="text"  name="input"id="input"  class="input_l_t1" title="기관명 적기">
+					<button class="searchByName" >검색</button>
+					</form>
+					
+					
 				</div>
 			</div>
 			
@@ -253,10 +297,36 @@
  		
  		<ul class="listWrap">
  			<span>병원주소 목록</span>
- 			<li></li>
- 			<li></li>
- 			<li></li>
- 		</ul>
+ 			
+ 		<c:if test="${not empty requestScope.hospList}">  
+		 	<table class="hospital_info_table" >
+				<th>NO.</th>
+				<th>의료기관</th>
+				<th>기관명</th>
+				<th>주소</th>
+				<th>전화</th>
+				<th>홈페이지</th>
+				<c:forEach var="i" begin="0" step="1" end="${siez -1}" varStatus="status">
+				<tr><!-- 첫번째 줄 시작 -->
+				    <td>${status.count}</td>
+				    <td>의료기관</td>
+				    <td>${requestScope.hospList[i].hospName}</td>
+				    <td>${requestScope.hospList[i].address}</td>
+				    <td>${requestScope.hospList[i].hospTell}</td>
+				    <td>
+				    <c:choose>
+				    	<c:when test="${requestScope.hospList[i].hospUrl == '-'}">
+					    	<p style="align-content: center;">-</p></td>
+				    	</c:when>
+				    	<c:otherwise>
+				    		<a href="${requestScope.hospList[i].hospUrl}" target='_blank'>
+					   		 ${requestScope.hospList[i].hospUrl}</a></td>
+					   	</c:otherwise>
+				    </c:choose>
+				</tr><!-- 첫번째 줄 끝 -->
+ 			</c:forEach>
+ 			 </table>
+ 		</c:if>
  		
  		
  		</div>
@@ -278,10 +348,24 @@
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=97ed58e74b2a1030e3fbd1d29e3272c9"></script>
 <script type="text/javascript">
 
+selectedMenu = 'searchHosp';	
 
+/* window.addEventListener("DOMContentLoaded", function(event) {
+	  
+	  console.dir("All resources finished loading!");
+	  
+	  if(${res}){
+		  alert("일치하는 검색결과가 없습니다.");
+	  }
+	  
+	    
+	  }); */
+
+
+	  
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 mapOption = {
-    center: new kakao.maps.LatLng(37.56679, 126.97877), // 지도의 중심좌표
+    center: new kakao.maps.LatLng(${requestScope.hospList[0].yPos}, ${requestScope.hospList[0].xPos}), // 지도의 중심좌표
     level: 3, // 지도의 확대 레벨
     mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
 }; 
@@ -299,8 +383,8 @@ map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 var positions = [
     {
     	content: '<div>카카오</div>', 
-        title: '카카오', 
-        latlng: new kakao.maps.LatLng(37.56700, 126.97877)
+        title: '${requestScope.hospList[0].hospName}', 
+        latlng: new kakao.maps.LatLng(${requestScope.hospList[0].yPos}, ${requestScope.hospList[0].xPos})
     },
     {
         title: '생태연못', 
@@ -314,6 +398,7 @@ var positions = [
         title: '근린공원',
         latlng: new kakao.maps.LatLng(37.56100, 126.97877)
     }
+    
 ];
 
 // 지도에 마커를 생성하고 표시한다
@@ -332,7 +417,7 @@ for (var i = 0; i < positions.length; i ++) {
     marker.setMap(map);
 }
 
-selectedMenu = 'searchHosp';
+
 
 </script>
 
