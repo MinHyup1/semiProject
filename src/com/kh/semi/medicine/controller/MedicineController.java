@@ -42,6 +42,9 @@ public class MedicineController extends HttpServlet {
 		String[] uriArr = request.getRequestURI().split("/");
 		
 		switch (uriArr[uriArr.length-1]) {
+		case "medicineMain":
+			request.getRequestDispatcher("/medicine/medicine").forward(request, response);
+			break;
 		case "medicineInfo":
 			medicineInfo(request,response);
 			break;

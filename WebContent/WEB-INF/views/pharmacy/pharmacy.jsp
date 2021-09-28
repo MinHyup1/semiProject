@@ -5,45 +5,12 @@
 <head>
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a91d097e5c5d9764f91631e0ac40e115"></script>
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a91d097e5c5d9764f91631e0ac40e115&libraries=services,clusterer,drawing"></script>
-<style type="text/css">
-
-.map{
-      
-   } 
-   
-</style>
 </head>
 <body>
 
-<div class="map">
+<div id="map" style="width:1000px;height:800px;"></div>
 
- <a>확인</a>
-
-
-</div>
-
-<script type="text/javascript">
-selectedMenu = 'searchPharm';
-
-let xhr = new XMLHttpRequest();
-
-/* 시작줄 작성 */
-
-let url = 'https://dapi.kakao.com/v2/local/search/category.json?category_group_code=BK9&x=37.5009759&y=127.03735019999999&radius=2000';
-xhr.open('get',encodeURI(url));
-/*  헤더 작성 */
-xhr.setRequestHeader('Authorization','KakaoAK 182dafe63568893e9a831aec56327706');  
-/*  요청 전송, body에 담을 데이터가 있다면 send 매개변수로 전달.*/ 
- 
-xhr.send();
-
-xhr.addEventListener('load',(event) => {
-	let obj =JSON.parse(event.target.response);
-	obj.documents.forEach((e)=>{
-		console.dir(e.place_name + ':' + e.x + ','+ e.y);
-	})
-})
+<script>
 
 let latlng = () => {
 	if(!navigator.geolocation){
@@ -72,7 +39,7 @@ let drawMap = async () => {
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	mapOption = { 
 	    center: new kakao.maps.LatLng(coords.latitude, coords.longitude), // 지도의 중심좌표
-	    level: 4 // 지도의 확대 레벨
+	    level: 5 // 지도의 확대 레벨
 	};
 
 	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -88,14 +55,20 @@ let drawMap = async () => {
 	var zoomControl = new kakao.maps.ZoomControl();
 	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
+	// 장소 검색 객체를 생성합니다
+	var ps = new kakao.maps.services.Places(map); 
+
+	// 카테고리로 은행을 검색합니다
+	ps.categorySearch('PM9', placesSearchCB, {useMapBounds:true}); 
 
 
-
-	map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
-	map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
+	map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);
+	
 }
 
 drawMap();
+
+ 
 </script>
 </body>
 </html>
