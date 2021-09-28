@@ -161,6 +161,11 @@ a {
 	background-color: transparent;
 }
 
+#a1:active, #a2:active, #a3:active{
+	color: green;
+	font-weight: bolder;
+}
+
 p {
 	margin: 0 0 10px;
 }

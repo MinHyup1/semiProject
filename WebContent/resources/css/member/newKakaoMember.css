@@ -72,20 +72,12 @@
 		width: 23%;
 	}
 	
-	#fpmgBt3:active{
-		background-color: #828282;
-		color: #fff;
-	}
-	
 	#modify{
 		width: 48%;
 	}
 	
-	#fpmgBt1:active{
-		background-color: #027ede;
-	}
 		
-	.fpmgBt1, .fpmgBt2{
+	.fpmgBt1{
 		display: block;
 		width: 80%;
 		height: 100%;
@@ -94,17 +86,8 @@
 		line-height: 60px;
 		border: 0;
 		border-radius: 5px;
-	}
-	
-	.fpmgBt1 {
 		background-color: #00AAFF;
 		color: #fff;
-	}
-	
-	.fpmgBt2 {
-		background-color: #fff;
-		color:#888;
-		border: 1.5px solid #ddd;
 	}
 
 	.fpmgBt3 {
@@ -118,6 +101,15 @@
 		color:gray;
 		border: 1px;
 		border-radius: 5px;
+	}
+	
+	.fpmgBt1:active{
+		background-color: #027ede;
+	}
+	
+	.fpmgBt3:active{
+		background-color: #828282;
+		color: #fff;
 	}
 
 	.aTag {

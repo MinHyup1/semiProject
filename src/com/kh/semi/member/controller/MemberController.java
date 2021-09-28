@@ -209,7 +209,6 @@ public class MemberController extends HttpServlet {
 
 		request.setAttribute("msg", "회원 수정이 완료되었습니다."); 
 		request.setAttribute("url", "/member/loginPage");
-		System.out.println("회원수정 완료!");
 		request.getRequestDispatcher("/error/result").forward(request, response);
 			
 	}
@@ -220,10 +219,12 @@ public class MemberController extends HttpServlet {
 
 	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String userId =((Member) request.getSession().getAttribute("authentication")).getId();//멤버객체에 authentication를 집어넣는다
-		//String userId = member.getId();
-		System.out.println("맴버아이디 제발 : "+userId);//출력 후 확인
 		memberService.deleteMember(userId);//삭제 진행
-		logout(request, response);//로그아웃 사용해 세션 끊고 인덱스로 이동
+		request.getSession().removeAttribute("authentication");
+		request.setAttribute("msg", "회원탈퇴가 완료되었습니다."); 
+		request.setAttribute("url", "/index");
+		request.getRequestDispatcher("/error/result").forward(request, response);
+		//logout(request, response);//로그아웃 사용해 세션 끊고 인덱스로 이동
 	}
 
 	private void findPassword(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {

@@ -27,7 +27,7 @@
 										<input type="hidden" name="kakaoNick" id="kakaoNick" />
 										<input type="hidden" name="kakaoGender" id="kakaoGender" />
 										<a href="javascript:loginWithKakao();" id="custom-login-btn">
-											<img src="../resources/img/kakao_login_medium_wide.png" />  <!-- 버튼 높이 조금 줄이고싶은데 실패함..  -->
+											<img src="../resources/img/kakao_login_medium_wide.png" />
 											<!-- <button class="btn btn-lg kakao">카카오톡 간편 로그인</button> -->
 										</a>
 									</div>
@@ -45,7 +45,7 @@
 								</div>
 								<a><button type="submit" class="btn btn-primary btn-lg btn-block">기존 회원 로그인</button></a>
 								
-									<span class="helper-text"><a href="/member/findId">아이디 찾기 | </a><a href="/member/findPassword">비밀번호 찾기 | </a><a href="/member/joinPage">가입하기</a></span>
+									<span class="helper-text"><a href="/member/findId" id="a1">아이디 찾기 | </a><a href="/member/findPassword" id="a2">비밀번호 찾기 | </a><a href="/member/joinPage" id="a3">가입하기</a></span>
 								
 							</form>
 						</div>
