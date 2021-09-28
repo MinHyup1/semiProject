@@ -108,6 +108,30 @@
     text-indent: 0;
     cursor: pointer;
 }
+
+table.hospital_info_table {
+  border-collapse: separate;
+  border-spacing: 1px;
+  text-align: center;
+  line-height: 1.5;
+  margin: 20px 10px;
+}
+table.hospital_info_table th {
+  width: 155px;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  vertical-align: top;
+  color: #fff;
+  background: #ce4869 ;
+}
+table.hospital_info_table td {
+  width: 155px;
+  padding: 10px;
+  vertical-align: center;
+  border-bottom: 1px solid #ccc;
+  background: #eee;
+}
     
 
 
@@ -261,38 +285,10 @@
 					<button class="searchByName" >검색</button>
 					</form>
 					
-					<input type="button" value="초기화" onclick="go_search()" class="input_l_s2">
-					
 					
 				</div>
 			</div>
-			<script type="text/javascript">//병원 이름으로 검색
 			
-			function go_search() {
-			
-				let input = document.querySelector('#input').value;
-				console.dir(input);
-				searchHospital(input);
-			}
-			
-			let searchHospital = async (input) => {
-				try{
-					let response = fetch('/HospitalController/searchByName?input=' + input)
-					.then(response => {
-						console.dir(response)
-					})
-						
-				}catch (error) {
-					console.dir(error);
-				}
-				
-				
-			}
-			
-			
-			
-			
-			</script>
 		</div>
 	</div></div>
  		</div>
@@ -301,7 +297,9 @@
  		
  		<ul class="listWrap">
  			<span>병원주소 목록</span>
-		 	<table border="1">
+ 			
+ 		<c:if test="${not empty requestScope.hospList}">  
+		 	<table class="hospital_info_table" >
 				<th>NO.</th>
 				<th>의료기관</th>
 				<th>기관명</th>
@@ -328,7 +326,7 @@
 				</tr><!-- 첫번째 줄 끝 -->
  			</c:forEach>
  			 </table>
- 		
+ 		</c:if>
  		
  		
  		</div>
@@ -350,10 +348,24 @@
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=97ed58e74b2a1030e3fbd1d29e3272c9"></script>
 <script type="text/javascript">
 
+selectedMenu = 'searchHosp';	
 
+/* window.addEventListener("DOMContentLoaded", function(event) {
+	  
+	  console.dir("All resources finished loading!");
+	  
+	  if(${res}){
+		  alert("일치하는 검색결과가 없습니다.");
+	  }
+	  
+	    
+	  }); */
+
+
+	  
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 mapOption = {
-    center: new kakao.maps.LatLng(37.56679, 126.97877), // 지도의 중심좌표
+    center: new kakao.maps.LatLng(${requestScope.hospList[0].yPos}, ${requestScope.hospList[0].xPos}), // 지도의 중심좌표
     level: 3, // 지도의 확대 레벨
     mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
 }; 
@@ -371,8 +383,8 @@ map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 var positions = [
     {
     	content: '<div>카카오</div>', 
-        title: '카카오', 
-        latlng: new kakao.maps.LatLng(37.56700, 126.97877)
+        title: '${requestScope.hospList[0].hospName}', 
+        latlng: new kakao.maps.LatLng(${requestScope.hospList[0].yPos}, ${requestScope.hospList[0].xPos})
     },
     {
         title: '생태연못', 
@@ -386,6 +398,7 @@ var positions = [
         title: '근린공원',
         latlng: new kakao.maps.LatLng(37.56100, 126.97877)
     }
+    
 ];
 
 // 지도에 마커를 생성하고 표시한다
@@ -404,7 +417,7 @@ for (var i = 0; i < positions.length; i ++) {
     marker.setMap(map);
 }
 
-selectedMenu = 'searchHosp';
+
 
 </script>
 
