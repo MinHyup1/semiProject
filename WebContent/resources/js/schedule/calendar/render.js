@@ -149,7 +149,7 @@ let rendPrescriptionToTable = async (event) => {
 	start.innerHTML = '<label>복용 시작일 : <input type="date" value=' + datas.start + ' readonly></label>';
 	
 	let end = document.createElement('td');
-	end.innerHTML = '<label>복용 시작일 : <input type="date" value=' + datas.end + ' readonly></label>';
+	end.innerHTML = '<label>복용 종료일 : <input type="date" value=' + datas.end + ' readonly></label>';
 	
 	let pharm = document.createElement('td');
 	pharm.innerHTML = '<label>처방 약국 : <input type="text" readonly></label>';
