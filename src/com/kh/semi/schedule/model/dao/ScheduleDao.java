@@ -142,14 +142,15 @@ public class ScheduleDao {
 		}
 	}
 
-	public void updateHasMedicalRecord(Connection conn, String scheduleId) {
+	public void updateHasMedicalRecord(Connection conn, String scheduleId, String status) {
 		PreparedStatement pstm = null;
-		String query = "update schedule_list set has_medical_record = 'Y' "
+		String query = "update schedule_list set has_medical_record = ? "
 							+ "where schedule_id = ?";
 		
 		try {
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, scheduleId);
+			pstm.setString(1, status);
+			pstm.setString(2, scheduleId);
 			pstm.executeUpdate();
 		} catch (Exception e) {
 			throw new DataAccessException(e);
@@ -158,14 +159,15 @@ public class ScheduleDao {
 		}
 	}
 
-	public void updateHasPrescription(Connection conn, String scheduleId) {
+	public void updateHasPrescription(Connection conn, String scheduleId, String status) {
 		PreparedStatement pstm = null;
-		String query = "update schedule_list set has_prescription = 'Y' "
+		String query = "update schedule_list set has_prescription = ? "
 							+ "where schedule_id = ?";
 		
 		try {
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, scheduleId);
+			pstm.setString(1, status);
+			pstm.setString(2, scheduleId);
 			pstm.executeUpdate();
 		} catch (Exception e) {
 			throw new DataAccessException(e);
@@ -174,6 +176,23 @@ public class ScheduleDao {
 		}
 	}
 
+	public void updateHasVisitNotice(Connection conn, String scheduleId, String status) {
+		PreparedStatement pstm = null;
+		String query = "update schedule_list set has_visit_notice = ? "
+							+ "where schedule_id = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, status);
+			pstm.setString(2, scheduleId);
+			pstm.executeUpdate();
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
+	
 	public void updateHasDoseNotice(Connection conn, String prescriptionId) {
 		PreparedStatement pstm = null;
 		String query = "update prescription_list set has_dose_notice = 1 "
@@ -209,23 +228,7 @@ public class ScheduleDao {
 		}
 		
 	}
-
-	public void updateHasVisitNotice(Connection conn, String scheduleId) {
-		PreparedStatement pstm = null;
-		String query = "update schedule_list set has_visit_notice = 'Y' "
-							+ "where schedule_id = ?";
-		
-		try {
-			pstm = conn.prepareStatement(query);
-			pstm.setString(1, scheduleId);
-			pstm.executeUpdate();
-		} catch (Exception e) {
-			throw new DataAccessException(e);
-		} finally {
-			template.close(pstm);
-		}
-	}
-
+	
 	public List<Schedule> selectScheduleListByUser(Connection conn, String userCode) {
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
@@ -386,6 +389,116 @@ public class ScheduleDao {
 		}
 		return timeSet;
 	}
+	
+	public Visit selectVisitByCode(Connection conn, String visitNoticeCode) {
+		PreparedStatement pstm = null;
+		String query = "select * from visit_notice where visit_notice_code = ?";
+		ResultSet rset = null;
+		Visit visit = null;
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, visitNoticeCode);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				visit = parseResultSetToVisit(rset);
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return visit;
+	}
+	
+	public Schedule selectScheduleListById(Connection conn, String scheduleId) {
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		Schedule schedule = null;
+		String query = "select * from schedule_list where schedule_id = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, scheduleId);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				schedule = parseResultSetToSchedule(rset);
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return schedule;
+	}
+	
+	public void deleteScheduleListById(Connection conn, String scheduleId) {
+		PreparedStatement pstm = null;
+		String query = "delete from schedule_list where schedule_id = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, scheduleId);
+			pstm.executeUpdate();
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
+	
+	public void deleteMedicalById(Connection conn, String historyId) {
+		PreparedStatement pstm = null;
+		String query = "delete from medical_history where history_id = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, historyId);
+			pstm.executeUpdate();
+			
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
+	
+	public void deletePrescriptionById(Connection conn, String prescriptionId) {
+		PreparedStatement pstm = null;
+		String query = "delete from prescription_list where prescription_id = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, prescriptionId);
+			pstm.executeUpdate();
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
+	
+	public void deleteVisitByCode(Connection conn, String visitNoticeCode) {
+		PreparedStatement pstm = null;
+		String query = "delete from visit_notice where visit_notice_code = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, visitNoticeCode);
+			pstm.executeUpdate();
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
+	
+	
+	
+	
+	
 
 	private Schedule parseResultSetToSchedule(ResultSet rset) throws SQLException {
 		Schedule schedule = new Schedule();
@@ -437,6 +550,7 @@ public class ScheduleDao {
 	}
 
 	
+
 
 	
 

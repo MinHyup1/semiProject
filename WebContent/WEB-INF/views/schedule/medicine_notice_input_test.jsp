@@ -72,7 +72,7 @@
 						<a href="${contextPath}/schedule/schedule-main"></i><i class="far fa-times-circle"></i></a>
 						<c:choose>
 							<c:when test="${not empty param.edit}"><button form="input_form" formaction="${contextPath}/schedule/renew-prescription"><i class="far fa-save"></i></button></c:when>
-							<c:otherwise><a href="javascript:window.history.go()"><i class="fas fa-eraser"></i></a><button form="input_form"><i class="far fa-save"></i></button></c:otherwise>
+							<c:otherwise><a href="#"><i class="fas fa-eraser"></i></a><button form="input_form"><i class="far fa-save"></i></button></c:otherwise>
 						</c:choose>
 					</div>
 				</div>
