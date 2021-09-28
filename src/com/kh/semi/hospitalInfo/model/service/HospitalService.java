@@ -1,6 +1,7 @@
 package com.kh.semi.hospitalInfo.model.service;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.semi.common.code.ErrorCode;
@@ -30,6 +31,24 @@ public class HospitalService {
 		}
 		
 		return res;
+	}
+
+	public List<HospitalInfo> searchByHospitalName(String keyWord) {
+		List<HospitalInfo> hospList = new ArrayList<HospitalInfo>();
+		Connection conn = template.getConnection();
+		
+		try {
+			hospList = hospDao.searchByHospitalName(conn,keyWord);
+			
+		} catch (Exception e) {
+			
+		}finally {
+			template.close(conn);
+		}
+		
+		
+		
+		return hospList;
 	}
 	
 }

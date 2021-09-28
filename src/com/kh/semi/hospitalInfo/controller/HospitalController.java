@@ -58,8 +58,8 @@ public class HospitalController extends HttpServlet {
 		case "update-info":
 			updateInfo(request, response);
 			break;
-		case "search":
-			searchHospital(request, response);
+		case "searchByName":
+			searchByHospitalName(request, response);
 			break;
 
 		default:
@@ -67,9 +67,27 @@ public class HospitalController extends HttpServlet {
 		}
 	}
 
-	private void searchHospital(HttpServletRequest request, HttpServletResponse response)
+	private void searchByHospitalName(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String keyWord = request.getParameter("input");
+		
+		if(keyWord == null || keyWord == "") {//공백을 입력할경우
+			response.sendRedirect("/test/searchHos");
+		}else {
+			List<HospitalInfo> hospList = hospService.searchByHospitalName(keyWord);
+			
+			request.setAttribute("hospList", hospList);
+			request.setAttribute("siez", hospList.size());
+			
+			if(hospList == null) {//검색결과가 없을경우
+				request.setAttribute("res", "null");
+			}
+			
+			request.getRequestDispatcher("/hospital/searchHospital").forward(request, response);
+		}
+		
+		
+		
 
 	}
 
