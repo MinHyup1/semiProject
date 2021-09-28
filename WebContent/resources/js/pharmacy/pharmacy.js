@@ -1,34 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<%@ include file="/WEB-INF/views/include/head.jsp" %>
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a91d097e5c5d9764f91631e0ac40e115"></script>
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a91d097e5c5d9764f91631e0ac40e115&libraries=services,clusterer,drawing"></script>
-<style type="text/css">
-
-.map{
-      
-   } 
-   
-</style>
-</head>
-<body>
-
-<div class="map">
-
- <a>확인</a>
-
-
-</div>
-
-<script type="text/javascript">
-selectedMenu = 'searchPharm';
-
-let xhr = new XMLHttpRequest();
-
-/* 시작줄 작성 */
+/**
+ * 
+ */
 
 let url = 'https://dapi.kakao.com/v2/local/search/category.json?category_group_code=BK9&x=37.5009759&y=127.03735019999999&radius=2000';
 xhr.open('get',encodeURI(url));
@@ -96,6 +68,3 @@ let drawMap = async () => {
 }
 
 drawMap();
-</script>
-</body>
-</html>
