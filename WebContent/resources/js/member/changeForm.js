@@ -91,6 +91,8 @@
 
    		document.querySelector('#frm_memberInfo').addEventListener('submit', e => {
    			
+			alert("이건 뜨나????ㄴ");
+
    			let pwReg = /(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Zㄱ-힣0-9])(?=.{8,})/;
 
    			if(!pwReg.test(password.value)){
