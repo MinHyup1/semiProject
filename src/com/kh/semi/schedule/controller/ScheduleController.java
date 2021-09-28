@@ -90,10 +90,10 @@ public class ScheduleController extends HttpServlet {
 			renewMedical(request, response);
 			break;
 		case "renew-prescription": //복용 알림 수정
-			//renewPrescription(request, response);
+			renewPrescription(request, response);
 			break;
 		case "renew-visit": //진료 알림 수정
-			//renewVisit(request, response);
+			renewVisit(request, response);
 			break;
 		default: throw new PageNotFoundException();
 		}
@@ -104,12 +104,33 @@ public class ScheduleController extends HttpServlet {
 
 	
 
-	private void renewMedical(HttpServletRequest request, HttpServletResponse response) {
+	private void renewVisit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Map<String, Object> map = (Map<String, Object>) request.getSession().getAttribute("currentSchedule");
+		Visit originVisit = (Visit) map.get("visit");
+		Visit newVisit = getVisitDto(request);
+		newVisit.setVisitNoticeCode(originVisit.getVisitNoticeCode());
+		newVisit.setScheduleId(originVisit.getScheduleId());
+		scheduleService.updateVisit(newVisit);
+		response.sendRedirect("/schedule/schedule-main?status=modify");
+	}
+
+	private void renewPrescription(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Map<String, Object> map = (Map<String, Object>) request.getSession().getAttribute("currentSchedule");
+		Prescription originPrescription = (Prescription) map.get("prescription");
+		
+		Map<String, Object> dtoMap = getPrescriptionDtoMap(request);
+		Prescription newPrescription = (Prescription) dtoMap.get("prescription");
+		newPrescription.setPrescriptionId(originPrescription.getPrescriptionId());
+		newPrescription.setScheduleId(originPrescription.getScheduleId());
+		
+		scheduleService.updatePrescription(dtoMap);
+		response.sendRedirect("/schedule/schedule-main?status=modify");
+	}
+	
+	
+
+	private void renewMedical(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Medical originMedical = (Medical) request.getSession().getAttribute("currentSchedule");
-		//삭제하고
-		
-		
-		//기존 historyId로 재등록
 		Date scheduleDate = parseStringToDate(request.getParameter("schedule_date"));
 		String hospital = request.getParameter("hospital");
 		
@@ -119,7 +140,9 @@ public class ScheduleController extends HttpServlet {
 		newMedical.setScheduleDate(scheduleDate);
 		newMedical.setScheduleName(createScheduleName(hospital));
 		//medical.setHospCode();
+		scheduleService.updateMedical(newMedical);
 		
+		response.sendRedirect("/schedule/schedule-main?status=modify");
 	}
 
 	private void deleteSchedule(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -314,35 +337,9 @@ public class ScheduleController extends HttpServlet {
 
 	//복용 알림 등록
 	private void doseNoticeRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String doseStartStr = request.getParameter("dose_start");
-		String doseEndStr = request.getParameter("dose_end");
-		String pharm = request.getParameter("pharm");
-		String[] medicine = request.getParameterValues("");
-		int doseTimes = Integer.parseInt(request.getParameter("dose_times"));
-		String[] doseNotice = request.getParameterValues("dose_notice");
-
-		Date doseStart = parseStringToDate(doseStartStr);
-		Date doseEnd = parseStringToDate(doseEndStr);
-		Map<String, Object> dtoMap = new HashMap<String, Object>();
-		
 		Member member = (Member) request.getSession().getAttribute("authentication");
 		
-		Prescription prescription = new Prescription();
-		prescription.setPrescriptionName(createPrescriptionName(pharm, medicine, doseNotice));
-		prescription.setStartDate(doseStart);
-		prescription.setEndDate(doseEnd);
-		//prescrition.setPharmCode();
-		prescription.setTimesPerDay(doseTimes);
-		dtoMap.put("prescription", prescription);
-		
-		// dose_notice_list
-		Timestamp[] doseNoticeDateTimes = createDoseNoticeDateTimes(doseStartStr, doseEndStr, doseNotice);
-		dtoMap.put("doseNoticeDateTimes", doseNoticeDateTimes);
-		
-		// medicine_list
-		if(medicine != null) {
-			
-		}
+		Map<String, Object> dtoMap = getPrescriptionDtoMap(request);
 		
 		scheduleService.insertDoseNoticeOnly(member.getUserCode(), dtoMap);
 		response.sendRedirect("/schedule/schedule-main?status=regist");
@@ -350,18 +347,8 @@ public class ScheduleController extends HttpServlet {
 
 	//진료 알림 등록
 	private void visitNoticeRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String scheduleDate = request.getParameter("schedule_date");
-		String hospital = request.getParameter("hospital");
-		String visitTime = request.getParameter("visit_notice_time");
-		Calendar noticeCalendar = addHourMinute(createCalendarFromString(scheduleDate), visitTime);
-		Timestamp noticeDateTime = new Timestamp(noticeCalendar.getTime().getTime());
-		
 		Member member = (Member) request.getSession().getAttribute("authentication");
-		
-		Visit visit = new Visit();
-		visit.setNoticeName(createVisitName(hospital));
-		//visit.setHospCode(hospCode);
-		visit.setNoticeDate(noticeDateTime);
+		Visit visit = getVisitDto(request);
 		
 		scheduleService.insertVisitNoticeOnly(member.getUserCode(), visit);
 		response.sendRedirect("/schedule/schedule-main?status=regist");
@@ -445,6 +432,54 @@ public class ScheduleController extends HttpServlet {
 		
 		scheduleService.insertMainSchedule(member.getUserCode(), dtoMap);
 		response.sendRedirect("/schedule/schedule-main?status=regist");
+	}
+	
+	private Visit getVisitDto(HttpServletRequest request) {
+		String scheduleDate = request.getParameter("schedule_date");
+		String hospital = request.getParameter("hospital");
+		String visitTime = request.getParameter("visit_notice_time");
+		Calendar noticeCalendar = addHourMinute(createCalendarFromString(scheduleDate), visitTime);
+		Timestamp noticeDateTime = new Timestamp(noticeCalendar.getTime().getTime());
+		
+		Visit visit = new Visit();
+		visit.setNoticeName(createVisitName(hospital));
+		//visit.setHospCode(hospCode);
+		visit.setNoticeDate(noticeDateTime);
+		
+		return visit;
+	}
+	
+	private Map<String, Object> getPrescriptionDtoMap(HttpServletRequest request) {
+		String doseStartStr = request.getParameter("dose_start");
+		String doseEndStr = request.getParameter("dose_end");
+		String pharm = request.getParameter("pharm");
+		String[] medicine = request.getParameterValues("");
+		int doseTimes = Integer.parseInt(request.getParameter("dose_times"));
+		String[] doseNotice = request.getParameterValues("dose_notice");
+
+		Date doseStart = parseStringToDate(doseStartStr);
+		Date doseEnd = parseStringToDate(doseEndStr);
+		Map<String, Object> dtoMap = new HashMap<String, Object>();
+		
+		Prescription prescription = new Prescription();
+		prescription.setPrescriptionName(createPrescriptionName(pharm, medicine, doseNotice));
+		prescription.setStartDate(doseStart);
+		prescription.setEndDate(doseEnd);
+		//prescrition.setPharmCode();
+		prescription.setTimesPerDay(doseTimes);
+		dtoMap.put("prescription", prescription);
+		
+		// dose_notice_list
+		if(doseNotice != null) {
+			Timestamp[] doseNoticeDateTimes = createDoseNoticeDateTimes(doseStartStr, doseEndStr, doseNotice);
+			dtoMap.put("doseNoticeDateTimes", doseNoticeDateTimes);
+		}
+		
+		// medicine_list
+		if(medicine != null) {
+			
+		}
+		return dtoMap;
 	}
 	
 	private Timestamp[] createVisitNoticeDateTimes(String[] visitNotice) {

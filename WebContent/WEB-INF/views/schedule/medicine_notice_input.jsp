@@ -59,7 +59,7 @@
 							<div><label class="add_btn">복용 알림 시간</label> <button type="button" class="add-time" onclick="addMedicineNotice()">추가</button></div>
 							<span id="timeCheck" class="valid-msg"></span>
 								<c:choose>
-									<c:when test="${not empty param.edit and not empty currentSchedule.timeSet}">
+									<c:when test="${not empty param.edit}">
 										<c:forEach items="${currentSchedule.timeSet}" var="time">
 											<label><input type="time" class='time' name="dose_notice" value='${time}' required> <i class="fas fa-trash edit-trash"></i></label>
 										</c:forEach>

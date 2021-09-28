@@ -272,6 +272,71 @@ public class ScheduleService {
 		}
 	}
 	
+	public void updateMedical(Medical newMedical) {
+		Connection conn = template.getConnection();
+		
+		try {
+			//기존 medical 삭제
+			scheduleDao.deleteMedicalById(conn, newMedical.getHistoryId());
+			//새로둔 medical 등록
+			scheduleDao.insertMedicalHistoryWithOriginId(conn, newMedical);
+			
+			template.commit(conn);
+		} catch (Exception e) {
+			template.rollback(conn);
+			throw e;
+		} finally {
+			template.close(conn);
+		}
+	}
+	
+	public void updatePrescription(Map<String, Object> dtoMap) {
+		Connection conn = template.getConnection();
+		
+		try {
+			Prescription prescription = (Prescription) dtoMap.get("prescription");
+			String prescriptionId = prescription.getPrescriptionId();
+			//기존 리스트 삭제
+			scheduleDao.deletePrescriptionById(conn, prescriptionId);
+			
+			scheduleDao.insertPrescriptionListWithOriginId(conn, prescription);
+			
+			if(dtoMap.get("doseNoticeDateTimes") != null) {
+				Timestamp[] doseNoticeDateTimes = (Timestamp[]) dtoMap.get("doseNoticeDateTimes");
+				insertDoseNoticeList(conn, doseNoticeDateTimes, prescriptionId);
+			}
+			
+			// 처방 약이 있다면, medicine_record에 insert 하고, prescription_list의 has_medicine Y로 바꾸기
+			if(dtoMap.get("medicine") != null) {
+				
+			}
+			template.commit(conn);
+		} catch (Exception e) {
+			template.rollback(conn);
+			throw e;
+		} finally {
+			template.close(conn);
+		}
+	}
+	
+	public void updateVisit(Visit newVisit) {
+		Connection conn = template.getConnection();
+		
+		try {
+			//기존 Visit 삭제
+			scheduleDao.deleteVisitByCode(conn, newVisit.getVisitNoticeCode());
+			//새로둔 Visit 등록
+			scheduleDao.insertVisitNoticeWithOriginId(conn, newVisit);
+			
+			template.commit(conn);
+		} catch (Exception e) {
+			template.rollback(conn);
+			throw e;
+		} finally {
+			template.close(conn);
+		}
+	}
+	
 	private String insertScheduleList(Connection conn, String userCode) {
 		scheduleDao.insertScheduleList(conn, userCode);
 		return scheduleDao.getCurrentScheduleId(conn);
@@ -289,9 +354,15 @@ public class ScheduleService {
 	}
 	
 	private void insertDoseNoticeList(Connection conn, Timestamp[] doseNoticeDateTimes, String prescriptionId) {
-		scheduleDao.insertDoseNotice(conn, doseNoticeDateTimes);
+		scheduleDao.insertDoseNotice(conn, doseNoticeDateTimes, prescriptionId);
 		scheduleDao.updateHasDoseNotice(conn, prescriptionId);
 	}
+
+	
+
+	
+
+	
 
 	
 
