@@ -270,6 +270,7 @@ public class ScheduleController extends HttpServlet {
 		}
 		
 		scheduleService.insertDoseNoticeOnly(member.getUserCode(), dtoMap);
+		response.sendRedirect("/schedule/schedule-main");
 	}
 
 	//진료 알림 등록
@@ -288,6 +289,7 @@ public class ScheduleController extends HttpServlet {
 		visit.setNoticeDate(noticeDateTime);
 		
 		scheduleService.insertVisitNoticeOnly(member.getUserCode(), visit);
+		response.sendRedirect("/schedule/schedule-main");
 	}
 
 	//진료 일정 기록
@@ -367,6 +369,7 @@ public class ScheduleController extends HttpServlet {
 		}
 		
 		scheduleService.insertMainSchedule(member.getUserCode(), dtoMap);
+		response.sendRedirect("/schedule/schedule-main");
 	}
 	
 	private Timestamp[] createVisitNoticeDateTimes(String[] visitNotice) {
