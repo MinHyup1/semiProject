@@ -91,20 +91,8 @@
 
    		document.querySelector('#frm_memberInfo').addEventListener('submit', e => {
    			
-			alert("이건 뜨나????????????????");
+			alert("카카오폼 작동 되는지????????????????");
 
-   			let pwReg = /(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Zㄱ-힣0-9])(?=.{8,})/;
-
-   			if(!pwReg.test(password.value)){
-   				e.preventDefault();
-				alert("비밀번호는 숫자, 영문자, 특수문자 조합의 \n 8자리 이상 문자열입니다.");
-   				document.querySelector('#pwCheck').innerHTML = '비밀번호는 숫자, 영문자, 특수문자 조합의 8자리 이상 문자열입니다.';
-   			}
-
-			if(password.value != passwordCheck.value){
-				e.preventDefault();
-				alert("비밀번호가 일치하지 않습니다.");
-			}
 
 			if(confirmNick != nick.value){
    				e.preventDefault();
@@ -120,6 +108,7 @@
 			
 			if(confirmEmail != email.value){
 				e.preventDefault();
+				alert("이메일 중복 검사를 통과하지 않았습니다.");
 				document.querySelector('#emailCheck').innerHTML = '이메일 중복 검사를 통과하지 않았습니다.';
 			}
 			

@@ -119,13 +119,20 @@ public class MemberController extends HttpServlet {
 		case "changeCancel" : //회원정보수정 취소
 			changeCancel(request,response);
 			break;
-
+		case "memberInfo" :
+			memberInfo(request,response);
+			break;
 		default: throw new PageNotFoundException();  //우리가 만든 예외처리 클래스 넣어주기
 		
 		}
 	}
 	
 
+
+	private void memberInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/member/memberInfo").forward(request, response);
+		
+	}
 
 	private void changeCancel(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("msg", "회원수정이 취소되었습니다. 메인페이지로 이동합니다.");

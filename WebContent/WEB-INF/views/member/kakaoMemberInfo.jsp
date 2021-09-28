@@ -126,7 +126,7 @@
 
 </script>
 
-<script src='${contextPath}/resources/js/member/changeForm.js'></script>
+<script src='${contextPath}/resources/js/member/kakaoForm.js'></script>
 
 </body>
 </html>
