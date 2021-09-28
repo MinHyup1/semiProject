@@ -18,7 +18,7 @@
 				<div class="wrap_form">
 					<div class="form_title">진료  기록 수정</div>
 					<div class="input_list">
-						<form action="schedule/renew-medical" method="post" class="input_form" id="input_form">
+						<form action="/schedule/renew-medical" method="post" class="input_form" id="input_form">
 							<span id="scheduleDateCheck" class="valid-msg"></span>
 							<label>진료 날짜 : <input type="date" class='standard_date' id="schedule_date" name="schedule_date" value='${currentSchedule.scheduleDate}' autofocus required></label>
 							<label class="search_btn">진료 병원 : <input type="text" name="hospital" value='${currentSchedule.hospCode}' placeholder="진료 병원을 기록해보세요" readonly> <button type="button" onclick="">검색</button></label>
