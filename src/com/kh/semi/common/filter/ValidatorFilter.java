@@ -102,6 +102,12 @@ public class ValidatorFilter implements Filter {
 				redirectUrl = "/member/memberInfo";
 			}
 			break;
+		case "kakaoMemberInfo":
+			ChangeForm changeForm2 = new ChangeForm(httpRequest);
+			if (!changeForm2.test()) { //joinForm의 테스트의 결과가 false라면(validator를 통과하지 못했을 때), 밑의 경로로 리다이렉트 하도록 지정
+				redirectUrl = "/member/kakaoMemberInfo";
+			}
+			break;
 		}
 		return redirectUrl;
 	}
