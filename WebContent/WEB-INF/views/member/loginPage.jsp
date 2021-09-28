@@ -70,8 +70,6 @@
 			          Kakao.API.request({
 			            url: '/v2/user/me', //사용자 정보를 읽어들이는 고정된 url
 			            success: function(res) {
-			            
-							alert('로그인성공');
 							
 							const email = res.kakao_account.email;
 							const nick = res.properties.nickname;

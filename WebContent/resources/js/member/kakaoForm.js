@@ -91,9 +91,6 @@
 
    		document.querySelector('#frm_memberInfo').addEventListener('submit', e => {
    			
-			alert("카카오폼 작동 되는지????????????????");
-
-
 			if(confirmNick != nick.value){
    				e.preventDefault();
 				alert("닉네임 중복 검사를 통과하지 않았습니다.");

@@ -116,6 +116,9 @@ public class MemberController extends HttpServlet {
 		case "kakaoMemberForm" : //카카오톡 회원정보수정 페이지로 이동
 			kakaoMemberForm(request,response);
 			break;
+		case "newKakaoMember" : //카카오톡 회원정보수정 페이지로 이동
+			newKakaoMember(request,response);
+			break;
 		case "changeCancel" : //회원정보수정 취소
 			changeCancel(request,response);
 			break;
@@ -128,6 +131,11 @@ public class MemberController extends HttpServlet {
 	}
 	
 
+
+	private void newKakaoMember(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/member/newKakaoMember").forward(request, response);
+		
+	}
 
 	private void memberInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/member/memberInfo").forward(request, response);
@@ -165,6 +173,7 @@ public class MemberController extends HttpServlet {
 		member.setAddress(postCode, address1, address2);
 		member.setEmail(email);
 		member.setGender(gender);
+		member.setKakaoNum(2);
 		
 		memberService.UpdateMember(member);
 		
@@ -348,7 +357,7 @@ public class MemberController extends HttpServlet {
 			session.setAttribute("authentication", kakaoMember);
 			
 			request.setAttribute("msg", "카카오 연동 회원가입이 완료되었습니다. 나머지 정보를 입력하여 주세요."); 
-			request.setAttribute("url", "/member/kakaoMemberForm"); //나머지 정보 입력하도록 이동시킴
+			request.setAttribute("url", "/member/newKakaoMember"); //나머지 정보 입력하도록 이동시킴
 			request.getRequestDispatcher("/error/result").forward(request, response);
 			return;
 		} else {
@@ -452,10 +461,13 @@ public class MemberController extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		Member userNick = (Member)session.getAttribute("authentication");
+		int num = userNick.getKakaoNum();
 		
 		if(member == null) {
 			response.getWriter().print("available");
-		} else if(nick.equals(userNick.getNick())) {
+		} else if(num != 1 && nick.equals(userNick.getNick())) {
+			response.getWriter().print("available");
+		} else if(num == 2 && nick.equals(userNick.getNick())) {
 			response.getWriter().print("available");
 		} else {
 			response.getWriter().print("disable");
@@ -468,10 +480,13 @@ public class MemberController extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		Member userPhone = (Member)session.getAttribute("authentication");
+		int num = userPhone.getKakaoNum();
 		
 		if(member == null) {
 			response.getWriter().print("available");
-		} else if(phone.equals(userPhone.getPhone())){
+		} else if(num != 1 && phone.equals(userPhone.getPhone())){
+			response.getWriter().print("available");
+		} else if(num == 2 && phone.equals(userPhone.getPhone())) {
 			response.getWriter().print("available");
 		} else {
 			response.getWriter().print("disable");
@@ -484,10 +499,13 @@ public class MemberController extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		Member userEmail = (Member)session.getAttribute("authentication");
+		int num = userEmail.getKakaoNum();
 		
 		if(member == null) {
 			response.getWriter().print("available");
-		} else if(email.equals(userEmail.getEmail())) {
+		} else if(num != 1 && email.equals(userEmail.getEmail())) {
+			response.getWriter().print("available");
+		} else if(num == 2 && email.equals(userEmail.getEmail())) {
 			response.getWriter().print("available");
 		} else {
 			response.getWriter().print("disable");

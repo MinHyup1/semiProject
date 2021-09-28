@@ -114,6 +114,10 @@ html {
 	font-size: 1.3vw;
 }
 
+.btn-primary:active{
+	background-color: #027ede;
+}
+
 .btn-block {
 	display: block;
 	width: 100%;

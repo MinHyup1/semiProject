@@ -137,6 +137,10 @@ img{
 	margin-bottom: 10px;
 }
 
+.btn-primary:active{
+	background-color: #027ede;
+}
+
 button {
 	font-family: inherit;
 	text-transform: none;
