@@ -53,30 +53,24 @@ public class MedicineController extends HttpServlet {
 		}
 	}
 
-	private void medicineInfo(HttpServletRequest request, HttpServletResponse response) {
+	private void medicineInfo(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		Medicine medicine = new Medicine();
-		//검색하고 싶은 약품 이름 받아오기	
+		// 검색하고 싶은 약품 이름 받아오기
 		String medName = request.getParameter("medName");
 		List<Medicine> medicineList = new ArrayList<Medicine>();
-		if(medicineService.selectMedicineByName(medName) == null) {
-			try {
-				medicineAPI(medName);
-				medicineService.selectMedicineByName(medName);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		medicineList = medicineService.selectMedicineByName(medName);
+
+		if (medicineList.isEmpty()) { //DB에 없을경우 API에 접속해서 확인후  DB에 저장
+			medicineList = medicineAPI(medName);			
 		}
 		
+		request.setAttribute("medicineList", medicineList);
+		request.setAttribute("size", medicineList.size());
 		
-		request.setAttribute("medName", medicine.getMedName());
-		request.setAttribute("medEfc", medicine.getMedEfc());
-		request.setAttribute("medMethod", medicine.getMedMethod());
-		request.setAttribute("medWarn", medicine.getMedWarn());
-		request.setAttribute("medImg", medicine.getMedImg());
+		request.getRequestDispatcher("/medicine/medicine").forward(request, response);
 	}
 	
-	public void medicineAPI(String medName) throws IOException {
+	public List<Medicine> medicineAPI(String medName) throws IOException {
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList?"); /*URL*/
         urlBuilder.append("&" + URLEncoder.encode("serviceKey","UTF-8") + "=" + "5oSqTcyHae2B8th6Dora7rZr6RgHBA9%2FFLdFH418ubQoO67vohoChDJ0BYGiyBGu8o3cRfxg39ZFGbaBHQor%2Fg%3D%3D"); /*공공데이터포털에서 받은 인증키*/
         urlBuilder.append("&" + URLEncoder.encode("itemName","UTF-8") + "=" + URLEncoder.encode(medName, "UTF-8")); /*제품명*/
@@ -99,6 +93,7 @@ public class MedicineController extends HttpServlet {
         }
         rd.close();
         conn.disconnect();
+        List<Medicine> medicineList = null;
         try {
 			JSONObject jObject = new JSONObject(sb.toString());
 
@@ -107,37 +102,37 @@ public class MedicineController extends HttpServlet {
 			JSONArray jArray = jsonResponse.getJSONArray("items");
 
 			Medicine med = null;
-			List<Medicine> medicineList = new ArrayList<Medicine>();
+			medicineList = new ArrayList<Medicine>();
 
-
+			
 			for (int j = 0; j < jArray.length(); j++) {
 
 				JSONObject obj = jArray.getJSONObject(j);
 				
 				int medNum = 0;
-				String medGetName = "";
-				String medEfc = "";
-				String medMethod = "";
-				String medWarn = "";
-				String medImg = "";
+				String medGetName = " ";
+				String medEfc = " ";
+				String medMethod = " ";
+				String medWarn = " ";
+				String medImg = " ";
 				
 				if(obj.has("itemName")) {
 					medGetName = obj.getString("itemName");
 				}
-				if(obj.has("itemSeq")) {
+				if(obj.has("itemSeq") && !obj.isNull("itemSeq")) {
 					medNum = obj.getInt("itemSeq");
 				}
-				if(obj.has("efcyQesitm")) {
+				if(obj.has("efcyQesitm") && !obj.isNull("efcyQesitm")) {
 					medEfc = obj.getString("efcyQesitm");
 				}
-				if(obj.has("useMethodQesitm")) {
+				if(obj.has("useMethodQesitm") && !obj.isNull("useMethodQesitm")) {
 					medMethod = obj.getString("useMethodQesitm");						
 				}
 				
-				if(obj.has("atpnWarnQesitm")) {
+				if(obj.has("atpnWarnQesitm") && !obj.isNull("atpnWarnQesitm")) {
 					medWarn = obj.getString("atpnWarnQesitm");
 				}
-				if(obj.has("itemImage")) {
+				if(obj.has("itemImage") && !obj.isNull("itemImage")) {
 					medImg = String.valueOf(obj.get("itemImage"));
 				}
 
@@ -152,7 +147,9 @@ public class MedicineController extends HttpServlet {
 				medicineList.add(med);
 			}
 			if (medicineService.getMedicineInfo(medicineList) > 0) {
+				System.out.println(medicineList);
 				System.out.println("API에서 정보를 정상적으로 가져왔습니다.");
+				
 			}
 			
 
@@ -162,6 +159,8 @@ public class MedicineController extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        
+        return medicineList;
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

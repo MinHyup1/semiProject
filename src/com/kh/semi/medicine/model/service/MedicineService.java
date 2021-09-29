@@ -16,8 +16,8 @@ public class MedicineService {
 	//이름으로 검색할 경우 db에서 약 정보를 확인해서 가져옴 (리스트로 받아오려고 하려 생각중)
 	
 	public List<Medicine> selectMedicineByName(String medName) {
-		Connection conn = template.getConnection();
-		Medicine medicine = null;
+		Connection conn = template.getConnection();		
+		
 		List<Medicine> medicineList = new ArrayList<Medicine>();
 		try {			
 			medicineList = medicineDao.selectMedicineByName(medName,conn);
