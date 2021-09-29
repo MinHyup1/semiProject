@@ -93,20 +93,36 @@ public class HospitalController extends HttpServlet {
 
 	private void updateInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, JSONException {
 
-		for (int i = 1; i < 95; i++) {
+		
+		
+		
+		for (int i = 1; i < 89; i++) {
+			
+			String dgsbjtCd = String.valueOf(i);
+			if(i < 10) {
+				dgsbjtCd = "0"+ String.valueOf(i);
+			}
+			System.out.println("진료과목코드 : " + dgsbjtCd);
+			
+			boolean flg = true;
+			
+			int pageNum = 1;
+			
+			while(flg) {
+				
 			StringBuilder urlBuilder = new StringBuilder(
 					"http://apis.data.go.kr/B551182/hospInfoService1/getHospBasisList1"); /* URL */
 			urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8")
 					+ "=WbW7KMwW0GkyneJEApEQUjXNL%2BBLWh1iAnVATl%2FUWX5YemHkvr0a6PRm4UNv5mm%2Fsj2vVgHPgFqmTkqkeS5hng%3D%3D"); /*
-																																 * Service
-																																 * Key
 																																 */
 			urlBuilder.append(
 					"&" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + URLEncoder.encode("-", "UTF-8")); /* 서비스키 */
 			urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "="
-					+ URLEncoder.encode(String.valueOf(i), "UTF-8")); /* 페이지번호 */
+					+ URLEncoder.encode(String.valueOf(pageNum), "UTF-8")); /* 페이지번호 */
 			urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
 					+ URLEncoder.encode("800", "UTF-8")); /* 한 페이지 결과 수 */
+			urlBuilder.append("&" + URLEncoder.encode("dgsbjtCd","UTF-8") + "=" 
+					+ URLEncoder.encode(dgsbjtCd, "UTF-8")); /*진료과목코드(활용가이드 참조)*/
 			urlBuilder.append(
 					"&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /* JSON 파싱 */
 
@@ -132,7 +148,15 @@ public class HospitalController extends HttpServlet {
 			// 가장 큰 JSONObject를 가져옵니다.
 			try {
 				JSONObject jObject = new JSONObject(sb.toString());
-
+				int totalCnt = jObject.getJSONObject("response").getJSONObject("body")
+				.getInt("totalCount");
+				
+				if( totalCnt == 0 || Math.floor(totalCnt/800) + 2 <= pageNum ) {//결과가 존재하지 않을시
+					System.out.println("결과가 없습니다.");
+					flg = false;
+					continue;
+				}
+				
 				JSONObject jsonResponse = jObject.getJSONObject("response").getJSONObject("body")
 						.getJSONObject("items");
 				JSONArray jArray = jsonResponse.getJSONArray("item");
@@ -146,7 +170,6 @@ public class HospitalController extends HttpServlet {
 					JSONObject obj = jArray.getJSONObject(j);
 					
 					String hospAddr = "-";
-					String clCd = "-";
 					String hospTell = "-";
 					String hospUrl = "-";
 					String hospName = "-";
@@ -156,8 +179,8 @@ public class HospitalController extends HttpServlet {
 					if(obj.has("addr")) {
 						hospAddr = obj.getString("addr");
 					}
-					if(obj.has("clCd")) {
-						clCd = String.valueOf(obj.getInt("clCd"));
+					if(obj.has("dgsbjtCd")) {
+						
 					}
 					if(obj.has("telno")) {
 						hospTell = obj.getString("telno");
@@ -178,7 +201,7 @@ public class HospitalController extends HttpServlet {
 					}
 
 					hosp = new HospitalInfo();
-					hosp.setHospTreat(clCd);
+					hosp.setHospTreat(dgsbjtCd);
 					hosp.setHospTell(hospTell);
 					hosp.setHospName(hospName);
 					hosp.setHospUrl(hospUrl);
@@ -190,13 +213,18 @@ public class HospitalController extends HttpServlet {
 
 				}
 
+				
+				
+				
 				if (hospService.updateHospInfo(hospList) >= 1) {
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					Date time = new Date();
 					String time1 = format.format(time);
 
-					System.out.println("[" + time1 + "]"+ i + " 페이지 병원정보 업데이트 완료.");
+					System.out.println("[" + time1 + "]" + pageNum +" 페이지 병원정보 업데이트 완료.");
 				}
+				
+				pageNum++;
 
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -205,7 +233,7 @@ public class HospitalController extends HttpServlet {
 				e.printStackTrace();
 			}
 
-
+			}
 
 		}
 
