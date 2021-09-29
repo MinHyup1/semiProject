@@ -21,7 +21,7 @@
 						<form action="/schedule/schedule-register" method="post" class="input_form" id="input_form">
 							<span id="scheduleDateCheck" class="valid-msg"></span>
 							<label>진료 날짜 : <input type="date" class='standard_date' id="schedule_date" name="schedule_date" value='${param.date}' autofocus required></label>
-							<label class="search_btn">진료 병원 : <input type="text" name="hospital" placeholder="진료 병원을 기록해보세요" readonly> <button type="button" onclick="">검색</button></label>
+							<label class="search_btn">진료 병원 : <input type="text" name="hospital" placeholder="진료 병원을 기록해보세요" readonly> <button type="button" onclick="createHospitalPopup()">검색</button></label>
 							<label class="search_btn">처방 약국 : <input type="text" name="pharm" placeholder="방문한 약국을 기록해보세요" readonly> <button type="button" onclick="">검색</button></label>
 							<label class="search_btn">처방 약 : <input type="text" name="searched_med" placeholder="처방 받은 약을 기록해보세요" readonly> <button type="button" onclick="">검색</button></label>
 							<div><span>aaa</span></div><!-- 처음에는 1칸, 약 추가시 칸 추가 / 휴지통 아이콘 사용하기 -->
