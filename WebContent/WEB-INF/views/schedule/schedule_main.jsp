@@ -48,7 +48,7 @@
 						</table>
 					</div>
 					<div class="action_icons">
-						<a href="${contextPath}/schedule/schedule-delete"><i class="fas fa-trash-alt"></i></i></a><a class="edit" href="${contextPath}/schedule/schedule-edit"><i class="fas fa-edit"></i></a>
+						<a href="${contextPath}/schedule/schedule-delete"><i class="fas fa-trash-alt"></i></i></a><a class="edit" href="${contextPath}/schedule/schedule-edit/"><i class="fas fa-edit"></i></a>
 					</div>
 				</div>
 			</div>
@@ -59,6 +59,19 @@
 		</footer>
 	</div>
 <script type="text/javascript">
+	<c:choose>
+		<c:when test="${param.status == 'regist'}">
+			alert("스케줄이 성공적으로 등록되었습니다.");
+		</c:when>
+		<c:when test="${param.status == 'delete'}">
+			alert("스케줄이 성공적으로 삭제되었습니다.");
+		</c:when>
+		<c:when test="${param.status == 'modify'}">
+			alert("스케줄이 성공적으로 수정되었습니다.");
+		</c:when>
+		<c:otherwise></c:otherwise>
+	</c:choose>
+	
 	selectedMenu = 'schedule';
 </script>
 </body>

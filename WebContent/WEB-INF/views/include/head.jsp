@@ -13,6 +13,7 @@
 <script src="${contextPath}/resources/js/bootstrap.js"></script>
 <script src="${contextPath}/resources/js/klorofil-common.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script src="${contextPath}/resources/js/schedule/schedule-fetch.js"></script>
 <html>
 <head>
 </head>
@@ -41,15 +42,15 @@
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                         <i class="far fa-bell"></i> <!--종 아이콘  -->
-                        <span class="badge bg-danger">5</span> <!-- 종아이콘에 나오는 숫자 -->
+                        <span class="badge bg-danger"></span> <!-- 종아이콘에 나오는 숫자 -->
                      </a>
                      <ul class="dropdown-menu notifications"> <!-- 종버튼 알람부분 -->
-                        <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
+                        <!-- <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
                         <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
                         <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
                         <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
-                        <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
-                        <li><a href="#" class="more">See all notifications</a></li>
+                        <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li> -->
+                        <li><a href="#" class="/schedule/schedule-main">진행 중이거나 곧 예정인 알림이 없습니다.</a></li>
                      </ul>
                   </li>
                   <li class="dropdown"> <!-- dropdown open -->
@@ -79,8 +80,8 @@
             <nav>
                <ul class="nav asdasd">
                   <li><a href="/test/searchHos" class="" data-loc="searchHosp"><i class="fas fa-hospital"></i> <span>병원 검색</span></a></li>
-                  <li><a href="/test/searchPharm" class="" data-loc="searchPharm"><i class="fas fa-vial"></i> <span>약국 검색</span></a></li>
-                  <li><a href="/test/searchMedi" class="" data-loc="searchMedi"><i class="fas fa-pills"></i> <span>의약품 검색</span></a></li>
+                  <li><a href="${contextPath}/pharmacy/pharmacy" class="" data-loc="searchPharm"><i class="fas fa-vial"></i> <span>약국 검색</span></a></li>
+                  <li><a href="${contextPath}/Medicine/medicineMain" class="" data-loc="searchMedi"><i class="fas fa-pills"></i> <span>의약품 검색</span></a></li>
                   <li><a href="${contextPath}/schedule/schedule-main" class="" data-loc="schedule"><i class="far fa-calendar-check"></i> <span>진료 스케줄</span></a></li> <!-- href 수정 -->
                   <li><a href="/test/board" class="" data-loc="board"><i class="fas fa-list"></i> <span>게시판</span></a></li>
                </ul>

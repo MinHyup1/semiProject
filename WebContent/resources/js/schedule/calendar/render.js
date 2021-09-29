@@ -17,6 +17,7 @@ let scheduleArray;
 	let originColor = undefined;
 	
 	if(!document.querySelector('.select_menu')) {
+		/*입력폼에서 standart-date에 값 없으면 달력 안띄워짐*/
 		standardDate = document.querySelector('.standard_date').value;
 	}
 	
@@ -120,7 +121,6 @@ let scheduleClick = async (event) => {
 
 let rendMedicalToTable = async (event) => {
 	let historyId = event.id;
-	
 	let response = await fetch('/schedule/get-medical?historyId=' + historyId);
 	let datas = await response.json();
 	document.querySelector('.schedule_table>tbody').innerHTML = '';
@@ -133,24 +133,23 @@ let rendMedicalToTable = async (event) => {
 	
 	document.querySelector('.schedule_table>tbody').append(date);
 	document.querySelector('.schedule_table>tbody').append(hospital);
+	document.querySelector('.edit').href = document.querySelector('.edit').href.split('schedule-edit')[0];
+	document.querySelector('.edit').href += 'schedule-edit/medical';
 	document.querySelector('.action_icons').style.visibility = 'visible';
-	document.querySelector('.edit').href += '/medical';
 }
 
 let rendPrescriptionToTable = async (event) => {
 	let prescriptionId = event.id;
-	
 	let response = await fetch('/schedule/get-prescription?prescriptionId=' + prescriptionId);
 	let datas = await response.json();
-	console.dir(datas);
-	let tbody = document.querySelector('.schedule_table>tbody')
+	let tbody = document.querySelector('.schedule_table>tbody');
 	tbody.innerHTML = '';
 	
 	let start = document.createElement('td');
 	start.innerHTML = '<label>복용 시작일 : <input type="date" value=' + datas.start + ' readonly></label>';
 	
 	let end = document.createElement('td');
-	end.innerHTML = '<label>복용 시작일 : <input type="date" value=' + datas.end + ' readonly></label>';
+	end.innerHTML = '<label>복용 종료일 : <input type="date" value=' + datas.end + ' readonly></label>';
 	
 	let pharm = document.createElement('td');
 	pharm.innerHTML = '<label>처방 약국 : <input type="text" readonly></label>';
@@ -176,12 +175,36 @@ let rendPrescriptionToTable = async (event) => {
 			tbody.append(timeTd);
 		})
 	}
+	
+	document.querySelector('.edit').href = document.querySelector('.edit').href.split('schedule-edit')[0];
+	document.querySelector('.edit').href += 'schedule-edit/prescription?edit=1';
 	document.querySelector('.action_icons').style.visibility = 'visible';
-	document.querySelector('.edit').href += '/prescription';
 }
 
-let rendVisitToTable = (event) => {
+let rendVisitToTable = async (event) => {
+	let visitNoticeCode = event.id;
+	let response = await fetch('/schedule/get-visit?visitNoticeCode=' + visitNoticeCode);
+	let datas = await response.json();
+	document.querySelector('.schedule_table>tbody').innerHTML = '';
 	
+	let date = document.createElement('td');
+	date.innerHTML = '<label>알림 날짜 : <input type="date" value=' + datas.notice_date + ' readonly></label>';
+	
+	let hospital = document.createElement('td');
+	hospital.innerHTML = '<label>진료 병원 : <input type="text" readonly></label>';
+	if(datas.hospital) {
+		hospital.innerHTML = '<label>진료 병원 : <input type="text" value=' + datas.hospital + ' readonly></label>';
+	}
+	
+	let time = document.createElement('td');
+	time.innerHTML = '<label>알림 시간 : <input type="time" value=' + datas.notice_time + ' readonly></label>';
+	
+	document.querySelector('.schedule_table>tbody').append(date);
+	document.querySelector('.schedule_table>tbody').append(hospital);
+	document.querySelector('.schedule_table>tbody').append(time);
+	document.querySelector('.edit').href = document.querySelector('.edit').href.split('schedule-edit')[0];
+	document.querySelector('.edit').href += 'schedule-edit/visit?edit=1';
+	document.querySelector('.action_icons').style.visibility = 'visible';
 }
 
 var rendScheduleTable = function () {
