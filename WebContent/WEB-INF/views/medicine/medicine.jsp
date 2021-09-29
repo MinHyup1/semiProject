@@ -12,20 +12,19 @@
 		background-color: lightyellow;
 		border-style: groove;	
 	}
+	
 </style>
 </head>
 <body>
 	<div class="main">
-	
+	<h1>의 약 품 검 색</h1>
 		<form method="post" action="medicineInfo">
 		<label>검색할 약품명 : </label>
 		<input type="text" class="medName" name="medName">
 		<button>확인</button>
 		</form>
-	</div>
-	<div>
 	<c:if test="${not empty requestScope.medicineList}">  
-		 	<table>
+		 	<table border="1" class="medList" style ="text-align: center">
 				<th>약 모양</th>
 				<th>약 이름</th>
 				<th>약 효능</th>
@@ -33,7 +32,7 @@
 				<th>주의사항</th>
 				<c:forEach var="i" begin="0" step="1" end="${size -1}" varStatus="status">
 				<tr><!-- 첫번째 줄 시작 -->
-				    <td>${requestScope.medicineList[i].medImg}</td>
+				    <td><img src="${requestScope.medicineList[i].medImg}"style="width: 100px; height: auto;"/></td>
 				    <td>${requestScope.medicineList[i].medName}</td>
 				    <td>${requestScope.medicineList[i].medEfc}</td>
 				    <td>${requestScope.medicineList[i].medMethod}</td>

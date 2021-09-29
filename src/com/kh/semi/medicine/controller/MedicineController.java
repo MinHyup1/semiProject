@@ -64,10 +64,10 @@ public class MedicineController extends HttpServlet {
 			medicineList = medicineAPI(medName);			
 		}
 		
+		
 		request.setAttribute("medicineList", medicineList);
 		request.setAttribute("size", medicineList.size());
-		
-		request.getRequestDispatcher("/medicine/medicine").forward(request, response);
+		request.getRequestDispatcher("/medicine/medicine").forward(request, response);		
 	}
 	
 	public List<Medicine> medicineAPI(String medName) throws IOException {
@@ -98,9 +98,10 @@ public class MedicineController extends HttpServlet {
 			JSONObject jObject = new JSONObject(sb.toString());
 
 			JSONObject jsonResponse = jObject.getJSONObject("body");
-			System.out.println(jsonResponse);
-			JSONArray jArray = jsonResponse.getJSONArray("items");
-
+			
+			JSONArray jArray = jsonResponse.getJSONArray("items");;
+			
+						
 			Medicine med = null;
 			medicineList = new ArrayList<Medicine>();
 
