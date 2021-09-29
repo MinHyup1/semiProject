@@ -1,7 +1,5 @@
 package com.kh.semi.medicine.model.dto;
 
-import java.util.Date;
-
 public class Medicine {
 
 	private int medNum;
@@ -10,7 +8,7 @@ public class Medicine {
 	private String medMethod;
 	private String medWarn;
 	private String medImg;
-	private Date medUpdate; //DB 업데이트 확인 용도
+	
 	
 	public int getMedNum() {
 		return medNum;
@@ -48,16 +46,11 @@ public class Medicine {
 	public void setMedImg(String medImg) {
 		this.medImg = medImg;
 	}
-	public Date getMedUpdate() {
-		return medUpdate;
-	}
-	public void setMedUpdate(Date medUpdate) {
-		this.medUpdate = medUpdate;
-	}
+	
 	@Override
 	public String toString() {
 		return "Medicine [medNum=" + medNum + ", medName=" + medName + ", medEfc=" + medEfc + ", medMethod=" + medMethod
-				+ ", medWarn=" + medWarn + ", medImg=" + medImg + ", medUpdate=" + medUpdate + "]";
+				+ ", medWarn=" + medWarn + ", medImg=" + medImg + "]";
 	}
 	
 	

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link href='${contextPath}/resources/css/member/kakaoMemberInfo.css' rel='stylesheet'/>
+<link href='${contextPath}/resources/css/member/newKakaoMember.css' rel='stylesheet'/>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <title>Insert title here</title>
@@ -93,7 +93,6 @@
 	</table>
 		<div class="footBtwrap">
 			<a id="modify"><input type="submit" value="회원정보수정" class="fpmgBt1"></a>
-			<a id="cancel"href="/member/changeCancel"><input type="button" value="취소" class="fpmgBt2"></a>
 			<a href="/member/delete" onclick="unlinkApp()"id="out"><input type="button" value="회원탈퇴" class="fpmgBt3"></a>
 		</div>
 	

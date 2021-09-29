@@ -20,7 +20,7 @@
 								<p class="joinInfo">회원가입</p>
 								<p class="lead">카카오톡으로 간편하게 회원가입 하세요.</p>
 							</div>
-														<form class="form-auth-small" name="kakaologin_frm" action="/member/kakaoLogin" method="post">
+							<form class="form-auth-small" name="kakaologin_frm" action="/member/kakaoLogin" method="post">
 								<div class="form-group" id="kakaoLogin">
 									<div class="kakaoBtn">
 										<!-- 카카오 정보 넣어줄 input 숨김처리로 넣어놓음 -->
@@ -28,7 +28,7 @@
 										<input type="hidden" name="kakaoNick" id="kakaoNick" />
 										<input type="hidden" name="kakaoGender" id="kakaoGender" />
 										<a href="javascript:loginWithKakao();" id="custom-login-btn">
-											<img src="../resources/img/kakao_login_medium_wide.png" />  <!-- 버튼 높이 조금 줄이고싶은데 실패함..  -->
+											<img src="../resources/img/kakao_login_medium_wide.png" />
 											<!-- <button class="btn btn-lg kakao">카카오톡 간편 로그인</button> -->
 										</a>
 									</div>
@@ -68,8 +68,6 @@
 	          Kakao.API.request({
 	            url: '/v2/user/me', //사용자 정보를 읽어들이는 고정된 url
 	            success: function(res) {
-	            
-					alert('로그인성공');
 					
 					const email = res.kakao_account.email;
 					const nick = res.properties.nickname;

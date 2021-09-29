@@ -137,6 +137,10 @@ img{
 	margin-bottom: 10px;
 }
 
+.btn-primary:active{
+	background-color: #027ede;
+}
+
 button {
 	font-family: inherit;
 	text-transform: none;
@@ -155,6 +159,11 @@ a {
 	color: #3287B2;
 	text-decoration: none;
 	background-color: transparent;
+}
+
+#a1:active, #a2:active, #a3:active{
+	color: green;
+	font-weight: bolder;
 }
 
 p {

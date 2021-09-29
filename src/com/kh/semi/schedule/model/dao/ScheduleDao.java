@@ -80,6 +80,26 @@ public class ScheduleDao {
 		}
 	}
 	
+	public void insertMedicalHistoryWithOriginId(Connection conn, Medical medical) {
+		PreparedStatement pstm = null;
+		String query = "insert into medical_history(history_id, schedule_id, schedule_date, "
+				+ "schedule_name, hosp_code) values(?, ?, ?, ?, ?)";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, medical.getHistoryId());
+			pstm.setString(2, medical.getScheduleId());
+			pstm.setDate(3, medical.getScheduleDate());
+			pstm.setString(4, medical.getScheduleName());
+			pstm.setString(5, medical.getHospCode());
+			pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
+	
 	public String getCurrentPrescriptionId(Connection conn) {
 		PreparedStatement pstm = null;
 		String query = "select sc_prescription_id.currval from dual";
@@ -121,10 +141,33 @@ public class ScheduleDao {
 			template.close(pstm);
 		}
 	}
+	
+	public void insertPrescriptionListWithOriginId(Connection conn, Prescription prescription) {
+		PreparedStatement pstm = null;
+		String query = "insert into prescription_list(prescription_id, schedule_id, prescription_name, "
+					+ "start_date, end_date, pharm_code, times_per_day) "
+					+ "values(?, ?, ?, ?, ?, ?, ?)";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, prescription.getPrescriptionId());
+			pstm.setString(2, prescription.getScheduleId());
+			pstm.setString(3, prescription.getPrescriptionName());
+			pstm.setDate(4, prescription.getStartDate());
+			pstm.setDate(5, prescription.getEndDate());
+			pstm.setString(6, prescription.getPharmCode());
+			pstm.setInt(7, prescription.getTimesPerDay());
+			pstm.executeUpdate();
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
 
-	public void insertDoseNotice(Connection conn, Timestamp[] doseNoticeDateTimes) {
+	public void insertDoseNotice(Connection conn, Timestamp[] doseNoticeDateTimes, String prescriptionId) {
 		CallableStatement cstm = null;
-		String query = "{call insert_dose_notice(?,?)}";
+		String query = "{call insert_dose_notice(?,?,?)}";
 		
 		try {
 			cstm = conn.prepareCall(query);
@@ -134,6 +177,7 @@ public class ScheduleDao {
 			
 			cstm.setArray(1, noticeTimeArr);
 			cstm.setInt(2, doseNoticeDateTimes.length);
+			cstm.setString(3, prescriptionId);
 			cstm.executeUpdate();
 		} catch (Exception e) {
 			throw new DataAccessException(e);
@@ -142,14 +186,15 @@ public class ScheduleDao {
 		}
 	}
 
-	public void updateHasMedicalRecord(Connection conn, String scheduleId) {
+	public void updateHasMedicalRecord(Connection conn, String scheduleId, String status) {
 		PreparedStatement pstm = null;
-		String query = "update schedule_list set has_medical_record = 'Y' "
+		String query = "update schedule_list set has_medical_record = ? "
 							+ "where schedule_id = ?";
 		
 		try {
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, scheduleId);
+			pstm.setString(1, status);
+			pstm.setString(2, scheduleId);
 			pstm.executeUpdate();
 		} catch (Exception e) {
 			throw new DataAccessException(e);
@@ -158,14 +203,15 @@ public class ScheduleDao {
 		}
 	}
 
-	public void updateHasPrescription(Connection conn, String scheduleId) {
+	public void updateHasPrescription(Connection conn, String scheduleId, String status) {
 		PreparedStatement pstm = null;
-		String query = "update schedule_list set has_prescription = 'Y' "
+		String query = "update schedule_list set has_prescription = ? "
 							+ "where schedule_id = ?";
 		
 		try {
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, scheduleId);
+			pstm.setString(1, status);
+			pstm.setString(2, scheduleId);
 			pstm.executeUpdate();
 		} catch (Exception e) {
 			throw new DataAccessException(e);
@@ -174,6 +220,23 @@ public class ScheduleDao {
 		}
 	}
 
+	public void updateHasVisitNotice(Connection conn, String scheduleId, String status) {
+		PreparedStatement pstm = null;
+		String query = "update schedule_list set has_visit_notice = ? "
+							+ "where schedule_id = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, status);
+			pstm.setString(2, scheduleId);
+			pstm.executeUpdate();
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
+	
 	public void updateHasDoseNotice(Connection conn, String prescriptionId) {
 		PreparedStatement pstm = null;
 		String query = "update prescription_list set has_dose_notice = 1 "
@@ -207,17 +270,21 @@ public class ScheduleDao {
 		} finally {
 			template.close(pstm);
 		}
-		
 	}
-
-	public void updateHasVisitNotice(Connection conn, String scheduleId) {
+	
+	public void insertVisitNoticeWithOriginId(Connection conn, Visit visit) {
 		PreparedStatement pstm = null;
-		String query = "update schedule_list set has_visit_notice = 'Y' "
-							+ "where schedule_id = ?";
+		String qurey = "insert into visit_notice(visit_notice_code, schedule_id, "
+				+ "notice_name, hosp_code, notice_date) "
+				+ "values(?, ?, ?, ?, ?)";
 		
 		try {
-			pstm = conn.prepareStatement(query);
-			pstm.setString(1, scheduleId);
+			pstm = conn.prepareStatement(qurey);
+			pstm.setString(1, visit.getVisitNoticeCode());
+			pstm.setString(2, visit.getScheduleId());
+			pstm.setString(3, visit.getNoticeName());
+			pstm.setString(4, visit.getHospCode());
+			pstm.setTimestamp(5, visit.getNoticeDate());
 			pstm.executeUpdate();
 		} catch (Exception e) {
 			throw new DataAccessException(e);
@@ -225,7 +292,7 @@ public class ScheduleDao {
 			template.close(pstm);
 		}
 	}
-
+	
 	public List<Schedule> selectScheduleListByUser(Connection conn, String userCode) {
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
@@ -386,6 +453,116 @@ public class ScheduleDao {
 		}
 		return timeSet;
 	}
+	
+	public Visit selectVisitByCode(Connection conn, String visitNoticeCode) {
+		PreparedStatement pstm = null;
+		String query = "select * from visit_notice where visit_notice_code = ?";
+		ResultSet rset = null;
+		Visit visit = null;
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, visitNoticeCode);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				visit = parseResultSetToVisit(rset);
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return visit;
+	}
+	
+	public Schedule selectScheduleListById(Connection conn, String scheduleId) {
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		Schedule schedule = null;
+		String query = "select * from schedule_list where schedule_id = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, scheduleId);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				schedule = parseResultSetToSchedule(rset);
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return schedule;
+	}
+	
+	public void deleteScheduleListById(Connection conn, String scheduleId) {
+		PreparedStatement pstm = null;
+		String query = "delete from schedule_list where schedule_id = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, scheduleId);
+			pstm.executeUpdate();
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
+	
+	public void deleteMedicalById(Connection conn, String historyId) {
+		PreparedStatement pstm = null;
+		String query = "delete from medical_history where history_id = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, historyId);
+			pstm.executeUpdate();
+			
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
+	
+	public void deletePrescriptionById(Connection conn, String prescriptionId) {
+		PreparedStatement pstm = null;
+		String query = "delete from prescription_list where prescription_id = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, prescriptionId);
+			pstm.executeUpdate();
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
+	
+	public void deleteVisitByCode(Connection conn, String visitNoticeCode) {
+		PreparedStatement pstm = null;
+		String query = "delete from visit_notice where visit_notice_code = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, visitNoticeCode);
+			pstm.executeUpdate();
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
+	
+	
+	
+	
+	
 
 	private Schedule parseResultSetToSchedule(ResultSet rset) throws SQLException {
 		Schedule schedule = new Schedule();
@@ -437,6 +614,7 @@ public class ScheduleDao {
 	}
 
 	
+
 
 	
 

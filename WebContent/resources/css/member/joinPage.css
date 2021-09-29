@@ -89,6 +89,16 @@ html {
 	color: #424242;
 }
 
+#custom-login-btn{
+	width: 100%;
+}
+
+
+img{
+	width: 100%;
+	object-fit: cover;
+}
+
 .btn, .btn-lg {
 	padding: 8px 0px;
 	line-height: 1.333333;
@@ -112,6 +122,10 @@ html {
 	color: #fff;
 	font-weight: bolder;
 	font-size: 1.3vw;
+}
+
+.btn-primary:active{
+	background-color: #027ede;
 }
 
 .btn-block {

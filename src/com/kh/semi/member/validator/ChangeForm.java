@@ -43,7 +43,7 @@ public class ChangeForm {
 		
 	
 
-		// 비밀번호가 영수특수문자 조합의 8자리 이상 문자열
+		//비밀번호가 영수특수문자 조합의 8자리 이상 문자열
 		valid = Pattern.matches("(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Zㄱ-힣0-9]).{8,}", password); //자바 정규표현식이라 자릿수 부분 살짝 다름
 		if (!valid) { //비밀번호 패턴이 통과되지 못했다면,
 			failedAttribute.put("password", password); //실패한 값들 넣어주기
