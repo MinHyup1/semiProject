@@ -91,6 +91,13 @@
 
    		document.querySelector('#frm_memberInfo').addEventListener('submit', e => {
    			
+			let nameReg = /^[가-힣]{2,5}$|^[a-zA-Z]{2,}$/;
+			
+			if(!nameReg.test(name.value)){
+				e.preventDefault();
+				document.querySelector('#nameCheck').innerHTML = '이름을 올바르게 입력하세요.';
+			}
+
 			if(confirmNick != nick.value){
    				e.preventDefault();
 				alert("닉네임 중복 검사를 통과하지 않았습니다.");

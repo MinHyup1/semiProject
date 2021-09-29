@@ -151,17 +151,18 @@ public class MemberDao {
 	public int updateMember(Member member, Connection conn) {
 		int res = 0;
 		PreparedStatement pstm = null;
-		String query = "update member set password = ?,nick = ?, phone = ?, address = ?, email = ? "
+		String query = "update member set password = ?, name = ?, nick = ?, phone = ?, address = ?, email = ? "
 				+ " where id = ?";
 		
 		try {
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, member.getPassword());
-			pstm.setString(2, member.getNick());
-			pstm.setString(3, member.getPhone());
-			pstm.setString(4, member.getAddress());
-			pstm.setString(5, member.getEmail());
-			pstm.setString(6, member.getId());
+			pstm.setString(2, member.getName());
+			pstm.setString(3, member.getNick());
+			pstm.setString(4, member.getPhone());
+			pstm.setString(5, member.getAddress());
+			pstm.setString(6, member.getEmail());
+			pstm.setString(7, member.getId());
 
 			res = pstm.executeUpdate();
 		} catch (SQLException e) {

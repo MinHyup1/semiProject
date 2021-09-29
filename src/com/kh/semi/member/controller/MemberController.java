@@ -159,6 +159,7 @@ public class MemberController extends HttpServlet {
 		Member member = new Member();
 		member = (Member) request.getSession().getAttribute("authentication");
 		String userId = member.getId(); //아이디 고정
+		String name = request.getParameter("name");
 		String nick = request.getParameter("nick");
 		String phone = request.getParameter("phone");
 		String postCode = request.getParameter("postCode");
@@ -168,6 +169,7 @@ public class MemberController extends HttpServlet {
 		String gender = request.getParameter("gender");
 
 		member.setId(userId);
+		member.setName(name);
 		member.setNick(nick);
 		member.setPhone(phone);
 		member.setAddress(postCode, address1, address2);
@@ -188,6 +190,7 @@ public class MemberController extends HttpServlet {
 		member = (Member) request.getSession().getAttribute("authentication");
 		String userId = member.getId();
 		String password = request.getParameter("password");
+		String name = member.getName();
 		String nick = request.getParameter("nick");
 		String phone = request.getParameter("phone");
 		String postCode = request.getParameter("postCode");
@@ -199,6 +202,7 @@ public class MemberController extends HttpServlet {
 		// 받아 온 정보들 member에 넣어주기
 		member.setId(userId);
 		member.setPassword(password);
+		member.setName(name);
 		member.setNick(nick);
 		member.setPhone(phone);
 		member.setAddress(postCode, address1, address2);
