@@ -151,7 +151,7 @@ public class MemberDao {
 	public int updateMember(Member member, Connection conn) {
 		int res = 0;
 		PreparedStatement pstm = null;
-		String query = "update member set password = ?, name = ?, nick = ?, phone = ?, address = ?, email = ? "
+		String query = "update member set password = ?, name = ?, nick = ?, phone = ?, address = ?, email = ?, gender = ?, kakaoNum = ?"
 				+ " where id = ?";
 		
 		try {
@@ -162,7 +162,9 @@ public class MemberDao {
 			pstm.setString(4, member.getPhone());
 			pstm.setString(5, member.getAddress());
 			pstm.setString(6, member.getEmail());
-			pstm.setString(7, member.getId());
+			pstm.setString(7, member.getGender());
+			pstm.setInt(8, member.getKakaoNum());
+			pstm.setString(9, member.getId());
 
 			res = pstm.executeUpdate();
 		} catch (SQLException e) {
@@ -318,6 +320,7 @@ public class MemberDao {
 		member.setAddress(rset.getString("address"),"","");
 		member.setEmail(rset.getString("email"));
 		member.setGender(rset.getString("gender"));
+		member.setKakaoNum(rset.getInt("kakaoNum"));
 
 		return member;
 	}
@@ -340,6 +343,7 @@ public class MemberDao {
 			case "address" : member.setAddress(rset.getString("address"),"",""); break;
 			case "email" : member.setEmail(rset.getString("email")); break;
 			case "gender" : member.setGender(rset.getString("gender")); break;
+			case "kakaoNum" : member.setKakaoNum(rset.getInt("kakaoNum")); break;
 			default : throw new SQLException("부적절한 컬럼명을 전달했습니다."); //예외처리
 			}
 		}
