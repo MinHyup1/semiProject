@@ -364,14 +364,16 @@ public class MemberController extends HttpServlet {
 			request.setAttribute("url", "/member/newKakaoMember"); //나머지 정보 입력하도록 이동시킴
 			request.getRequestDispatcher("/error/result").forward(request, response);
 			return;
-		} else if(kakaoUser != null && kakaoUser.getKakaoNum() == 1) {
-			session.setAttribute("authentication", kakaoUser);
-			
-			request.setAttribute("msg", "나머지 정보를 입력하지 않아 회원가입이 취소되었습니다. 회원가입을 다시 진행하여 주세요."); 
-			request.setAttribute("url", "/member/delete"); //나머지 정보 입력 안된 계정 db 삭제시킴
-			request.getRequestDispatcher("/error/result").forward(request, response);
-			return;
-		} else {
+		} /*
+			 * else if(kakaoUser != null && kakaoUser.getKakaoNum() == 1) {
+			 * session.setAttribute("authentication", kakaoUser);
+			 * 
+			 * request.setAttribute("msg",
+			 * "나머지 정보를 입력하지 않아 회원가입이 취소되었습니다. 회원가입을 다시 진행하여 주세요.");
+			 * request.setAttribute("url", "/member/delete"); //나머지 정보 입력 안된 계정 db 삭제시킴
+			 * request.getRequestDispatcher("/error/result").forward(request, response);
+			 * return; }
+			 */ else {
 			kakaoMember = memberService.selectMemberById(kakaoId); //멤버정보 불러와서
 			session.setAttribute("authentication", kakaoMember); //attribute에 넣기
 			request.setAttribute("msg", "카카오 연동 로그인이 완료되었습니다."); 
