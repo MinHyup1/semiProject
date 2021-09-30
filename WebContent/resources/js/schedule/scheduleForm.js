@@ -120,3 +120,13 @@
 	
 	
 })();
+
+let createHospitalPopup = () => {
+	let positionX = screen.width/2 - (450/2);
+	let positionY = screen.height/2 - (700/2);
+	let windowFeatures = `width=510px, height=700px, left=${positionX}, top=${positionY}, resizable=no`;
+	
+	let popup = open("/schedule/popup/hospital-popup", "search", windowFeatures);
+	
+	return popup;
+}

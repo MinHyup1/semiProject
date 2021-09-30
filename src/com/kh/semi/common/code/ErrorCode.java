@@ -11,12 +11,13 @@ public enum ErrorCode {
 	FAILED_FILE_UPLOAD_ERROR("파일업로드에 실패하였습니다."),
 	NOT_MEMBER_ERROR("로그인 후 사용해주세요.", "/member/loginPage"),
 	FAILED_GET_SCHEDULE("스케줄을 가져올 수 없습니다.\r문의 후 사용해주세요.", "/index"),
-	
+	API_DATA_ERROR("해당 정보는 없습니다"),
 	REDIRECT("");
 	
 
 	public final String MESSAGE;
 	public String URL;
+	public String CLOSE;
 	
 	private ErrorCode(String msg) {
 		this.MESSAGE = msg;
@@ -33,5 +34,9 @@ public enum ErrorCode {
 		return this;
 	}
 	
+	public ErrorCode setCLOSE(String close) {
+		CLOSE = close;
+		return this;
+	}
 	
 }

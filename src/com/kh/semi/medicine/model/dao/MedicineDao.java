@@ -15,27 +15,31 @@ public class MedicineDao {
 	private JDBCTemplate template = JDBCTemplate.getInstance(); //JDBC템플릿 인스턴스 생성
 
 	public List<Medicine> selectMedicineByName(String medName, Connection conn) {
-		Medicine medicine = null;
 		List<Medicine> medicineList = new ArrayList<Medicine>();
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		
-		String query = "select * from MEDICINE where ?";
-		
+		Medicine medicine = null;
+		String columns = "MED_NUM, MED_NAME, MED_EFC, MED_METHOD, MED_WARN, MED_IMG";
+		String selectName = "%"+medName+"%";
+		String query = "select " + columns +" from MEDICINE where MED_NAME like ?";		
 		try {
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, "%"+medName+"%");
+			pstm.setString(1, selectName);
 			rset = pstm.executeQuery();
-		
+			
 			while(rset.next()) {
+				
 				medicine = new Medicine();
-				medicine.setMedNum(rset.getInt("med_num"));
-				medicine.setMedName(rset.getString("med_name"));
-				medicine.setMedEfc(rset.getString("med_efc"));
-				medicine.setMedWarn(rset.getString("med_warn"));
-				medicine.setMedImg(rset.getString("med_img"));
+				medicine.setMedNum(rset.getInt(1));
+				medicine.setMedName(rset.getString(2));
+				medicine.setMedEfc(rset.getString(3));
+				medicine.setMedMethod(rset.getString(4));
+				medicine.setMedWarn(rset.getString(5));
+				medicine.setMedImg(rset.getString(6));
 				medicineList.add(medicine);
-			}
+							
+			}			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

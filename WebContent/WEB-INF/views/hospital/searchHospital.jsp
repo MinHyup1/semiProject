@@ -4,11 +4,6 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
-<link href='${contextPath}/resources/css/schedule/calendar/main.css' rel='stylesheet'/>
-<script src='${contextPath}/resources/js/schedule/calendar/render.js'></script>
-<script src='${contextPath}/resources/js/schedule/calendar/main.js'></script>
-<script src='${contextPath}/resources/js/schedule/calendar/locales-all.js'></script>
-<link href='${contextPath}/resources/css/schedule/schedule_main.css' rel='stylesheet'/>
 <style type="text/css">
 
 .search_title_wrapper {
@@ -300,17 +295,16 @@ table.hospital_info_table td {
  			
  		<c:if test="${not empty requestScope.hospList}">  
 		 	<table class="hospital_info_table" >
-				<th>NO.</th>
-				<th>의료기관</th>
+				<th style="width: 5%;" >NO.</th>
 				<th>기관명</th>
-				<th>주소</th>
+				<th style="width: 30%;">주소</th>
 				<th>전화</th>
 				<th>홈페이지</th>
 				<c:forEach var="i" begin="0" step="1" end="${siez -1}" varStatus="status">
 				<tr><!-- 첫번째 줄 시작 -->
-				    <td>${status.count}</td>
-				    <td>의료기관</td>
-				    <td>${requestScope.hospList[i].hospName}</td>
+				    <td class="num1" valign="${status.count -1}">${status.count}</td>
+				   
+				    <td><a onclick="createKakaoMap(${requestScope.hospList[i].xPos},${requestScope.hospList[i].yPos})">${requestScope.hospList[i].hospName}</a></td>
 				    <td>${requestScope.hospList[i].address}</td>
 				    <td>${requestScope.hospList[i].hospTell}</td>
 				    <td>
@@ -361,9 +355,90 @@ selectedMenu = 'searchHosp';
 	    
 	  }); */
 
-
+document.querySelector('.call').addEventListener('click',(e)=>{
+	var xhr = new XMLHttpRequest();
+	var url = 'http://apis.data.go.kr/B551182/hospInfoService1/getHospBasisList1'; /*URL*/
+	var queryParams = '?' + encodeURIComponent('ServiceKey') + '='+'WbW7KMwW0GkyneJEApEQUjXNL%2BBLWh1iAnVATl%2FUWX5YemHkvr0a6PRm4UNv5mm%2Fsj2vVgHPgFqmTkqkeS5hng%3D%3D'; /*Service Key*/
+	queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+	queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
+	queryParams += '&' + encodeURIComponent('sidoCd') + '=' + encodeURIComponent('110000'); /**/
+	queryParams += '&' + encodeURIComponent('sgguCd') + '=' + encodeURIComponent('110019'); /**/
+	queryParams += '&' + encodeURIComponent('emdongNm') + '=' + encodeURIComponent('신내동'); /**/
+	queryParams += '&' + encodeURIComponent('yadmNm') + '=' + encodeURIComponent('서울의료원'); /**/
+	queryParams += '&' + encodeURIComponent('zipCd') + '=' + encodeURIComponent('2010'); /**/
+	queryParams += '&' + encodeURIComponent('clCd') + '=' + encodeURIComponent('11'); /**/
+	queryParams += '&' + encodeURIComponent('dgsbjtCd') + '=' + encodeURIComponent('01'); /**/
+	queryParams += '&' + encodeURIComponent('xPos') + '=' + encodeURIComponent('127.09854004628151'); /**/
+	queryParams += '&' + encodeURIComponent('yPos') + '=' + encodeURIComponent('37.6132113197367'); /**/
+	queryParams += '&' + encodeURIComponent('radius') + '=' + encodeURIComponent('3000'); /**/
+	xhr.open('GET', url + queryParams);
+	xhr.onreadystatechange = function () {
+	    if (this.readyState == 4) {
+	        alert('Status: '+this.status+'nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'nBody: '+this.responseText);
+	    }
+	};
+	xhr.send('');
+	
+	console.dir(xhr.response);
+})
 	  
+
+function createKakaoMap(xPos,yPos) {
+		  
+	
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+  mapOption = {
+      center: new kakao.maps.LatLng(yPos, xPos), // 지도의 중심좌표
+      level: 3, // 지도의 확대 레벨
+      mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
+  }; 
+
+  // 지도를 생성한다 
+  var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+  // 지도에 확대 축소 컨트롤을 생성한다
+  var zoomControl = new kakao.maps.ZoomControl();
+
+  // 지도의 우측에 확대 축소 컨트롤을 추가한다
+  map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+  
+
+
+  //마커를 표시할 위치와 title 객체 배열입니다 
+  var positions = [
+      {
+      	content: '<div>${requestScope.hospList[0].hospName}</div>', 
+          title: '${requestScope.hospList[0].hospName}', 
+          latlng: new kakao.maps.LatLng(yPos, xPos)
+      }
+      
+  ];
+
+  for (var i = 0; i < positions.length; i ++) {
+	    // 마커를 생성합니다
+	    var marker = new kakao.maps.Marker({
+	        map: map, // 마커를 표시할 지도
+	        position: positions[i].latlng // 마커의 위치
+	    });
+
+	    // 마커에 표시할 인포윈도우를 생성합니다 
+	    var infowindow = new kakao.maps.InfoWindow({
+	        content: positions[i].content // 인포윈도우에 표시할 내용
+	    });
+
+	    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+	    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+	    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+	    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+	    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+	}
+
+
+
+  
+} 
+	  
+/* var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 mapOption = {
     center: new kakao.maps.LatLng(${requestScope.hospList[0].yPos}, ${requestScope.hospList[0].xPos}), // 지도의 중심좌표
     level: 3, // 지도의 확대 레벨
@@ -418,7 +493,7 @@ for (var i = 0; i < positions.length; i ++) {
 }
 
 
-
+ */
 </script>
 
 </body>

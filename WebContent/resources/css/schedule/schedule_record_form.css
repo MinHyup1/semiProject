@@ -49,6 +49,10 @@
 	width: 85%;
 }
 
+.code{
+	display: none;
+}
+
 .valid-msg{
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	display:block;
@@ -106,6 +110,15 @@ input[type=text]::placeholder{
 
 .input_form>div{
 	margin-bottom: 11px;
+}
+
+.input_form input[name="medicine"]{
+	display: inline-block;
+	width: 27%;
+	font-weight: 500;
+	border-radius: 5px;
+	border-width: 1px;
+	border-color: #8c8c8c;
 }
 
 button[type="button"]{

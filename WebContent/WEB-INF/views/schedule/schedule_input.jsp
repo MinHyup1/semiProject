@@ -21,10 +21,16 @@
 						<form action="/schedule/schedule-register" method="post" class="input_form" id="input_form">
 							<span id="scheduleDateCheck" class="valid-msg"></span>
 							<label>진료 날짜 : <input type="date" class='standard_date' id="schedule_date" name="schedule_date" value='${param.date}' autofocus required></label>
-							<label class="search_btn">진료 병원 : <input type="text" name="hospital" placeholder="진료 병원을 기록해보세요" readonly> <button type="button" onclick="">검색</button></label>
-							<label class="search_btn">처방 약국 : <input type="text" name="pharm" placeholder="방문한 약국을 기록해보세요" readonly> <button type="button" onclick="">검색</button></label>
+							<label class="search_btn">진료 병원 : <input type="text" name="hospital" class="hospital" placeholder="진료 병원을 기록해보세요" readonly> <button type="button" onclick="createHospitalPopup()">검색</button></label><input value="병원코드" name="hospCode" class="code">
+							<label class="search_btn">처방 약국 : <input type="text" name="pharm" placeholder="방문한 약국을 기록해보세요" readonly> <button type="button" onclick="">검색</button></label><input value="약국코드" name="pharmCode" class="code">
 							<label class="search_btn">처방 약 : <input type="text" name="searched_med" placeholder="처방 받은 약을 기록해보세요" readonly> <button type="button" onclick="">검색</button></label>
-							<div><span>aaa</span></div><!-- 처음에는 1칸, 약 추가시 칸 추가 / 휴지통 아이콘 사용하기 -->
+							<div>
+								<span><input name="medicine" value="약 1" readonly><input value="약코드" name="mediCode" class="code"> <i class="fas fa-trash"></i></span>
+								<span><input name="medicine" value="약 2" readonly><input value="약코드" name="mediCode" class="code"> <i class="fas fa-trash"></i></span>
+								<span><input name="medicine" value="약 3" readonly><input value="약코드" name="mediCode" class="code"> <i class="fas fa-trash"></i></span>
+								<span><input name="medicine" value="약 4" readonly><input value="약코드" name="mediCode" class="code"> <i class="fas fa-trash"></i></span>
+								<span><input name="medicine" value="약 5" readonly><input value="약코드" name="mediCode" class="code"> <i class="fas fa-trash"></i></span>
+							</div><!-- 처음에는 1칸, 약 추가시 칸 추가 / 휴지통 아이콘 사용하기 -->
 							<span id="startDateCheck" class="valid-msg"></span>
 							<label>복용 시작일 : <input type="date" id="dose_start" class="dose_start" name="dose_start"></label>
 							<span id="endDateCheck" class="valid-msg"></span>
