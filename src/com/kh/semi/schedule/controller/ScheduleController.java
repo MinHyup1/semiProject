@@ -357,8 +357,14 @@ public class ScheduleController extends HttpServlet {
 	//진료 일정 기록
 	private void scheduleRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Date scheduleDate = parseStringToDate(request.getParameter("schedule_date"));
+		
+		String hospCode = request.getParameter("hospCode");
 		String hospital = request.getParameter("hospital");
+		
+		String pharmCode = request.getParameter("pharmCode");
 		String pharm = request.getParameter("pharm");
+		
+		String[] mediCode = request.getParameterValues("mediCode");
 		String[] medicine = request.getParameterValues("");
 		String doseStartStr = request.getParameter("dose_start");
 		String doseEndStr = request.getParameter("dose_end");
@@ -368,6 +374,15 @@ public class ScheduleController extends HttpServlet {
 		
 		Date doseStart = null;
 		Date doseEnd = null;
+		
+		
+		System.out.println(hospCode);
+		
+		
+		
+		
+		
+		
 		
 		Member member = (Member) request.getSession().getAttribute("authentication");
 		Map<String, Object> dtoMap = new HashMap<String, Object>();
@@ -430,8 +445,8 @@ public class ScheduleController extends HttpServlet {
 			dtoMap.put("visitList", visitList);
 		}
 		
-		scheduleService.insertMainSchedule(member.getUserCode(), dtoMap);
-		response.sendRedirect("/schedule/schedule-main?status=regist");
+		//scheduleService.insertMainSchedule(member.getUserCode(), dtoMap);
+		//response.sendRedirect("/schedule/schedule-main?status=regist");
 	}
 	
 	private Visit getVisitDto(HttpServletRequest request) {

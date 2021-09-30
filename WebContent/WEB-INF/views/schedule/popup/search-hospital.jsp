@@ -15,7 +15,7 @@
 			<span class="desc">> 진료받는 병원의 이름을 찾아 저장해보세요.</span>
 			<div class="search">
 				<input type="text", placeholder="ex) ***병원">
-				<button>검색</button>
+				<button onclick="searchHosp()">검색</button>
 			</div>
 		</div>
 		<div>
@@ -37,4 +37,5 @@
 		</div>
 	</div>
 </body>
+<script src='${contextPath}/resources/js/schedule/popup/search-hospital.js'></script>
 </html>

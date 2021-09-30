@@ -17,6 +17,7 @@ public enum ErrorCode {
 
 	public final String MESSAGE;
 	public String URL;
+	public String CLOSE;
 	
 	private ErrorCode(String msg) {
 		this.MESSAGE = msg;
@@ -33,5 +34,9 @@ public enum ErrorCode {
 		return this;
 	}
 	
+	public ErrorCode setCLOSE(String close) {
+		CLOSE = close;
+		return this;
+	}
 	
 }
