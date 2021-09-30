@@ -76,7 +76,7 @@ public class HospitalService {
 		
 		try {
 			res = hospDao.updateSearchTreat(conn,treatList);
-			
+			conn.commit();
 		} catch (Exception e) {
 			conn.rollback();
 			throw e;
