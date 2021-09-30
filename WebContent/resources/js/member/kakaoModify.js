@@ -1,45 +1,5 @@
 (()=>{
 	
-		//아이디 정규식검사 및 중복검사
-   		let confirmId = '';
-   		//영문소문자 또는 영문소문자+숫자,5-11글자
-		let idReg = /^[a-z]{5,11}$|^[a-z0-9]{5,11}$/;
-
-   		document.querySelector("#btnIdCheck").addEventListener('click', e => {
-   			
-   			/*id 속성값이 지정되어 있으면 id값으로 해당 요소객체 호출 가능*/
-   			let id = userId.value;
-   			
-			/*우리 서버에 요청을 보내서 사용자가 입력한 아이디가 있는지 없는지 확인해야 하니까 우리서버와 통신이 발생해야 함 => fetch 사용*/
-   			if(id){ /*userId가 null이 아니라면*/
-				if(!idReg.test(userId.value)){
-					e.preventDefault();
-					alert("아이디는 영문소문자 또는 영문소문자+숫자로 이루어진 \n 5-11글자 입니다.");
-					document.querySelector('#idCheck').innerHTML = '아이디는 영문소문자 또는 영문소문자+숫자로 이루어진 5-11글자 입니다.';
-				}else{
-					fetch('/member/id-check?userId=' + id)
-   					.then(response => {
-						if(!response.ok)
-						throw new Error(`${response.statusText} : ${response.status}`);
-						return response.text();
-					}).then(text => {
-						//console.dir(text);	
-   						if(text == 'available'){
-							/*alert("사용 가능한 아이디 입니다.");*/
-   							document.querySelector('#idCheck').innerHTML = '사용 가능한 아이디 입니다.';
-   							confirmId = id;
-   						}else if(text == 'disable'){
-							/*alert("이미 존재하는 아이디 입니다.");*/
-   							document.querySelector('#idCheck').innerHTML = '이미 존재하는 아이디 입니다.';
-   						}
-   					}).catch(error => {
-						document.querySelector('#idCheck').innerHTML = error; //에러가 발생할 경우 에러 찍어주기
-					})	
-				}
-   			}
-   		})
-	
-	
    		//닉네임 정규식검사 및 중복검사
    		let confirmNick = '';
    		let nickReg = /[a-zA-Z0-9가-힣]{2,10}/;
@@ -132,13 +92,6 @@
    		document.querySelector('#frm_memberInfo').addEventListener('submit', e => {
    			
 			let nameReg = /^[가-힣]{2,5}$|^[a-zA-Z]{2,}$/;
-			
-			if(confirmId != userId.value){
-   				e.preventDefault(); //submit태그의 동작을 중단시킴
-				alert("아이디 중복 검사를 통과하지 않았습니다.");
-   				document.querySelector('#idCheck').innerHTML = '아이디 중복 검사를 통과하지 않았습니다.';
-   			}
-			
 			
 			if(!nameReg.test(name.value)){
 				e.preventDefault();

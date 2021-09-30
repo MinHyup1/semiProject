@@ -41,7 +41,11 @@ public class ChangeForm {
 		boolean res = true;
 		boolean valid = true;
 		
-	
+		// db에 존재하지 않는 아이디인지 확인
+		if (memberService.selectMemberById(userId) != null) { // 존재하는 아이디 라면,
+			failedAttribute.put("userId", userId); // 실패한 값들 넣어주기
+			res = false;
+		}
 
 		//비밀번호가 영수특수문자 조합의 8자리 이상 문자열
 		valid = Pattern.matches("(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Zㄱ-힣0-9]).{8,}", password); //자바 정규표현식이라 자릿수 부분 살짝 다름
@@ -50,13 +54,14 @@ public class ChangeForm {
 			res = false;
 		}
 		
+		// db에 존재하지 않는 닉네임인지 확인
+		if (memberService.selectMemberByNick(nick) != null) { //존재하는 닉네임 이라면,
+			failedAttribute.put("nick", nick);
+			res = false;
+		} 
 		
 		// 전화번호가 9~11자리의 숫자
-		valid = Pattern.matches("^\\d{9,11}$", phone);
-		if (!valid) { //전화번호 패턴이 통과되지 못했다면,
-			failedAttribute.put("phone", phone); //실패한 값들 넣어주기
-			res = false;
-		}else if(memberService.selectMemberByPhone(phone) != null) {
+		if(memberService.selectMemberByPhone(phone) != null) {
 			failedAttribute.put("phone", phone); //실패한 값들 넣어주기
 			res = false;
 		}

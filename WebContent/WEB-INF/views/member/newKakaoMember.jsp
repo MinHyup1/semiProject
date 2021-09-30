@@ -21,20 +21,20 @@
 			<td class="aTag" colspan="2" align="right">
 			<a>*필수입력사항</a></td>
 		</tr>
-		
-
-		<c:choose>
-		    <c:when test="${undefined != authentication.id}"></c:when>
-		    <c:otherwise>
-		    	<tr>
-				<td width="200" align="center" class="title">* 아이디</td>
-				<td width="500">
+		<tr>
+			<td width="200" align="center" class="title">* 아이디</td>
+			<td class="inputInfo" width="500">
+				<c:if test = "${authentication.id != 'undefined'}">
 					<span class="fixedSpan">${authentication.id}</span>
-				</td>
-			
-				</tr>
-		    </c:otherwise>
-		</c:choose>
+				</c:if>	
+				<c:if test = "${authentication.id eq 'undefined'}">
+					<input type="text" size="30" name="userId" id="userId" maxlength="30" placeholder="영문소문자 or 영문소문자+숫자, 5~11 글자"
+					required />
+					<input class="check" id="btnIdCheck" type="button" value="중복체크" />
+					<span id="idCheck" class="valid-msg" ></span>
+				</c:if>	
+			</td>
+		</tr>
 		<tr>
 			<td width="200" align="center" class="title">* 이름</td>
 			<td width="500">

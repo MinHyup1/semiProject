@@ -308,6 +308,34 @@ public class MemberDao {
 		return member;
 	}
 	
+	public int updateKaKaoMember(Member member, Connection conn) {
+		int res = 0;
+		PreparedStatement pstm = null;
+		String query = "update member set id = ?, password = ?, name = ?, nick = ?, phone = ?, address = ?, email = ?, gender = ?, kakaoNum = ?"
+						+ " where USER_CODE = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, "왜안돼");
+			pstm.setString(2, member.getPassword());
+			pstm.setString(3, member.getName());
+			pstm.setString(4, member.getNick());
+			pstm.setString(5, member.getPhone());
+			pstm.setString(6, member.getAddress());
+			pstm.setString(7, member.getEmail());
+			pstm.setString(8, member.getGender());
+			pstm.setInt(9, member.getKakaoNum());
+			pstm.setString(10, member.getUserCode());
+
+			res = pstm.executeUpdate();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+		return res;
+	}
+	
 	
 	private Member convertAllToMember(ResultSet rset) throws SQLException {
 		Member member = new Member();
@@ -349,6 +377,7 @@ public class MemberDao {
 		}
 		return member;
 	}
+
 
 
 

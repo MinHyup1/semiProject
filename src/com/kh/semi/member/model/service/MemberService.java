@@ -190,6 +190,23 @@ public class MemberService {
 		return member;
 	}
 
+	public int UpdateKakaoMember(Member member) {
+		Connection conn = template.getConnection();
+		int res = 0;
+		
+		try {
+			res = memberDao.updateKaKaoMember(member, conn);
+			template.commit(conn);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			template.close(conn);
+		}
+		return res;
+		
+	}
+
 
 
 	

@@ -58,12 +58,11 @@ public class JoinForm {
 		}
 		
 		// db에 존재하지 않는 닉네임인지 확인
-		//valid = Pattern.matches("", nick);
-		//if (memberService.selectMemberByNick(nick) != null) { //존재하는 닉네임 이라면,
-			//failedAttribute.put("nick", nick);
-			//res = false;
-	//	} 
-			 // else if(!valid) { failedAttribute.put("nick", nick); res = false; }
+		if (memberService.selectMemberByNick(nick) != null) { //존재하는 닉네임 이라면,
+			failedAttribute.put("nick", nick);
+			res = false;
+		} 
+			 
 			 
 
 		// 전화번호가 9~11자리의 숫자

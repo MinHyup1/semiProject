@@ -106,7 +106,7 @@
 </form>
 </div>
 
-<script src='${contextPath}/resources/js/member/kakaoForm.js'></script>
+<script src='${contextPath}/resources/js/member/kakaoModify.js'></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src='${contextPath}/resources/js/member/kakaoLogin.js'></script>
 
