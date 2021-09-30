@@ -83,7 +83,9 @@
                   <li><a href="${contextPath}/pharmacy/pharmacy" class="" data-loc="searchPharm"><i class="fas fa-vial"></i> <span>약국 검색</span></a></li>
                   <li><a href="${contextPath}/Medicine/medicineMain" class="" data-loc="searchMedi"><i class="fas fa-pills"></i> <span>의약품 검색</span></a></li>
                   <li><a href="${contextPath}/schedule/schedule-main" class="" data-loc="schedule"><i class="far fa-calendar-check"></i> <span>진료 스케줄</span></a></li> <!-- href 수정 -->
-                  <li><a href="/test/board" class="" data-loc="board"><i class="fas fa-list"></i> <span>게시판</span></a></li>
+                  <li><a href="/test/board?BBS_TYPE=FREEBOARD" class="" data-loc="freeboard"><i class="fas fa-list"></i> <span>자유게시판</span></a></li>
+                  <li><a href="/test/board?BBS_TYPE=QNA" class="" data-loc="freeboard"><i class="fas fa-list"></i> <span>질문게시판</span></a></li>
+                  <li><a href="/test/board?BBS_TYPE=FAQ" class="" data-loc="freeboard"><i class="fas fa-list"></i> <span>자주묻는 질문</span></a></li>
                </ul>
             </nav>
          </div>
