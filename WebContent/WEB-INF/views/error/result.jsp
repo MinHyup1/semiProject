@@ -28,6 +28,10 @@
 		location.href="${url}";
 	</c:if>
 	
+	<%-- 뒤로가기 --%>
+	<c:if test="${not empty close}">
+		window.self.close();
+	</c:if>
 	
 	</script>
 

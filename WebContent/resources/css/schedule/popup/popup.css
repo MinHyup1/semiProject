@@ -54,11 +54,12 @@ body{
 
 table{
 	width: 100%;
+	border-style: dashed;
+
 }
 
 thead{
 	height: 30px;
-	border-bottom-style: double thin;
 }
 
 .name{

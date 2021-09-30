@@ -26,6 +26,7 @@ public class ExceptionHandler extends HttpServlet {
 		
 		request.setAttribute("msg", e.error.MESSAGE);
 		request.setAttribute("url", e.error.URL);
+		request.setAttribute("close", e.error.CLOSE);
 		request.getRequestDispatcher("/WEB-INF/views/error/result.jsp").forward(request, response);
 	}
 

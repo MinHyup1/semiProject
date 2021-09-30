@@ -54,14 +54,20 @@ public class AuthorizationFilter implements Filter {
 		HttpSession session = httpRequest.getSession();
 		Member member = (Member) session.getAttribute("authentication");
 		
-		if(member==null) {
-			httpRequest.getRequestDispatcher("/index").forward(httpRequest, httpResponse);
-		}else if(member.getKakaoNum()==1 &&member.getPhone()==null&&member.getName()==null) {
-			 throw new HandlableException(ErrorCode.REDIRECT.setURL("/member/kakaoMemberForm"));
+		if(uriArr.length != 0) {
+			switch (uriArr[2]) {
+			case "popup":
+				if(member == null) {
+					throw new HandlableException(ErrorCode.NOT_MEMBER_ERROR);
+				}
+				break;
+			default:
+				if(member == null) {
+					throw new HandlableException(ErrorCode.NOT_MEMBER_ERROR.setCLOSE("close"));
+				}
+				break;
+			}
 		}
-
-		
-			 
 	}
 
 	private void scheduleAuthorize(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String[] uriArr) {
