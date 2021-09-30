@@ -60,13 +60,13 @@ public class MedicineController extends HttpServlet {
 		// 검색하고 싶은 약품 이름 받아오기
 		String medName = request.getParameter("medName");
 		List<Medicine> medicineList = new ArrayList<Medicine>();
-		medicineList = medicineService.selectMedicineByName(medName);
+		medicineList = medicineService.selectMedicineByName(medName); //DB 에 있는지 확인 
 
 		if(medicineList.isEmpty()) { //DB에 없을경우 API에 접속해서 확인후  DB에 저장
-			medicineList = medicineAPI(medName);			
+			medicineList = medicineAPI(medName);	//DB저장 따로 ,API에서 바로 출력	
 		}
 					
-		if(!medicineList.isEmpty()) {
+		if(!medicineList.isEmpty()) { 
 			request.setAttribute("medicineList", medicineList);
 			request.setAttribute("size", medicineList.size());
 		}
