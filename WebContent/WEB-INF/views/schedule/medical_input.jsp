@@ -20,8 +20,8 @@
 					<div class="input_list">
 						<form action="/schedule/renew-medical" method="post" class="input_form" id="input_form">
 							<span id="scheduleDateCheck" class="valid-msg"></span>
-							<label>진료 날짜 : <input type="date" class='standard_date' id="schedule_date" name="schedule_date" value='${currentSchedule.scheduleDate}' autofocus required></label>
-							<label class="search_btn">진료 병원 : <input type="text" name="hospital" value='${currentSchedule.hospCode}' placeholder="진료 병원을 기록해보세요" readonly> <button type="button" onclick="">검색</button></label>
+							<label>진료 날짜 : <input type="date" class='standard_date' id="schedule_date" name="schedule_date" value='${currentSchedule.medical.scheduleDate}' autofocus required></label>
+							<label class="search_btn">진료 병원 : <input type="text" name="hospital" class="hospital" value='${currentSchedule.hospName}' placeholder="진료 병원을 기록해보세요" readonly> <button type="button" onclick="createHospitalPopup()">검색</button></label><input class="hospCode" name="hospCode" value='${currentSchedule.medical.hospCode}' id="code">
 						</form>
 					</div>
 					<div class="action_icons">

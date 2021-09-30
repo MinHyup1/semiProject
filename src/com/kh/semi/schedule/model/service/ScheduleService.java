@@ -40,11 +40,10 @@ public class ScheduleService {
 					insertDoseNoticeList(conn, doseNoticeDateTimes, prescriptionId);
 				}
 				
-				// 처방 약이 있다면, medicine_record에 insert 하고, prescription_list의 has_medicine Y로 바꾸기
-				if(dtoMap.get("medicine") != null) {
-					
+				if(dtoMap.get("mediCodeArr") != null) {
+					Integer[] mediCodeArr = (Integer[]) dtoMap.get("mediCodeArr");
+					insertMedicineRecord(conn, mediCodeArr, prescriptionId);
 				}
-				
 			}
 			
 			if(dtoMap.get("visitList") != null) {
@@ -78,8 +77,9 @@ public class ScheduleService {
 			insertDoseNoticeList(conn, doseNoticeDateTimes, prescriptionId);
 			
 			// 처방 약이 있다면, medicine_record에 insert 하고, prescription_list의 has_medicine Y로 바꾸기
-			if(dtoMap.get("medicine") != null) {
-				
+			if(dtoMap.get("mediCodeArr") != null) {
+				Integer[] mediCodeArr = (Integer[]) dtoMap.get("mediCodeArr");
+				insertMedicineRecord(conn, mediCodeArr, prescriptionId);
 			}
 			
 			template.commit(conn);
@@ -175,6 +175,8 @@ public class ScheduleService {
 			
 			if(prescription.getHasMedicine().equals("Y")) {
 				//약 검색 해결되면 진행 prescMap.put("medicine", medicineList);
+				List<Integer> medNumList = scheduleDao.selectMedNumById(conn, prescription.getPrescriptionId());
+				prescMap.put("medNumList", medNumList);
 			}
 			
 		} finally {
@@ -356,6 +358,11 @@ public class ScheduleService {
 	private void insertDoseNoticeList(Connection conn, Timestamp[] doseNoticeDateTimes, String prescriptionId) {
 		scheduleDao.insertDoseNotice(conn, doseNoticeDateTimes, prescriptionId);
 		scheduleDao.updateHasDoseNotice(conn, prescriptionId);
+	}
+	
+	private void insertMedicineRecord(Connection conn, Integer[] mediCodeArr, String prescriptionId) {
+		scheduleDao.insertMedicineRecord(conn, mediCodeArr, prescriptionId);
+		scheduleDao.updateHasMedicine(conn, prescriptionId);
 	}
 
 	

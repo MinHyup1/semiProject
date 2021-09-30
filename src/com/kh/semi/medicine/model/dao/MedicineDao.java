@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.semi.common.db.JDBCTemplate;
+import com.kh.semi.common.exception.DataAccessException;
 import com.kh.semi.medicine.model.dto.Medicine;
 
 public class MedicineDao {
@@ -78,6 +79,35 @@ public class MedicineDao {
 		}
 		
 		return res;
+	}
+	
+	//[참고] 륜수 수정 10/01 2:53
+	public Medicine selectMedicineByNum(Connection conn, int num) {
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		Medicine medicine = null;
+		String query = "select * from medicine where med_num = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setInt(1, num);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				medicine = new Medicine();
+				medicine.setMedNum(rset.getInt("med_num"));
+				medicine.setMedName(rset.getString("med_name"));
+				medicine.setMedEfc(rset.getString("med_efc"));
+				medicine.setMedMethod(rset.getString("med_method"));
+				medicine.setMedWarn(rset.getString("med_warn"));
+				medicine.setMedImg(rset.getString("med_img"));
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return medicine;
 	}
 	
 	
