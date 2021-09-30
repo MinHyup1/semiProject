@@ -35,7 +35,7 @@ public class AuthorizationFilter implements Filter {
 			switch (uriArr[1]) {
 			
 			case "member": memberAuthorize(httpRequest, httpResponse, uriArr); break;
-			case "index": index(httpRequest, httpResponse, uriArr); break; 
+			//case "index": index(httpRequest, httpResponse, uriArr); break; 
 			case "schedule":
 				scheduleAuthorize(httpRequest, httpResponse, uriArr);
 				break;
@@ -54,7 +54,6 @@ public class AuthorizationFilter implements Filter {
 		HttpSession session = httpRequest.getSession();
 		Member member = (Member) session.getAttribute("authentication");
 		
-		if(uriArr.length != 0) {
 			switch (uriArr[2]) {
 			case "popup":
 				if(member == null) {
@@ -67,7 +66,6 @@ public class AuthorizationFilter implements Filter {
 				}
 				break;
 			}
-		}
 	}
 
 	private void scheduleAuthorize(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String[] uriArr) {
@@ -75,10 +73,18 @@ public class AuthorizationFilter implements Filter {
 		HttpSession session = httpRequest.getSession();
 		Member member = (Member) session.getAttribute("authentication");
 
-		if (member == null) {
-			throw new HandlableException(ErrorCode.NOT_MEMBER_ERROR);
+		switch (uriArr[2]) {
+		case "popup":
+			if(member == null) {
+				throw new HandlableException(ErrorCode.NOT_MEMBER_ERROR);
+			}
+			break;
+		default:
+			if(member == null) {
+				throw new HandlableException(ErrorCode.NOT_MEMBER_ERROR.setCLOSE("close"));
+			}
+			break;
 		}
-
 	}
 
 	private void memberAuthorize(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String[] uriArr) {
