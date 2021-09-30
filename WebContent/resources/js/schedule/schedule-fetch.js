@@ -32,9 +32,7 @@ let getNotice = async () => {
 			let startDays = (start-today)/24/60/60/1000;
 			let end = getDate(el.end);
 			let endDays = (today-end)/24/60/60/1000;
-			console.dir(startDays);
-			console.dir(endDays);
-			if(startDays <= 0 && endDays >= 0) {
+			if(startDays <= 0 && endDays <= 0) {
 				return true;
 			}
 		}
@@ -82,7 +80,7 @@ let getNotice = async () => {
 
 let getDate = (dateStr) => {
 	dateArr = dateStr.split('-');
-	let date = new Date(dateArr[0], dateArr[1]-1, dateArr[2]);
+	let date = new Date(dateArr[0], dateArr[1]-1, dateArr[2].substring(0,2));
 	return date;
 }
 

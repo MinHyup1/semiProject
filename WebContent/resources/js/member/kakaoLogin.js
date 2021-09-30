@@ -7,6 +7,7 @@ console.log(Kakao.isInitialized());
 function loginWithKakao(){
 	Kakao.Auth.login({	 
 		success: function(authObj) {
+			Kakao.Auth.setAccessToken(authObj.access_token);
 			//로그인 성공시, API 호출
 			Kakao.API.request({
 				url: '/v2/user/me', //사용자 정보를 읽어들이는 고정된 url
@@ -35,17 +36,20 @@ function loginWithKakao(){
 }
 
 function unlinkApp() {
-    Kakao.API.request({
-      url: '/v1/user/unlink',
-      success: function(res) {
-    	console.log(res);
-        alert('success: ' + JSON.stringify(res));
-      },
-      fail: function(err) {
-    	console.log(err);
-        alert('fail: ' + JSON.stringify(err));
-      },
-    })
+	Kakao.API.request({
+		url: '/v1/user/unlink',
+		success: function(res) {
+			console.log(res);
+			alert('success: ' + JSON.stringify(res));
+      	},
+		fail: function(err) {
+    		console.log(err);
+        	alert('fail: ' + JSON.stringify(err));
+      	},
+    });
+	alert("카카오 계정 연결이 끊겼습니다.");
+	//Kakao.Auth.setAccessToken(undefined);
+	
 }
 
 function kakaoLogout() {
