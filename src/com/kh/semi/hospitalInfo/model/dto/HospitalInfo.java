@@ -11,6 +11,9 @@ public class HospitalInfo {
 	private String address;		//주소
 	private String xPos;		//X 좌표
 	private String yPos;		//Y 좌표
+	private String uniqeCode;  	//고유 요양 기호
+	
+	
 	public int getHospCode() {
 		return hospCode;
 	}
@@ -59,14 +62,19 @@ public class HospitalInfo {
 	public void setyPos(String yPos) {
 		this.yPos = yPos;
 	}
+	public String getUniqeCode() {
+		return uniqeCode;
+	}
+	public void setUniqeCode(String uniqeCode) {
+		this.uniqeCode = uniqeCode;
+	}
 	@Override
 	public String toString() {
 		return "HospitalInfo [hospCode=" + hospCode + ", hospTreat=" + hospTreat + ", hospTell=" + hospTell
 				+ ", hospName=" + hospName + ", hospUrl=" + hospUrl + ", address=" + address + ", xPos=" + xPos
-				+ ", yPos=" + yPos + "]";
+				+ ", yPos=" + yPos + ", uniqeCode=" + uniqeCode + "]";
 	}
-	
-	
-	
+
+
 	
 }
