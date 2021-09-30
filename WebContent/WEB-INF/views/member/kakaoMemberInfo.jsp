@@ -20,10 +20,9 @@
 			<td class="aTag" colspan="2" align="right">
 			<a>*필수입력사항</a></td>
 		</tr>
-		<c:set var="id" value="undefined" />
 
 		<c:choose>
-		    <c:when test="${id eq authentication.id}"></c:when>
+		    <c:when test="${undefined != authentication.id}"></c:when>
 		    <c:otherwise>
 		    	<tr>
 				<td width="200" align="center" class="title">* 아이디</td>
