@@ -18,7 +18,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.kh.semi.board.model.dto.BoardDTO;
 import com.kh.semi.board.model.dto.FileDTO;
-import com.kh.semi.board.service.BoardService;
+import com.kh.semi.board.model.service.BoardService;
 
 @WebServlet("/FileUploadServlet")
 public class FileUploadServlet extends HttpServlet {
