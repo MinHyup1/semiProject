@@ -278,7 +278,6 @@ table.hospital_info_table td {
 					<form action="/HospitalController/searchByName" method="get">
 					<input type ="text"  name="input"id="input"  class="input_l_t1" title="기관명 적기">
 					<button class="searchByName" >검색</button>
-					<button class="call" >요청</button>
 					</form>
 					
 					
@@ -296,30 +295,15 @@ table.hospital_info_table td {
  			
  		<c:if test="${not empty requestScope.hospList}">  
 		 	<table class="hospital_info_table" >
-				<th>NO.</th>
-				<th>의료기관</th>
+				<th style="width: 5%;" >NO.</th>
 				<th>기관명</th>
-				<th>주소</th>
+				<th style="width: 30%;">주소</th>
 				<th>전화</th>
 				<th>홈페이지</th>
 				<c:forEach var="i" begin="0" step="1" end="${siez -1}" varStatus="status">
 				<tr><!-- 첫번째 줄 시작 -->
 				    <td class="num1" valign="${status.count -1}">${status.count}</td>
-				    <td>
-				    ${requestScope.hospList[i].hospTreat}
-				    <c:choose>
-				    	<c:when test="${requestScope.hospList[i].hospTreat == 00 }">
-				    	
-				    	</c:when>
-				    
-				    
-				    
-				    
-				    
-				    
-				    </c:choose>
-				    
-				    </td>
+				   
 				    <td><a onclick="createKakaoMap(${requestScope.hospList[i].xPos},${requestScope.hospList[i].yPos})">${requestScope.hospList[i].hospName}</a></td>
 				    <td>${requestScope.hospList[i].address}</td>
 				    <td>${requestScope.hospList[i].hospTell}</td>

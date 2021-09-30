@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.transform.Templates;
@@ -13,6 +14,7 @@ import com.kh.semi.common.code.ErrorCode;
 import com.kh.semi.common.db.JDBCTemplate;
 import com.kh.semi.common.exception.HandlableException;
 import com.kh.semi.hospitalInfo.model.dto.HospitalInfo;
+import com.kh.semi.hospitalInfo.model.dto.SearchTreat;
 
 public class HospitalDao {
 	
@@ -22,7 +24,7 @@ public class HospitalDao {
 	public int updateHospInfo(Connection conn, List<HospitalInfo> hospList) {
 		PreparedStatement pstm = null;
 		int res = 0;
-		String query = "insert into HOSPITAL_INFO(HOSP_CODE, HOSP_TREAT, HOSP_TELL, HOSP_NAME, HOSP_URL"
+		String query = "insert into HOSPITAL_INFO(HOSP_CODE, UNIQUE_CODE, HOSP_TELL, HOSP_NAME, HOSP_URL"
 				+ ", HOSP_ADDRESS, HOSP_XPOS, HOSP_YPOS) values(HOSPITAL_CODE.NEXTVAL,?,?,?,?,?,?,?)";
 		
 		try {
@@ -30,7 +32,7 @@ public class HospitalDao {
 			for(int i = 0; i < hospList.size(); i++) {
 				HospitalInfo hosp = hospList.get(i);
 				pstm = conn.prepareStatement(query);
-				pstm.setString(1, hosp.getHospTreat());
+				pstm.setString(1, hosp.getUniqeCode());
 				pstm.setString(2, hosp.getHospTell());
 				pstm.setString(3, hosp.getHospName());
 				pstm.setString(4, hosp.getHospUrl());
@@ -66,7 +68,6 @@ public class HospitalDao {
 			while(rset.next()) {
 				hosp = new HospitalInfo();
 				hosp.setHospCode(rset.getInt("HOSP_CODE"));
-				hosp.setHospTreat(rset.getString("HOSP_TREAT"));
 				hosp.setHospTell(rset.getString("HOSP_TELL"));
 				hosp.setHospName(rset.getString("HOSP_NAME"));
 				hosp.setHospUrl(rset.getString("HOSP_URL"));
@@ -90,6 +91,63 @@ public class HospitalDao {
 		
 		
 		return hospList;
+	}
+
+
+	public int bringHospCode(Connection conn, String uniqeCode) {
+		int hospCode = 0;
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		
+		String query = "select hosp_code from hospital_info where unique_code = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1,uniqeCode);
+			
+			rset = pstm.executeQuery();
+			
+			if(rset.next()) {
+				hospCode = rset.getInt("HOSP_CODE");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			template.close(rset, pstm);
+		}
+		return hospCode;
+	}
+
+
+	public int updateSearchTreat(Connection conn, List<SearchTreat> treatList) {
+		int res = 0;
+		PreparedStatement pstm = null;
+		
+		String query = "insert into SEARCH_TREAT(TREAT_INDEX, HOSP_CODE, TREAT_CODE)"
+				+ "values(TREAT_INDEX.NEXTVAL, ? , ?)";
+		
+		try {
+			
+			for (int i = 0; i < treatList.size(); i++) {
+				
+				pstm = conn.prepareStatement(query);
+				pstm.setInt(1, treatList.get(i).getHospCode());
+				pstm.setString(2, treatList.get(i).getTreatCode());
+				res = pstm.executeUpdate();
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			template.close(pstm);
+		}
+		
+		
+		return res;
 	}
 
 
