@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html lang="en" class="fullscreen-bg">
 <head>
+<script type="text/javascript" src='${contextPath}/resources/js/htmlElementSelector.js'></script>
+<script type="text/javascript" src='${contextPath}/resources/js/webUtil.js'></script>
 <link href='${contextPath}/resources/css/member/loginPage.css' rel='stylesheet'/>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -44,7 +46,7 @@
 								</div>
 								<a><button type="submit" class="btn btn-primary btn-lg btn-block">기존 회원 로그인</button></a>
 								
-									<span class="helper-text"><a href="/member/findId" id="a1">아이디 찾기 | </a><a href="/member/findPassword" id="a2">비밀번호 찾기 | </a><a href="/member/joinPage" id="a3">가입하기</a></span>
+									<span class="helper-text"><a href="/member/findId" onclick='openGoogle()' id="a1">아이디 찾기 | </a><a href="/member/findPassword" id="a2">비밀번호 찾기 | </a><a href="/member/joinPage" id="a3">가입하기</a></span>
 								
 							</form>
 						</div>
@@ -53,9 +55,30 @@
 			</div>
 		</div>
 	</div>
-	
+<button onclick='openNaver()'>네이버</button>
+<button onclick='openDaum()'>다음</button>
+<button onclick='openGoogle()'>구글</button>
+<script type="text/javascript">
+   let daumWindow;
+   
+   let positionX = screen.width/2 - 300;
+   let positionY = screen.height/2 - 150;
+   
+
+   let openGoogle = () =>{
+      let google = createPopup({
+                  url:'/member/findId',
+                  name:'',
+                  width:522,
+                  height:302
+               });
+   }
+   
+</script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src='${contextPath}/resources/js/member/kakaoLogin.js'></script>
+
+
 
 </body>
 </html>
