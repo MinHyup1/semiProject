@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 
 import com.kh.semi.board.model.dto.FileDTO;
-import com.kh.semi.board.service.BoardService;
+import com.kh.semi.board.model.service.BoardService;
 
 @WebServlet("/FileDownServlet")
 public class FileDownServlet extends HttpServlet {
