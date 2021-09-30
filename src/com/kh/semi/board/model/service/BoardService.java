@@ -1,4 +1,4 @@
-package com.kh.semi.board.service;
+package com.kh.semi.board.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
