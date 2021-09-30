@@ -215,6 +215,26 @@ public class HospitalController extends HttpServlet {
 		
 
 	}
+	
+	private void searchByHospitalNameInPopup(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String keyWord = request.getParameter("input");
+		
+		if(keyWord == null || keyWord == "") {//공백을 입력할경우
+			//response.sendRedirect("/test/searchHos");
+		}else {
+			List<HospitalInfo> hospList = hospService.searchByHospitalName(keyWord);
+			
+			request.setAttribute("hospList", hospList);
+			request.setAttribute("siez", hospList.size());
+			
+			if(hospList == null) {//검색결과가 없을경우
+				request.setAttribute("res", "null");
+			}
+			
+			//request.getRequestDispatcher("/hospital/searchHospital").forward(request, response);
+		}
+	}
 
 	private void insertInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, JSONException {
 		

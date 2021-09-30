@@ -258,8 +258,6 @@ table.hospital_info_table td {
 					<input type ="text"  name="input"id="input"  class="input_l_t1" title="기관명 적기">
 					<button class="searchByName" >검색</button>
 					
-					
-					
 				</div>
 			</div>
 			
