@@ -349,7 +349,7 @@ public class MemberController extends HttpServlet {
 		Member kakaoMember = new Member();
 		HttpSession session = request.getSession();
 		
-		if (kakaoUser == null) { //아이디가 존재하지 않는다면,
+		if (kakaoUser != null) { //아이디가 존재하지 않는다면,
 			System.out.println("카카오 로그인 성공");
 			kakaoMember.setEmail(kakaoId);
 			kakaoMember.setId(kakaoId);
