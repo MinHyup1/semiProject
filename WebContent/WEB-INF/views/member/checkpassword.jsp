@@ -29,7 +29,7 @@
 							</tr>
 						</table>
 					</form>
-					<button id="btn_login" onclick="location.href='/member/loginPage'">로그인</button>
+					<button id="btn_login"  onClick='window.close()'>닫기</button>
 				</div>
 			</div>
 		</div>

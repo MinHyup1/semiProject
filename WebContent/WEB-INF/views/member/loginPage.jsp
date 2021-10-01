@@ -47,7 +47,7 @@
 								</div>
 								<a><button type="submit" class="btn btn-primary btn-lg btn-block">기존 회원 로그인</button></a>
 								
-									<span class="helper-text"><a href="/member/findId" onclick='openGoogle()' id="a1">아이디 찾기 | </a><a href="/member/findPassword" id="a2">비밀번호 찾기 | </a><a href="/member/joinPage" id="a3">가입하기</a></span>
+									<span class="helper-text"><a onclick='openFindId()' id="a1">아이디 찾기 | </a><a onclick='openFindPassword()' id="a2">비밀번호 찾기 | </a><a href="/member/joinPage" id="a3">가입하기</a></span>
 								
 							</form>
 						</div>
@@ -56,9 +56,6 @@
 			</div>
 		</div>
 	</div>
-<button onclick='openNaver()'>네이버</button>
-<button onclick='openDaum()'>다음</button>
-<button onclick='openGoogle()'>구글</button>
 <script type="text/javascript">
    let daumWindow;
    
@@ -66,8 +63,8 @@
    let positionY = screen.height/2 - 150;
    
 
-   let openGoogle = () =>{
-      let google = createPopup({
+   let openFindId = () =>{
+      let FindId = createPopup({
                   url:'/member/findId',
                   name:'',
                   width:522,
@@ -75,6 +72,14 @@
                });
    }
    
+   let openFindPassword = () =>{
+	   let FindPassword = createPopup({
+           url:'/member/findPassword',
+           name:'',
+           width:522,
+           height:302
+        });
+   }
 </script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src='${contextPath}/resources/js/member/kakaoLogin.js'></script>
