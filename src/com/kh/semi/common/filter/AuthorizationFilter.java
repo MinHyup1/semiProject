@@ -87,6 +87,10 @@ public class AuthorizationFilter implements Filter {
 			if (session.getAttribute("authentication") == null) {
 				throw new HandlableException(ErrorCode.REDIRECT.setURL("/member/loginPage"));
 			}
+		case "mypage":
+			if (session.getAttribute("authentication") == null) {
+				throw new HandlableException(ErrorCode.REDIRECT.setURL("/member/loginPage"));
+			}
 		case "delete":
 			if (session.getAttribute("authentication") == null) {
 				throw new HandlableException(ErrorCode.REDIRECT.setURL("/member/loginPage"));
