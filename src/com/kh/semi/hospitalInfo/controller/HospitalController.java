@@ -76,7 +76,7 @@ public class HospitalController extends HttpServlet {
 	private void updateTreatInfo(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
-		for(int i = 0; i < 89; i++) {
+		for(int i = 61; i < 62; i++) {
 			boolean flg = true;
 			int pageNum = 1;
 			
@@ -194,24 +194,54 @@ public class HospitalController extends HttpServlet {
 
 	private void searchByHospitalName(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String keyWord = request.getParameter("input");
-		
-		if(keyWord == null || keyWord == "") {//공백을 입력할경우
-			response.sendRedirect("/test/searchHos");
+		String keyWord = request.getParameter("input"); //병원검색어
+		String[] treatCheckBox = null;
+		List<String> hospCodeList = null;
+		request.removeAttribute("msg");
+		if(request.getParameterValues("treatCheckBox") == null ) {
+			treatCheckBox = new String[0];
+			
 		}else {
+			treatCheckBox = request.getParameterValues("treatCheckBox");
+			hospCodeList = hospService.searchByTreatCode(treatCheckBox);
+		}
+		
+		
+		
+		
+		
+		
+		if(keyWord == "" && treatCheckBox.length == 0 ) {//키워드와 진료코드 모두 공백일경우
+			
+			request.setAttribute("msg", "검색어 입력해주세요 또는 진료과목을 체크해주세요.");
+			
+			
+		}else if(keyWord == "" && treatCheckBox.length > 0  ) {//진료코드만 입력할경우
+			List<HospitalInfo> hospList = hospService.searchByHospitalCode(hospCodeList);
+			
+			request.setAttribute("hospList", hospList);
+			request.setAttribute("siez", hospList.size());
+			
+		}else if(keyWord != "" && treatCheckBox.length == 0)  {//키워드만 입력할경우
 			List<HospitalInfo> hospList = hospService.searchByHospitalName(keyWord);
 			
 			request.setAttribute("hospList", hospList);
 			request.setAttribute("siez", hospList.size());
 			
-			if(hospList == null) {//검색결과가 없을경우
+			if(hospList.size() == 0) {//검색결과가 없을경우
 				request.setAttribute("res", "null");
 			}
 			
-			request.getRequestDispatcher("/hospital/searchHospital").forward(request, response);
+		}else if(keyWord != "" && treatCheckBox.length > 0) {//진료코드와 키워드가 공백이 아닐경우
+			
+			List<HospitalInfo> hospList = hospService.searchByKeywordAndTreatCode(keyWord,treatCheckBox);
+			
+			request.setAttribute("hospList", hospList);
+			request.setAttribute("siez", hospList.size());
+			
 		}
 		
-		
+		request.getRequestDispatcher("/hospital/searchHospital").forward(request, response);
 		
 
 	}
@@ -242,8 +272,6 @@ public class HospitalController extends HttpServlet {
 		int pageNum = 1;
 		
 		while(flg) {
-			
-			
 			
 			StringBuilder urlBuilder = new StringBuilder(
 					"http://apis.data.go.kr/B551182/hospInfoService1/getHospBasisList1"); /* URL */

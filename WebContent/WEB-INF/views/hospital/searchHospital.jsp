@@ -151,101 +151,101 @@ table.hospital_info_table td {
 					
 					<div class="check_box">
 					
-					<label class="checkbox"><input type="checkbox" name="dd" class="chk_dgsbjt_cd1" title="내과체크" value="01"> 내과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="내과체크" value="01"> 내과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="신경과체크" value="02"> 신경과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="신경과체크" value="02"> 신경과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="정신건강의학과체크" value="03"> 정신건강의학과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="정신건강의학과체크" value="03"> 정신건강의학과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="외과체크" value="04"> 외과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="외과체크" value="04"> 외과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="정형외과체크" value="05"> 정형외과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="정형외과체크" value="05"> 정형외과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="신경외과체크" value="06"> 신경외과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="신경외과체크" value="06"> 신경외과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="흉부외과체크" value="07"> 흉부외과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="흉부외과체크" value="07"> 흉부외과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="성형외과체크" value="08"> 성형외과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="성형외과체크" value="08"> 성형외과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="마취통증의학과체크" value="09"> 마취통증의학과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="마취통증의학과체크" value="09"> 마취통증의학과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="산부인과체크" value="10"> 산부인과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="산부인과체크" value="10"> 산부인과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="소아청소년과체크" value="11"> 소아청소년과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="소아청소년과체크" value="11"> 소아청소년과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="안과체크" value="12"> 안과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="안과체크" value="12"> 안과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="이비인후과체크" value="13"> 이비인후과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="이비인후과체크" value="13"> 이비인후과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="피부과체크" value="14"> 피부과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="피부과체크" value="14"> 피부과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="비뇨기과체크" value="15"> 비뇨기과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="비뇨기과체크" value="15"> 비뇨기과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="영상의학과체크" value="16"> 영상의학과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="영상의학과체크" value="16"> 영상의학과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="방사선종양학과체크" value="17"> 방사선종양학과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="방사선종양학과체크" value="17"> 방사선종양학과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="병리과체크" value="18"> 병리과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="병리과체크" value="18"> 병리과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="진단검사의학과체크" value="19"> 진단검사의학과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="진단검사의학과체크" value="19"> 진단검사의학과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="결핵과체크" value="20"> 결핵과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="결핵과체크" value="20"> 결핵과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="재활의학과체크" value="21"> 재활의학과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="재활의학과체크" value="21"> 재활의학과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="핵의학과체크" value="22"> 핵의학과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="핵의학과체크" value="22"> 핵의학과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="가정의학과체크" value="23"> 가정의학과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="가정의학과체크" value="23"> 가정의학과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="응급의학과체크" value="24"> 응급의학과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="응급의학과체크" value="24"> 응급의학과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="직업환경의학과체크" value="25"> 직업환경의학과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="직업환경의학과체크" value="25"> 직업환경의학과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="예방의학과체크" value="26"> 예방의학과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="예방의학과체크" value="26"> 예방의학과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="치과체크" value="49"> 치과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="치과체크" value="49"> 치과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="구강악안면외과체크" value="50"> 구강악안면외과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="구강악안면외과체크" value="50"> 구강악안면외과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="치과보철과체크" value="51"> 치과보철과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="치과보철과체크" value="51"> 치과보철과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="치과교정과체크" value="52"> 치과교정과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="치과교정과체크" value="52"> 치과교정과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="소아치과체크" value="53"> 소아치과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="소아치과체크" value="53"> 소아치과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="치주과체크" value="54"> 치주과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="치주과체크" value="54"> 치주과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="치과보존과체크" value="55"> 치과보존과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="치과보존과체크" value="55"> 치과보존과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="구강내과체크" value="56"> 구강내과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="구강내과체크" value="56"> 구강내과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="영상치의학과체크" value="57"> 영상치의학과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="영상치의학과체크" value="57"> 영상치의학과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="구강악안면방사선과체크" value="57"> 구강악안면방사선과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="구강악안면방사선과체크" value="57"> 구강악안면방사선과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="구강병리과체크" value="58"> 구강병리과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="구강병리과체크" value="58"> 구강병리과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="예방치과체크" value="59"> 예방치과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="예방치과체크" value="59"> 예방치과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="한방내과체크" value="80"> 한방내과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="한방내과체크" value="80"> 한방내과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="한방부인과체크" value="81"> 한방부인과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="한방부인과체크" value="81"> 한방부인과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="한방소아과체크" value="82"> 한방소아과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="한방소아과체크" value="82"> 한방소아과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="한방안·이비인후·피부과체크" value="83"> 한방안·이비인후·피부과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="한방안·이비인후·피부과체크" value="83"> 한방안·이비인후·피부과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="한방안이비인후피부과체크" value="83"> 한방안이비인후피부과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="한방안이비인후피부과체크" value="83"> 한방안이비인후피부과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="한방신경정신과체크" value="84"> 한방신경정신과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="한방신경정신과체크" value="84"> 한방신경정신과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="침구과체크" value="85"> 침구과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="침구과체크" value="85"> 침구과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="한방재활의학과체크" value="86"> 한방재활의학과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="한방재활의학과체크" value="86"> 한방재활의학과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="사상체질과체크" value="87"> 사상체질과</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="사상체질과체크" value="87"> 사상체질과</label>
 					
-					<label class="checkbox"><input type="checkbox" class="chk_dgsbjt_cd1" title="한방응급체크" value="88"> 한방응급</label>
+					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="한방응급체크" value="88"> 한방응급</label>
 					
 					</div>
 				</div>
@@ -257,7 +257,7 @@ table.hospital_info_table td {
 					
 					<input type ="text"  name="input"id="input"  class="input_l_t1" title="기관명 적기">
 					<button class="searchByName" >검색</button>
-					
+					<c:if test="${not empty msg}"><p id="is_empty" style="color: red">${msg}</p></c:if>
 				</div>
 			</div>
 			
@@ -269,7 +269,7 @@ table.hospital_info_table td {
  		<div class="hospital_list">
  		
  		<ul class="listWrap">
- 			<span>병원주소 목록</span>
+ 			
  			
  		<c:if test="${not empty requestScope.hospList}">  
 		 	<table class="hospital_info_table" >
@@ -329,7 +329,7 @@ function createKakaoMap(xPos,yPos) {
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
   mapOption = {
       center: new kakao.maps.LatLng(yPos, xPos), // 지도의 중심좌표
-      level: 3, // 지도의 확대 레벨
+      level: 4, // 지도의 확대 레벨
       mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
   }; 
 
@@ -377,6 +377,7 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 
   
 } 
+
 	  
 
 </script>

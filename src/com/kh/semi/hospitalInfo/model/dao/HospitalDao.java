@@ -151,5 +151,147 @@ public class HospitalDao {
 	}
 
 
+	public List<String> searchByTreatCode(Connection conn, String[] treatCheckBox) {
+		List<String> hospCodeList = new ArrayList<String>();
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String questionMark = "("; 
+		for (int i = 0; i < treatCheckBox.length; i++) { //string배열에맞게 물음표갯수를 맞춰준다.
+			if(i == treatCheckBox.length-1) {
+				questionMark += "? )";
+			}else {
+				questionMark += "?,";
+			}
+			
+		}
+		String query = "select distinct  HOSP_CODE from search_treat where TREAT_CODE IN " + questionMark;
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			for (int i = 0; i < treatCheckBox.length; i++) {
+				pstm.setString(i + 1 , treatCheckBox[i]);
+			}
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				hospCodeList.add(rset.getString("HOSP_CODE"));
+			}
+									
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			template.close(rset, pstm);
+		}
+		
+		
+		
+		
+		
+		
+		
+		return hospCodeList;
+	}
+
+
+	public List<HospitalInfo> searchByHospitalCode(Connection conn, List<String> hospCodeList) {
+		List<HospitalInfo> hospInfoList = new ArrayList<HospitalInfo>();
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		HospitalInfo hosp = null;
+		String query = "select * from hospital_info where hosp_code = ?"; 
+		for (int i = 0; i < hospCodeList.size(); i++) {
+			try {
+
+				pstm = conn.prepareStatement(query);
+				pstm.setString(1, hospCodeList.get(i));
+
+				rset = pstm.executeQuery();
+
+				if (rset.next()) {
+					hosp = new HospitalInfo();
+					hosp.setHospCode(rset.getInt("HOSP_CODE"));
+					hosp.setHospTell(rset.getString("HOSP_TELL"));
+					hosp.setHospName(rset.getString("HOSP_NAME"));
+					hosp.setHospUrl(rset.getString("HOSP_URL"));
+					hosp.setAddress(rset.getString("HOSP_ADDRESS"));
+					hosp.setxPos(rset.getString("HOSP_XPOS"));
+					hosp.setyPos(rset.getString("HOSP_YPOS"));
+
+					hospInfoList.add(hosp);
+				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				template.close(rset, pstm);
+			}
+		}
+		
+		
+		
+		
+		return hospInfoList;
+
+		
+	}
+
+
+	public List<HospitalInfo> searchByKeywordAndTreatCode(Connection conn, String keyWord, String[] treatCheckBox) {
+		List<HospitalInfo> hospInfoList = new ArrayList<HospitalInfo>();
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		HospitalInfo hosp = null;
+		String questionMark = "("; 
+		for (int i = 0; i < treatCheckBox.length; i++) { //string배열에맞게 물음표갯수를 맞춰준다.
+			if(i == treatCheckBox.length-1) {
+				questionMark += "? )";
+			}else {
+				questionMark += "?,";
+			}
+			
+		}
+		String query = "select * " + 
+				"from hospital_info " + 
+				"join search_treat using(hosp_code)" + 
+				"where hosp_name like '%' || ? || '%'"
+				+ "and treat_code in " + questionMark; 
+		try {
+			pstm = conn.prepareStatement(query);
+			for(int i = 0; i < treatCheckBox.length; i++) {
+				pstm.setString(1, keyWord);
+				pstm.setString(i + 2, treatCheckBox[i]);
+			}
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				hosp = new HospitalInfo();
+				hosp.setHospCode(rset.getInt("HOSP_CODE"));
+				hosp.setHospTell(rset.getString("HOSP_TELL"));
+				hosp.setHospName(rset.getString("HOSP_NAME"));
+				hosp.setHospUrl(rset.getString("HOSP_URL"));
+				hosp.setAddress(rset.getString("HOSP_ADDRESS"));
+				hosp.setxPos(rset.getString("HOSP_XPOS"));
+				hosp.setyPos(rset.getString("HOSP_YPOS"));
+
+				hospInfoList.add(hosp);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			template.close(rset, pstm);
+		}
+		
+		
+		
+		return hospInfoList;
+	}
+
+
 
 }

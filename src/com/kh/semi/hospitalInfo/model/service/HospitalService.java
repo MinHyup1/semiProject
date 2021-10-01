@@ -87,5 +87,53 @@ public class HospitalService {
 		
 		return res;
 	}
+
+	public List<String> searchByTreatCode(String[] treatCheckBox) {
+		Connection conn = template.getConnection();
+		List<String> hospCodeList = null;
+		
+		try {
+			hospCodeList = hospDao.searchByTreatCode(conn,treatCheckBox);
+			conn.commit();
+		} catch (Exception e) {
+			
+		}finally {
+			template.close(conn);
+		}
+		
+		return hospCodeList;
+		
+	}
+
+	public List<HospitalInfo> searchByHospitalCode(List<String> hospCodeList) {
+		Connection conn = template.getConnection();
+		List<HospitalInfo> hospInfoList = null;
+		
+		try {
+			hospInfoList = hospDao.searchByHospitalCode(conn,hospCodeList);
+			conn.commit();
+		} catch (Exception e) {
+			
+		}finally {
+			template.close(conn);
+		}
+		
+		return hospInfoList;
+	}
+
+	public List<HospitalInfo> searchByKeywordAndTreatCode(String keyWord, String[] treatCheckBox) {
+		Connection conn = template.getConnection();
+		List<HospitalInfo> hospInfoList = null;
+		
+		try {
+			hospInfoList = hospDao.searchByKeywordAndTreatCode(conn,keyWord,treatCheckBox);
+		} catch (Exception e) {
+			
+		}finally {
+			template.close(conn);
+		}
+		
+		return hospInfoList;
+	}
 	
 }
