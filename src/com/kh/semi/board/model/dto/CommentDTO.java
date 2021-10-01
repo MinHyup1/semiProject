@@ -83,4 +83,13 @@ public class CommentDTO {
 		REGDATE = rEGDATE;
 	}
 
+	@Override
+	public String toString() {
+		return "CommentDTO [BNO=" + BNO + ", COMMENTLEVEL=" + COMMENTLEVEL + ", COMMENT_ID=" + COMMENT_ID
+				+ ", PARENT_COMMENT_ID=" + PARENT_COMMENT_ID + ", CONTENT=" + CONTENT + ", NAME=" + NAME
+				+ ", USER_CODE=" + USER_CODE + ", DELETE_AT=" + DELETE_AT + ", REGDATE=" + REGDATE + "]";
+	}
+	
+	
+
 }
