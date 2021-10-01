@@ -58,11 +58,13 @@
 	</table>
 		<div class="footBtwrap">
 		<c:if test="${empty authentication.password}">
-			<a href="/member/kakaoMemberForm"><input  value="회원정보수정" class="fpmgBt1"></a>
+			<a ><input type="button"   onclick="location.href='/member/kakaoMemberForm'" value="회원정보수정" class="fpmgBt1"></a>
 		</c:if>
+		
 		<c:if test="${not empty authentication.password}">
-			<a  href="/member/changeForm"><input value="회원정보수정" class="fpmgBt1"></a>
+			<a ><input type="button" onclick="location.href='/member/changeForm'" value="회원정보수정" class="fpmgBt1"></a>
 		</c:if>
+		
 			<a id="cancel"href="/index"><input type="button" value="돌아가기" class="fpmgBt2"></a>
 			<a style="display: none" href="/member/delete" onclick="unlinkApp()" id="out"><input value="회원탈퇴" class="fpmgBt3"></a>
 		</div>

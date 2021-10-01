@@ -108,12 +108,7 @@
 		</tr>
 	</table>
 		<div class="footBtwrap">
-			<c:if test="${empty authe.nick}">
-				<a id="modify"><input type="submit" value="회원정보수정" class="fpmgBt1"></a>
-			</c:if>
-			<c:if test="${empty joinFailed.nick}">
-				<a id="modify"><input type="submit" value="회원정보수정" class="fpmgBt1"></a>
-			</c:if>
+			<a id="modify"><input type="submit" value="회원정보수정" class="fpmgBt1"></a>
 			<a href="/member/changeCancel" id="cancel"><input type="button" value="취소" class="fpmgBt2"></a>
 			<a href="/member/delete" id="out"><input type="button" value="회원탈퇴" class="fpmgBt3"></a>
 		</div>
