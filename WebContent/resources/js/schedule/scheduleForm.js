@@ -146,9 +146,10 @@ let createMedicinePopup = () => {
 	
 	let popup = open("/schedule/popup/medicine-popup", "search", windowFeatures);
 		popup.addEventListener('beforeunload', e => {
-			document.querySelector('#medi-trash').addEventListener('click', e => {		
-			e.target.parentElement.remove();
-
+			document.querySelectorAll('#medi-trash').forEach(el => {
+				el.addEventListener('click', e => {		
+				e.target.parentElement.remove();
+			})
 		})
 	})
 	

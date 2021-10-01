@@ -82,6 +82,10 @@ tbody>tr{
 	text-decoration: underline;
 }
 
+.line:hover .medImg, .line:hover .medName{
+	text-decoration: underline;
+}
+
 .code{
 	visibility: hidden;
 }

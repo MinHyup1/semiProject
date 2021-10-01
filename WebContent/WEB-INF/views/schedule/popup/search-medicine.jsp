@@ -16,8 +16,10 @@
 		<div class="wrap_search">
 			<span class="desc">> 복용하고 있는 약 이름을 찾아 저장해보세요.</span>
 			<div class="search">
-				<input type="text", placeholder="ex) 타이레놀...">
-				<button onclick="searchMed()">검색</button>
+				<form action="/Medicine/medicineInfoInPopup" class="search">
+					<input type="text" name="medName" placeholder="ex) 타이레놀...">
+					<button onclick="searchMed()">검색</button>
+				</form>
 			</div>
 		</div>
 		<div>
@@ -30,10 +32,19 @@
 				</thead>
 				<tbody>
 					<!-- 검색된 병원 리스트 -->
-					<tr>
-						<td>이미지</td>
-						<td>*****약</td>
-					</tr>
+					<c:choose>
+						<c:when test="${empty medicineList}">
+							<tr><td colspan="2">검색된 결과가 없습니다.</td></tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${medicineList}" var="med">
+								<tr class='line'>
+									<td><a class='medImg'><img src="${med.medImg}"style="width: 100px; height: auto;"/></a></td>
+									<td><a class='medName'>${med.medName}</a><span class="code">${med.medNum}</span></td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</tbody>
 			</table>
 		</div>

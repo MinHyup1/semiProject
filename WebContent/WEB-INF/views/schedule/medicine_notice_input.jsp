@@ -40,15 +40,17 @@
 							required></label>
 							<label class="search_btn">처방 약국 : <input type="text" name="pharm" class="pharm"
 								<c:choose>
-									<c:when test="${not empty param.edit and not empty currentSchedule.prescription.pharmCode}">value='${currentSchedule.prescription.pharmCode}'</c:when>
+									<c:when test="${not empty param.edit and not empty currentSchedule.prescription.pharmCode}">value='${currentSchedule.pharmName}'</c:when>
 									<c:otherwise></c:otherwise>
 								</c:choose>
-							placeholder="방문한 약국을 기록해보세요" readonly> <button type="button" onclick="createPharmPopup()">검색</button></label><input value="약국코드" class="pharmCode" name="pharmCode" id="code">
+							placeholder="방문한 약국을 기록해보세요" readonly> <button type="button" onclick="createPharmPopup()">검색</button></label><input class="pharmCode" name="pharmCode" id="code">
 							<label class="search_btn">처방 약 : <input type="text" name="searched_med" placeholder="처방 받은 약을 기록해보세요" readonly> <button type="button" onclick="createMedicinePopup()">검색</button></label>
 							<div class='medi-list'>
 								<c:choose>
-									<c:when test="${not empty param.edit and not empty currentSchedule.prescription.hasMedicine == 'N'}">
-										<span><input name="medicine" value="약 1" readonly><input value="약코드" name="mediCode" class="code"> <i class="fas fa-trash edit-trash"></i>
+									<c:when test="${not empty param.edit and not empty currentSchedule.medicineList}">
+										<c:forEach items="${currentSchedule.medicineList}" var="med" varStatus="status">
+											<span><input name="medicine" value="${currentSchedule.medicineList[status.index]}" readonly><input value="${currentSchedule.medNumList[status.index]}" name="mediCode" id="code"> <i class="fas fa-trash edit-trash"></i></span>
+										</c:forEach>
 									</c:when>
 								</c:choose>
 							</div><!-- 처음에는 1칸, 약 추가시 칸 추가 / 휴지통 아이콘 사용하기 -->
@@ -63,7 +65,7 @@
 								<c:choose>
 									<c:when test="${not empty param.edit}">
 										<c:forEach items="${currentSchedule.timeSet}" var="time">
-											<label><input type="time" class='time' name="dose_notice" value='${time}' required> <i class="fas fa-trash edit-trash"></i></label>
+											<label><input type="time" class='time' name="dose_notice" value='${time}' required> <i class="fas fa-trash edit-trash dose"></i></label>
 										</c:forEach>
 									</c:when>
 									<c:otherwise><label><input type="time" class='time' name="dose_notice" required></label></c:otherwise>
@@ -92,7 +94,9 @@
 		if(document.querySelectorAll('.edit-trash')) {
 			document.querySelectorAll('.edit-trash').forEach(function(e) {
 				e.addEventListener('click', function(event) {
-					document.querySelector('input[type=number]').value -= 1;
+					if(event.target.className == 'fas fa-trash edit-trash dose') {
+						document.querySelector('input[type=number]').value -= 1;
+					}
 					event.target.parentElement.remove();
 				})
 			})

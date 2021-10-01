@@ -29,6 +29,7 @@ public class PharmacyService {
 		return res;
 	}
 	
+
 	public List<Pharmacy> pharmacyFindByName(String name) {
 		Connection conn = template.getConnection();
 		List<Pharmacy> pharmacyList = new ArrayList<Pharmacy>();
@@ -52,4 +53,20 @@ public class PharmacyService {
 	}
 
 	
+
+	//[참고] 륜수 수정 10/01 10:44
+	public String getPharmNameByCode(String pharmCode) {
+		Connection conn = template.getConnection();
+		Pharmacy pharmacy = null;
+		String pharmName = null;
+		
+		try {
+			pharmacy = pharmacyDao.selectPharmByCode(conn, pharmCode);
+			pharmName = pharmacy.getPharName();
+		} finally {
+			template.close(conn);
+		}
+		return pharmName;
+	}
+
 }

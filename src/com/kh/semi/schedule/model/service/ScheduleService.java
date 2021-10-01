@@ -309,8 +309,9 @@ public class ScheduleService {
 			}
 			
 			// 처방 약이 있다면, medicine_record에 insert 하고, prescription_list의 has_medicine Y로 바꾸기
-			if(dtoMap.get("medicine") != null) {
-				
+			if(dtoMap.get("mediCodeArr") != null) {
+				Integer[] mediCodeArr = (Integer[]) dtoMap.get("mediCodeArr");
+				insertMedicineRecord(conn, mediCodeArr, prescriptionId);
 			}
 			template.commit(conn);
 		} catch (Exception e) {

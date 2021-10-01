@@ -35,6 +35,11 @@ let getNotice = async () => {
 			if(startDays <= 0 && endDays <= 0) {
 				return true;
 			}
+		}else{
+			let start = getDate(el.start);
+			if(start-today == 0) {
+				return true;
+			}
 		}
 		return false;
 	})
@@ -46,36 +51,42 @@ let getNotice = async () => {
 		document.querySelector('.badge').innerHTML = (noticeNow.length + startInThisWeek.length);
 	}
 	
-	startInThisWeek.sort((a, b)=>{
-		let aDate = new Date(a.start.substring(0, 10));
-		let bDate = new Date(b.start.substring(0, 10));
-		return aDate - bDate;
-	})
-	console.dir(startInThisWeek);
-	noticeNow.sort((a, b)=>{
-		let aDate = new Date(a.start.substring(0, 10));
-		let bDate = new Date(b.start.substring(0, 10));
-		return aDate - bDate;
-	})
-	console.dir(noticeNow);
-	
 	document.querySelector('.notifications').innerHTML = '';
 	
-	noticeNow.forEach(e=>{
-		document.querySelector('.notifications').innerHTML += 
-		"<li><a href='/schedule/schedule-main' class='notification-item'><span class='dot bg-danger'></span>" + e.title + "</a>"
-	})
-	
-	startInThisWeek.forEach(e=>{
-		if(e.kind == 'visit') {
+	if(noticeNow.length != 0) {
+		noticeNow.sort((a, b)=>{
+			let aDate = new Date(a.start.substring(0, 10));
+			let bDate = new Date(b.start.substring(0, 10));
+			return aDate - bDate;
+		})
+		console.dir(noticeNow);
+		
+		document.querySelector('.notifications').innerHTML += "<li><a href='#' class='more'>진행 중일 알림</a></li>";
+		noticeNow.forEach(e=>{
 			document.querySelector('.notifications').innerHTML += 
-			"<li><a href='/schedule/schedule-main' class='notification-item'><span class='dot bg-success'></span>" + e.title + "</a>"
-		}else{
-			document.querySelector('.notifications').innerHTML += 
-			"<li><a href='/schedule/schedule-main' class='notification-item'><span class='dot bg-warning'></span>" + e.title + "</a>"
-		}
-	})
+			"<li><a href='/schedule/schedule-main' class='notification-item'><span class='dot bg-danger'></span>" + e.title + "</a>"
+		})
+	}
 	
+	if(startInThisWeek.length != 0) {
+		startInThisWeek.sort((a, b)=>{
+			let aDate = new Date(a.start.substring(0, 10));
+			let bDate = new Date(b.start.substring(0, 10));
+			return aDate - bDate;
+		})
+		console.dir(startInThisWeek);
+		
+		document.querySelector('.notifications').innerHTML += "<li><a href='#' class='more'>곧 예정인 알림</a></li>";
+		startInThisWeek.forEach(e=>{
+			if(e.kind == 'visit') {
+				document.querySelector('.notifications').innerHTML += 
+				"<li><a href='/schedule/schedule-main' class='notification-item'><span class='dot bg-success'></span>" + e.title + "</a>"
+			}else{
+				document.querySelector('.notifications').innerHTML += 
+				"<li><a href='/schedule/schedule-main' class='notification-item'><span class='dot bg-warning'></span>" + e.title + "</a>"
+			}
+		})
+	}
 })();
 
 let getDate = (dateStr) => {
