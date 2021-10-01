@@ -65,4 +65,14 @@ public class FileDTO {
 		REGDATE = rEGDATE;
 	}
 
+	@Override
+	public String toString() {
+		return "FileDTO [FILE_NO=" + FILE_NO + ", BNO=" + BNO + ", BBS_TYPE=" + BBS_TYPE + ", ORG_FILE_NAME="
+				+ ORG_FILE_NAME + ", STORED_FILE_NAME=" + STORED_FILE_NAME + ", FILE_SIZE=" + FILE_SIZE + ", REGDATE="
+				+ REGDATE + "]";
+	}
+	
+	
+	
+
 }

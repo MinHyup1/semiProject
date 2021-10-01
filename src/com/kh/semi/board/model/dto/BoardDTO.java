@@ -83,4 +83,12 @@ public class BoardDTO {
 		USER_CODE = uSER_CODE;
 	}
 
+	@Override
+	public String toString() {
+		return "BoardDTO [RN=" + RN + ", BNO=" + BNO + ", BBS_TYPE=" + BBS_TYPE + ", TITLE=" + TITLE + ", CONTENT="
+				+ CONTENT + ", REGDATE=" + REGDATE + ", USER_CODE=" + USER_CODE + ", ID=" + ID + ", NAME=" + NAME + "]";
+	}
+
+	
+	
 }
