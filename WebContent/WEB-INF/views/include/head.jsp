@@ -58,12 +58,12 @@
                      <ul class="dropdown-menu">
                      	<!-- 카카오톡 연동으로 로그인 한 회원에게 보여주는 회원정보수정 페이지  -->
                      	<c:if test="${authentication.password eq null}">
-                     		<li><a href="/member/kakaoMemberForm"><i class="far fa-user"></i> <span>My Profile</span></a></li>
+                     		<li><a href="/member/mypage"><i class="far fa-user"></i> <span>My Profile</span></a></li>
                      		<li><a href="/member/logout" onclick="kakaoLogout()"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
                      	</c:if>
                      	<!-- 일반회원으로 로그인 한 회원에게 보여주는 회원정보수정 페이지  -->
                      	<c:if test="${authentication.password != null}">
-                        	<li><a href="/member/changeForm"><i class="far fa-user"></i> <span>My Profile</span></a></li>
+                        	<li><a href="/member/mypage"><i class="far fa-user"></i> <span>My Profile</span></a></li>
                         	<li><a href="/member/logout"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
                         </c:if>
                      </ul>

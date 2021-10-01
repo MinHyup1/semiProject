@@ -125,12 +125,19 @@ public class MemberController extends HttpServlet {
 		case "memberInfo" :
 			memberInfo(request,response);
 			break;
+		case "mypage" :
+			mypage(request,response);
+			break;
 		default: throw new PageNotFoundException();  //우리가 만든 예외처리 클래스 넣어주기
 		
 		}
 	}
 	
 
+
+	private void mypage(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException{
+		request.getRequestDispatcher("/member/mypage").forward(request, response);		
+	}
 
 	private void newKakaoMember(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/member/newKakaoMember").forward(request, response);
