@@ -5,32 +5,39 @@ Kakao.init('8406376e4a3016276da81540af46ba74');
 console.log(Kakao.isInitialized());
 
 function loginWithKakao(){
-	Kakao.Auth.login({	 
-		success: function(authObj) {
-			Kakao.Auth.setAccessToken(authObj.access_token);
-			//로그인 성공시, API 호출
-			Kakao.API.request({
-				url: '/v2/user/me', //사용자 정보를 읽어들이는 고정된 url
-				success: function(res) {
-				
-				const id = res.id; //회원 고유식별번호 가져오기	
-				const email = res.kakao_account.email;
-				const nick = res.properties.nickname;
-				const gender = res.kakao_account.gender;
-							
-				document.getElementById('kakaoId').value = id;
-				document.getElementById('kakaoEmail').value = email;
-				document.getElementById('kakaoNick').value = nick;
-				document.getElementById('kakaoGender').value = gender;
-				document.kakaologin_frm.submit();
-				//location.href="/index";
-				}
-			})
-		},
-		fail: function(err) {
-			alert(JSON.stringify(err));
-		}
-	});
+   Kakao.Auth.login({    
+      success: function(authObj) {
+         Kakao.Auth.setAccessToken(authObj.access_token);
+         console.log(authObj);
+         //로그인 성공시, API 호출
+         Kakao.API.request({
+            url: '/v2/user/me', //사용자 정보를 읽어들이는 고정된 url
+            success: function(res) {
+            alert(JSON.stringify(res));   
+            
+            const id = res.id;      
+            const email = res.kakao_account.email;
+            const nick = res.properties.nickname;
+            const gender = res.kakao_account.gender;
+                     
+            console.log(email);
+            console.log(nick);
+            console.log(gender);
+            console.log(id);
+                     
+            document.getElementById('kakaoId').value = id;
+            document.getElementById('kakaoEmail').value = email;
+            document.getElementById('kakaoNick').value = nick;
+            document.getElementById('kakaoGender').value = gender;
+            document.kakaologin_frm.submit();
+            //location.href="/index";
+            }
+         })
+      },
+      fail: function(err) {
+         alert(JSON.stringify(err));
+      }
+   });
 }
 
 function unlinkApp() {
