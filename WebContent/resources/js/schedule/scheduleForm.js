@@ -121,13 +121,13 @@
 	
 })();
 
-/*window.addEventListener('unload', e => {
+window.addEventListener('unload', e => {
 	if(docuemnt.querySelectorAll('.medicine')) {
 		document.querySelectorAll('#medi-trash').forEach(el => {
 			console.dir(el);
 		})
 	}
-})*/
+})
 
 let createHospitalPopup = () => {
 	let positionX = screen.width/2 - (450/2);
@@ -145,6 +145,13 @@ let createMedicinePopup = () => {
 	let windowFeatures = `width=510px, height=700px, left=${positionX}, top=${positionY}, resizable=no`;
 	
 	let popup = open("/schedule/popup/medicine-popup", "search", windowFeatures);
+		popup.addEventListener('beforeunload', e => {
+						console.dir('aa');
+			document.querySelector('#medi-trash').addEventListener('click', e => {		
+			e.target.parentElement.remove();
+
+		})
+	})
 	
 	return popup;
 }

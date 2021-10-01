@@ -217,12 +217,14 @@ public class ScheduleController extends HttpServlet {
 	private void getPrescription(HttpServletRequest request, HttpServletResponse response) {
 		String prescriptionId = request.getParameter("prescriptionId");
 		Map<String, Object> prescMap = scheduleService.selectPrescriptionById(prescriptionId);
+		List<String> medicineList = null;
 		
 		if(prescMap.get("medNumList") != null) {
 			List<Integer> medNumList = (List<Integer>) prescMap.get("medNumList");
-			List<String> medicineList = medicineService.selectMedNameByNum(medNumList);
+			medicineList = medicineService.selectMedNameByNum(medNumList);
 			System.out.println(medicineList);
 			//fetch로 보낼거랑 session에 저장할거 하기
+			prescMap.put("medicineList", medicineList);
 		}
 		
 		request.getSession().setAttribute("currentSchedule", prescMap);
@@ -237,7 +239,8 @@ public class ScheduleController extends HttpServlet {
 		map.put("timesPerDay", prescription.getTimesPerDay());
 		
 		if(prescMap.get("timeSet") != null) map.put("doseTime", (Set<String>) prescMap.get("timeSet"));
-		if(prescMap.get("medicine") != null) map.put("medicine", (List<String>) prescMap.get("medicine"));
+		if(medicineList != null) map.put("medicineList", medicineList);
+		
 		String responseBody = gson.toJson(map);
 		try {
 			response.getWriter().print(responseBody);
