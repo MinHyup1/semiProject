@@ -129,7 +129,8 @@ let rendMedicalToTable = async (event) => {
 	date.innerHTML = '<label>진료 날짜 : <input type="date" value=' + datas.schedule_date + ' readonly></label>';
 	
 	let hospital = document.createElement('td');
-	hospital.innerHTML = '<label>진료 병원 : <input type="text" value=' + datas.hospital + ' readonly></label>';
+	hospital.innerHTML = "<label>진료 병원 : <a href='/HospitalController/searchByName?input=" + datas.hospital + "'>" + datas.hospital + "</a></label>";
+	//hospital.innerHTML = '<label>진료 병원 : <input type="text" value=' + datas.hospital + ' readonly></label>';
 	
 	document.querySelector('.schedule_table>tbody').append(date);
 	document.querySelector('.schedule_table>tbody').append(hospital);
@@ -154,15 +155,33 @@ let rendPrescriptionToTable = async (event) => {
 	let pharm = document.createElement('td');
 	pharm.innerHTML = '<label>처방 약국 : <input type="text" readonly></label>';
 	
+	let mediTitle = document.createElement('td');
+	mediTitle.innerHTML = '<label>처방 약 : </label>';
+	
+	tbody.append(start);
+	tbody.append(end);
+	
 	if(datas.pharm) {
 		pharm.innerHTML = '<label>처방 약국 : <input type="text" value=' + datas.pharm + ' readonly></label>';
 	}
 	
-	tbody.append(start);
-	tbody.append(end);
 	tbody.append(pharm);
+	tbody.append(mediTitle);
 	
-	if(datas.medicine) {}//추후 추가
+	if(datas.medicineList) {
+		let mediTd = document.createElement('td');
+		let mediDiv = document.createElement('span');
+		mediDiv.style.display = 'flex';
+		mediDiv.style.flexWrap = 'wrap';
+		
+		let medicineList = datas.medicineList;
+		console.dir(medicineList);
+		medicineList.forEach(e => {
+			mediDiv.innerHTML += "<span><a href='/Medicine/medicineInfo?medName=" + e + "'>" + e + "</a></span>"
+		})
+		mediTd.append(mediDiv);
+		tbody.append(mediTd);
+	}
 	
 	let times = document.createElement('td');
 	times.innerHTML = "<label>1일 복용 횟수 : <input type='number' style='width:40px' value=" + datas.timesPerDay + " readonly> 회</label>";

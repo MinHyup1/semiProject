@@ -6,14 +6,10 @@ let searchMed = () => {
 	let trash = document.createElement('i');
 	trash.className = "fas fa-trash";
 	trash.id = "medi-trash";
-	
-	trash.addEventListener('click', e => {
-		e.target.parentElement.remove();
-	})
-	
+
 	medi.appendChild(trash);
 	
-	opener.document.querySelector('.medi-list').appendChild(medi);
+	opener.document.querySelector('.medi-list').appendChild(medi);	
 	
 	window.close();
 }
