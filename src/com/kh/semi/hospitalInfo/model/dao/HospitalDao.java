@@ -95,7 +95,7 @@ public class HospitalDao {
 	}
 
 
-	public int bringHospCode(Connection conn, String uniqeCode) {
+	public int bringHospCode(Connection conn, String uniqeCode) throws SQLException {
 		int hospCode = 0;
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
@@ -112,8 +112,7 @@ public class HospitalDao {
 				hospCode = rset.getInt("HOSP_CODE");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw e;
 		}finally {
 			template.close(rset, pstm);
 		}
