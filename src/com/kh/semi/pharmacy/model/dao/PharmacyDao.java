@@ -58,7 +58,10 @@ public class PharmacyDao {
 			
 			while(rset.next()) {
 				pharmacy = new Pharmacy();
-				pharmacy = parseRsetToPharmacy(rset);
+				pharmacy.setPharName(rset.getString("pharm_name"));
+				pharmacy.setPharLoc(rset.getString("pharm_loc"));
+				pharmacy.setPharLat(rset.getString("pharm_lat"));
+				pharmacy.setPharLon(rset.getString("pharm_lon"));
 				pharmacyList.add(pharmacy);
 			}
 			
@@ -86,7 +89,10 @@ public class PharmacyDao {
 			
 			while(rset.next()) {
 				pharmacy = new Pharmacy();
-				pharmacy = parseRsetToPharmacy(rset);
+				pharmacy.setPharName(rset.getString("pharm_name"));
+				pharmacy.setPharLoc(rset.getString("pharm_loc"));
+				pharmacy.setPharLat(rset.getString("pharm_lat"));
+				pharmacy.setPharLon(rset.getString("pharm_lon"));
 				pharmacyList.add(pharmacy);
 			}
 			
