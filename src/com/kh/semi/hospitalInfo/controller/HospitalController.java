@@ -63,6 +63,9 @@ public class HospitalController extends HttpServlet {
 		case "searchByName":
 			searchByHospitalName(request, response);
 			break;
+		case "searchByHospitalNameInPopup":
+			searchByHospitalNameInPopup(request, response);
+			break;
 		case "update-treatInfo":
 			updateTreatInfo(request, response);
 			break;
@@ -255,14 +258,15 @@ public class HospitalController extends HttpServlet {
 		}else {
 			List<HospitalInfo> hospList = hospService.searchByHospitalName(keyWord);
 			
-			request.setAttribute("hospList", hospList);
-			request.setAttribute("siez", hospList.size());
+			request.getSession().setAttribute("hospList", hospList);
+			request.getSession().setAttribute("siez", hospList.size());
 			
 			if(hospList == null) {//검색결과가 없을경우
 				request.setAttribute("res", "null");
 			}
 			
-			//request.getRequestDispatcher("/hospital/searchHospital").forward(request, response);
+			//request.getRequestDispatcher("/schedule/popup/hospital-popup").forward(request, response);
+			response.sendRedirect("/schedule/popup/hospital-popup");
 		}
 	}
 
