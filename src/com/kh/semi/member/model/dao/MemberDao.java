@@ -120,15 +120,6 @@ public class MemberDao {
 		return res;	
 	}
 
-	// userId로 ' or 1=1 or user_id = ' 값을 전달받으면 모든 회원의 비밀번호가 수정
-	// SQL Injection 공격
-	// 악의적인 SQL구문을 주입해서 상대방의 DataBase를 공격하는 기법
-
-	// SQL Injection 공격 막기 위해 PreparedStatement 사용
-	// 인스턴스를 생성할 때 쿼리 템플릿을 미리 등록
-	// 생성시 등록된 쿼리 템플릿의 구조가 변경되는 것을 방지
-	// 문자열에 대해서 자동으로 이스케이프 처리
-	// ex) ->\' or 1=1 or user_id = \'
 	public int updatePassword(String userId, String password, Connection conn) {
 		int res = 0;
 		PreparedStatement pstm = null;
@@ -308,7 +299,6 @@ public class MemberDao {
 		return member;
 	}
 	
-	
 	private Member convertAllToMember(ResultSet rset) throws SQLException {
 		Member member = new Member();
 		member.setUserCode(rset.getString("user_code"));
@@ -349,6 +339,8 @@ public class MemberDao {
 		}
 		return member;
 	}
+
+
 
 
 

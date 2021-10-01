@@ -43,7 +43,7 @@
 								<th>2021.09월</th>
 							</thead>
 							<tbody>
-								<th>등록된 일정이 없습니다.</th>
+								<th>등록된 일정이 없습니다.<br><i style="font-size: 12px">날짜를 더블클릭하여 일정 및 알림을 등록해보세요.</i></th>
 							</tbody>
 						</table>
 					</div>
@@ -59,19 +59,6 @@
 		</footer>
 	</div>
 <script type="text/javascript">
-	<c:choose>
-		<c:when test="${param.status == 'regist'}">
-			alert("스케줄이 성공적으로 등록되었습니다.");
-		</c:when>
-		<c:when test="${param.status == 'delete'}">
-			alert("스케줄이 성공적으로 삭제되었습니다.");
-		</c:when>
-		<c:when test="${param.status == 'modify'}">
-			alert("스케줄이 성공적으로 수정되었습니다.");
-		</c:when>
-		<c:otherwise></c:otherwise>
-	</c:choose>
-	
 	selectedMenu = 'schedule';
 </script>
 </body>

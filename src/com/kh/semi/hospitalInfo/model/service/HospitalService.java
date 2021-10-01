@@ -136,4 +136,17 @@ public class HospitalService {
 		return hospInfoList;
 	}
 	
+	//[참고] 륜수 수정(10/01 01:29)
+	public HospitalInfo searchByHospitalCode(String hospCode) {
+		Connection conn = template.getConnection();
+		HospitalInfo hospital = null;
+		
+		try {
+			hospital = hospDao.searchByHospitalCode(conn, hospCode);
+		} finally {
+			template.close(conn);
+		}
+		return hospital;
+	}
+	
 }

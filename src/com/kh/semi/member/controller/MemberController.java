@@ -158,7 +158,10 @@ public class MemberController extends HttpServlet {
 		
 		Member member = new Member();
 		member = (Member) request.getSession().getAttribute("authentication");
-		String userId = member.getId(); //아이디 고정
+ 
+		System.out.println("넘어온 어트리뷰트 확인 : "+ member);
+		
+		String userId = member.getId(); 
 		String name = request.getParameter("name");
 		String nick = request.getParameter("nick");
 		String phone = request.getParameter("phone");
@@ -341,7 +344,7 @@ public class MemberController extends HttpServlet {
 	//카카오 로그인 구현
 	private void kakaoLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String kakaoId = request.getParameter("kakaoEmail"); //카카오 이메일을 아이디로 넣을 예정
+		String kakaoId = request.getParameter("kakaoId"); // 카카오 회원번호를 아이디로 넣기
 		String kakaoNick = request.getParameter("kakaoNick");
 		
 		Member kakaoUser = memberService.selectMemberById(kakaoId); //아이디 존재하는지 체크
@@ -349,21 +352,21 @@ public class MemberController extends HttpServlet {
 		Member kakaoMember = new Member();
 		HttpSession session = request.getSession();
 		
-		if (kakaoUser == null) { //아이디가 존재하지 않는다면,
-			System.out.println("카카오 로그인 성공");
-			kakaoMember.setEmail(kakaoId);
-			kakaoMember.setId(kakaoId);
-			kakaoMember.setNick(kakaoNick);
-			kakaoMember.setKakaoNum(1); //혹시 나중에 쓸 수도 있어서 테이블 하나 추가해서 넣어놓음
+			if (kakaoUser == null) { //아이디가 존재하지 않는다면,
+			 System.out.println("카카오 로그인 성공");
 			
-			memberService.insertMember(kakaoMember);
-			
-			session.setAttribute("authentication", kakaoMember);
-			
-			request.setAttribute("msg", "나머지 정보를 입력하셔야 카카오 연동 회원가입이 완료됩니다. 회원정보 입력창으로 넘어갑니다."); 
-			request.setAttribute("url", "/member/newKakaoMember"); //나머지 정보 입력하도록 이동시킴
-			request.getRequestDispatcher("/error/result").forward(request, response);
-			return;
+			 kakaoMember.setId(kakaoId);
+			 kakaoMember.setNick(kakaoNick);
+			 kakaoMember.setKakaoNum(1); //혹시 나중에 쓸 수도 있어서 테이블 하나 추가해서 넣어놓음
+
+			 memberService.insertMember(kakaoMember);
+					
+			 session.setAttribute("authentication", kakaoMember);
+					
+			 request.setAttribute("msg", "나머지 정보를 입력하셔야 카카오 연동 회원가입이 완료됩니다. 회원정보 입력창으로 넘어갑니다."); 
+			 request.setAttribute("url", "/member/newKakaoMember"); //나머지 정보 입력하도록 이동시킴
+			 request.getRequestDispatcher("/error/result").forward(request, response);
+			 return;
 		} /*
 			 * else if(kakaoUser != null && kakaoUser.getKakaoNum() == 1) {
 			 * session.setAttribute("authentication", kakaoUser);
@@ -390,6 +393,10 @@ public class MemberController extends HttpServlet {
 	}
 
 	private void basicJoin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Member member = new Member();
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("authentication", member);
 		request.getRequestDispatcher("/member/joinForm").forward(request, response);
 		
 	}
@@ -422,14 +429,14 @@ public class MemberController extends HttpServlet {
 		member.setAddress(postCode, address1, address2);
 		member.setEmail(email);
 		member.setGender(gender);
+		member.setKakaoNum(6); //일반회원은 kakaoNum 6으로 고정
 		
 		memberService.insertMember(member);
 		
 		request.setAttribute("msg", "회원가입이 완료되었습니다."); 
 		request.setAttribute("url", "/member/loginPage");
-		//request.getRequestDispatcher("/index").forward(request, response);
-		System.out.println("회원가입 완료!");
-
+		request.getRequestDispatcher("/error/result").forward(request, response);
+		
 	}
 	
 	//가입취소 버튼 클릭 시 작동
@@ -457,12 +464,16 @@ public class MemberController extends HttpServlet {
 
 	private void checkId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId = request.getParameter("userId");
-		
 		Member member = memberService.selectMemberById(userId);
+		
+		HttpSession session = request.getSession();
+		Member kakaoId = (Member)session.getAttribute("authentication");
 		
 		if(member == null) {
 			response.getWriter().print("available");
-		}else {
+		} else if(kakaoId.getId().equals("undefined") && member.getId() == null) {
+			response.getWriter().print("available");
+		} else {
 			response.getWriter().print("disable");
 		}
 	}
@@ -477,12 +488,12 @@ public class MemberController extends HttpServlet {
 		
 		if(member == null) {
 			response.getWriter().print("available");
-		} else if(num != 1 && nick.equals(userNick.getNick())) {
+		} else if(num == 6 && nick.equals(userNick.getNick())) { //일반회원이 닉네임 변경 원할 시
 			response.getWriter().print("available");
-		} else if(num == 2 && nick.equals(userNick.getNick())) {
+		} else if(num == 2 && nick.equals(userNick.getNick())) { //카카오 회원이 닉네임 변경 원할 시
 			response.getWriter().print("available");
 		} else {
-			response.getWriter().print("disable");
+			response.getWriter().print("disable"); //이미 다른 사람 정보로 존재하는 경우
 		}
 	}
 	
@@ -496,12 +507,12 @@ public class MemberController extends HttpServlet {
 		
 		if(member == null) {
 			response.getWriter().print("available");
-		} else if(num != 1 && phone.equals(userPhone.getPhone())){
+		} else if(num == 6 && phone.equals(userPhone.getPhone())){ //일반회원이 핸드폰 번호 변경 원할 시
 			response.getWriter().print("available");
-		} else if(num == 2 && phone.equals(userPhone.getPhone())) {
+		} else if(num == 2 && phone.equals(userPhone.getPhone())) { //카카오 회원이 핸드폰 번호 변경 원할 시
 			response.getWriter().print("available");
 		} else {
-			response.getWriter().print("disable");
+			response.getWriter().print("disable"); //이미 다른 사람 정보로 존재하는 경우
 		}
 	}
 	
@@ -515,12 +526,12 @@ public class MemberController extends HttpServlet {
 		
 		if(member == null) {
 			response.getWriter().print("available");
-		} else if(num != 1 && email.equals(userEmail.getEmail())) {
+		} else if(num == 6 && email.equals(userEmail.getEmail())) { //일반회원이 이메일 변경 원할 시
 			response.getWriter().print("available");
-		} else if(num == 2 && email.equals(userEmail.getEmail())) {
+		} else if(num == 2 && email.equals(userEmail.getEmail())) { //카카오 회원이 이메일 변경 원할 시
 			response.getWriter().print("available");
-		} else {
-			response.getWriter().print("disable");
+		} else {  
+			response.getWriter().print("disable");  //이미 다른 사람 정보로 존재하는 경우
 		}
 		
 	}

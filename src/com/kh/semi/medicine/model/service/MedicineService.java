@@ -43,7 +43,21 @@ public class MedicineService {
 		return res;
 	}
 	
-	
+	//[참고] 륜수 수정 10/01 2:46
+	public List<String> selectMedNameByNum(List<Integer> medNumList) {
+		Connection conn = template.getConnection();
+		List<String> medicineList = new ArrayList<String>();
+		
+		try {
+			for (Integer num : medNumList) {
+				Medicine medicine = medicineDao.selectMedicineByNum(conn, num);
+				medicineList.add(medicine.getMedName());
+			}
+		} finally {
+			template.close(conn);
+		}
+		return medicineList;
+	}
 	
 	
 	

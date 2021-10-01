@@ -59,17 +59,18 @@ public class MedicineController extends HttpServlet {
 
 		// 검색하고 싶은 약품 이름 받아오기
 		String medName = request.getParameter("medName");
-		List<Medicine> medicineList = new ArrayList<Medicine>();
+		List<Medicine> medicineList = null;
 		medicineList = medicineService.selectMedicineByName(medName); //DB 에 있는지 확인 
 
 		if(medicineList.isEmpty()) { //DB에 없을경우 API에 접속해서 확인후  DB에 저장
-			medicineList = medicineAPI(medName);	//DB저장 따로 ,API에서 바로 출력	
+			medicineList = medicineAPI(medName);//DB저장 따로 ,API에서 바로 출력	
 		}
 					
-		if(!medicineList.isEmpty()) { 
-			request.setAttribute("medicineList", medicineList);
-			request.setAttribute("size", medicineList.size());
+		if(medicineList != null) {
+		request.setAttribute("medicineList", medicineList);
+		request.setAttribute("size", medicineList.size());
 		}
+		
 		request.getRequestDispatcher("/medicine/medicine").forward(request, response);		
 	}
 	
@@ -97,18 +98,21 @@ public class MedicineController extends HttpServlet {
         rd.close();
         conn.disconnect();
         List<Medicine> medicineList = null;
-        try {
+		try {
 			JSONObject jObject = new JSONObject(sb.toString());
 
 			JSONObject jsonResponse = jObject.getJSONObject("body");
-			
+
 			JSONArray jArray = null;
-				if(!jsonResponse.has("items")) {
-					throw new HandlableException(ErrorCode.API_DATA_ERROR);
-				}	
-				jArray = jsonResponse.getJSONArray("items");
-			
-						
+
+			if (!jsonResponse.has("items")) {
+				return medicineList;
+				//throw new HandlableException(ErrorCode.API_DATA_ERROR);
+				
+			}
+
+			jArray = jsonResponse.getJSONArray("items");
+
 			Medicine med = null;
 			medicineList = new ArrayList<Medicine>();
 
@@ -154,9 +158,9 @@ public class MedicineController extends HttpServlet {
 				
 				medicineList.add(med);
 			}
-			if (medicineService.getMedicineInfo(medicineList) > 0) {
+			if (medicineService.getMedicineInfo(medicineList) > 0) { //DB저장
 				System.out.println(medicineList);
-				System.out.println("API에서 정보를 정상적으로 가져왔습니다.");
+				System.out.println("API에서 정보를 가져와  저장했습니다.");
 				
 			}
 			
@@ -168,7 +172,7 @@ public class MedicineController extends HttpServlet {
 			e.printStackTrace();
 		}
         
-        return medicineList;
+        return medicineList; //view 뿌리기 위해 리턴
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

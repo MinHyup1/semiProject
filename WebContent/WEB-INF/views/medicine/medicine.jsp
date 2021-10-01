@@ -23,7 +23,8 @@
 		<input type="text" class="medName" name="medName">
 		<button>확인</button>
 		</form>
-	<c:if test="${not empty requestScope.medicineList}">  
+	<c:choose>	
+	<c:when test="${not empty requestScope.medicineList}">  
 		 	<table border="1" class="medList" style ="text-align: center">
 				<th>약 모양</th>
 				<th>약 이름</th>
@@ -40,8 +41,14 @@
 				</tr><!-- 첫번째 줄 끝 -->
  			</c:forEach>
  			 </table>
- 		</c:if>
-	
+ 		</c:when>
+ 		<c:when test="${empty requestScope.medicineList}">
+ 		<br>
+ 		<table border="1" class="medList" style ="text-align: center">
+ 		<th>검색결과가 없습니다.</th>
+ 		</table>
+ 		</c:when>
+	</c:choose>
 	</div>
 	<footer> </footer>
 

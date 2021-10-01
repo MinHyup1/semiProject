@@ -20,20 +20,6 @@
 			<td class="aTag" colspan="2" align="right">
 			<a>*필수입력사항</a></td>
 		</tr>
-		<c:set var="id" value="undefined" />
-
-		<c:choose>
-		    <c:when test="${id eq authentication.id}"></c:when>
-		    <c:otherwise>
-		    	<tr>
-				<td width="200" align="center" class="title">* 아이디</td>
-				<td width="500">
-					<span class="fixedSpan">${authentication.id}</span>
-				</td>
-			
-				</tr>
-		    </c:otherwise>
-		</c:choose>
 		<tr>
 			<td width="200" align="center" class="title">* 이름</td>
 			<td width="500">
@@ -107,7 +93,7 @@
 </form>
 </div>
 
-<script src='${contextPath}/resources/js/member/kakaoForm.js'></script>
+<script src='${contextPath}/resources/js/member/kakaoModify.js'></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src='${contextPath}/resources/js/member/kakaoLogin.js'></script>
 

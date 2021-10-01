@@ -38,18 +38,20 @@
 									<c:otherwise>min='${param.date}'</c:otherwise>
 								</c:choose>
 							required></label>
-							<label class="search_btn">처방 약국 : <input type="text" name="pharm" 
+							<label class="search_btn">처방 약국 : <input type="text" name="pharm" class="pharm"
 								<c:choose>
 									<c:when test="${not empty param.edit and not empty currentSchedule.prescription.pharmCode}">value='${currentSchedule.prescription.pharmCode}'</c:when>
 									<c:otherwise></c:otherwise>
 								</c:choose>
-							placeholder="방문한 약국을 기록해보세요" readonly> <button type="button" onclick="">검색</button></label>
-							<label class="search_btn">처방 약 : <input type="text" name="searched_med" placeholder="처방 받은 약을 기록해보세요" readonly> <button type="button" onclick="">검색</button></label>
-							<div>
+							placeholder="방문한 약국을 기록해보세요" readonly> <button type="button" onclick="createPharmPopup()">검색</button></label><input value="약국코드" class="pharmCode" name="pharmCode" id="code">
+							<label class="search_btn">처방 약 : <input type="text" name="searched_med" placeholder="처방 받은 약을 기록해보세요" readonly> <button type="button" onclick="createMedicinePopup()">검색</button></label>
+							<div class='medi-list'>
 								<c:choose>
-									<c:when test="${not empty param.edit and not empty currentSchedule.prescription.hasMedicine == 'N'}"><span>약1</span></c:when>
+									<c:when test="${not empty param.edit and not empty currentSchedule.prescription.hasMedicine == 'N'}">
+										<span><input name="medicine" value="약 1" readonly><input value="약코드" name="mediCode" class="code"> <i class="fas fa-trash edit-trash"></i>
+									</c:when>
 								</c:choose>
-							<span>aaa</span></div><!-- 처음에는 1칸, 약 추가시 칸 추가 / 휴지통 아이콘 사용하기 -->
+							</div><!-- 처음에는 1칸, 약 추가시 칸 추가 / 휴지통 아이콘 사용하기 -->
 							<label>1일 복용 횟수 : <input type="number" name="dose_times" value=
 								<c:choose>
 									<c:when test="${not empty param.edit}">'${currentSchedule.prescription.timesPerDay}'</c:when>

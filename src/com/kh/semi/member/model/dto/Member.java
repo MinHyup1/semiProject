@@ -44,6 +44,7 @@ public class Member {
 	private String email;
 	private String gender;
 	private int kakaoNum;
+	private int token;
 
 
 	public Member() {
@@ -129,13 +130,25 @@ public class Member {
 	public void setKakaoNum(int kakaoNum) {
 		this.kakaoNum = kakaoNum;
 	}
+	
+	
+
+	public int getToken() {
+		return token;
+	}
+
+	public void setToken(int token) {
+		this.token = token;
+	}
 
 	@Override
 	public String toString() {
 		return "Member [userCode=" + userCode + ", id=" + id + ", password=" + password + ", name=" + name + ", nick="
 				+ nick + ", phone=" + phone + ", address=" + address + ", email=" + email + ", gender=" + gender
-				+ ", kakaoNum=" + kakaoNum + "]";
+				+ ", kakaoNum=" + kakaoNum + ", token=" + token + "]";
 	}
+
+
 
 
 	
