@@ -33,10 +33,16 @@
 							autofocus required></label>
 							<label class="search_btn">진료 병원 : <input type="text" name="hospital" class="hospital"
 								<c:choose>
+									<c:when test="${not empty param.edit and not empty currentSchedule.visit.hospCode}">value='${currentSchedule.hospName}'</c:when>
+									<c:otherwise></c:otherwise>
+								</c:choose>
+							placeholder="진료 병원을 기록해보세요" readonly> <button type="button" onclick='createHospitalPopup()'>검색</button></label>
+							<input class="hospCode" name="hospCode"
+								<c:choose>
 									<c:when test="${not empty param.edit and not empty currentSchedule.visit.hospCode}">value='${currentSchedule.visit.hospCode}'</c:when>
 									<c:otherwise></c:otherwise>
 								</c:choose>
-							placeholder="진료 병원을 기록해보세요" readonly> <button type="button" onclick='createHospitalPopup()'>검색</button></label><input value="병원코드" class="hospCode" name="hospCode" id="code">
+							id="code">
 							<span id="timeCheck" class="valid-msg"></span>
 							<label>알림 시간 : <input type="time" class='time'
 								<c:choose>

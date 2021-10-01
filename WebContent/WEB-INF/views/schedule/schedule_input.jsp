@@ -21,8 +21,8 @@
 						<form action="/schedule/schedule-register" method="post" class="input_form" id="input_form">
 							<span id="scheduleDateCheck" class="valid-msg"></span>
 							<label>진료 날짜 : <input type="date" class='standard_date' id="schedule_date" name="schedule_date" value='${param.date}' autofocus required></label>
-							<label class="search_btn">진료 병원 : <input type="text" name="hospital" class="hospital" placeholder="진료 병원을 기록해보세요" readonly> <button type="button" onclick="createHospitalPopup()">검색</button></label><input value="병원코드" class="hospCode" name="hospCode" id="code">
-							<label class="search_btn">처방 약국 : <input type="text" name="pharm" class="pharm" placeholder="방문한 약국을 기록해보세요" readonly> <button type="button" onclick="createPharmPopup()">검색</button></label><input value="약국코드" class="pharmCode" name="pharmCode" id="code">
+							<label class="search_btn">진료 병원 : <input type="text" name="hospital" class="hospital" placeholder="진료 병원을 기록해보세요" readonly> <button type="button" onclick="createHospitalPopup()">검색</button></label><input class="hospCode" name="hospCode" id="code">
+							<label class="search_btn">처방 약국 : <input type="text" name="pharm" class="pharm" placeholder="방문한 약국을 기록해보세요" readonly> <button type="button" onclick="createPharmPopup()">검색</button></label><input class="pharmCode" name="pharmCode" id="code">
 							<label class="search_btn">처방 약 : <input type="text" name="searched_med" placeholder="처방 받은 약을 기록해보세요" readonly> <button type="button" onclick="createMedicinePopup()">검색</button></label>
 							<div class='medi-list'>
 								<!-- <span><input name="medicine" value="약 1" readonly><input value="약코드" name="mediCode" class="code"> <i class="fas fa-trash"></i></span>

@@ -257,7 +257,6 @@ public class HospitalController extends HttpServlet {
 			//response.sendRedirect("/test/searchHos");
 		}else {
 			List<HospitalInfo> hospList = hospService.searchByHospitalName(keyWord);
-			
 			request.getSession().setAttribute("hospList", hospList);
 			request.getSession().setAttribute("siez", hospList.size());
 			

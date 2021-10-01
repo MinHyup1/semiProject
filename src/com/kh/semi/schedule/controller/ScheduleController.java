@@ -195,15 +195,24 @@ public class ScheduleController extends HttpServlet {
 	private void getVisit(HttpServletRequest request, HttpServletResponse response) {
 		String visitNoticeCode = request.getParameter("visitNoticeCode");
 		Visit visit = scheduleService.selectVisitByCode(visitNoticeCode);
+		HospitalInfo hospital = null;
+		String hospName = null;
+		if(visit.getHospCode() != null) {
+			hospital = hospitalService.searchByHospitalCode(visit.getHospCode());
+			hospName = hospital.getHospName();
+		}
+		
 		Map<String, Object> visitMap = new HashMap<String, Object>();
 		visitMap.put("visit", visit);
+		visitMap.put("hospName", hospName);
 		visitMap.put("notice_date", getDateStringFromTimestamp(visit.getNoticeDate()));
 		visitMap.put("notice_time", getTimeStringFromTimestamp(visit.getNoticeDate()));
 		request.getSession().setAttribute("currentSchedule", visitMap);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("notice_date", getDateStringFromTimestamp(visit.getNoticeDate()));
-		map.put("hospital", visit.getHospCode());
+		map.put("hospital", hospName);
+		map.put("hospCode", visit.getHospCode());
 		map.put("notice_time", getTimeStringFromTimestamp(visit.getNoticeDate()));
 		
 		String responseBody = gson.toJson(map);
@@ -294,7 +303,6 @@ public class ScheduleController extends HttpServlet {
 			for (int i = 0; i < medicalList.size(); i++) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				Medical medical = medicalList.get(i);
-				//map.put("id", medical.getHistoryId());
 				map.put("id", medical.getHistoryId());
 				map.put("start", medical.getScheduleDate().toString());
 				map.put("allDay", true);
@@ -310,7 +318,6 @@ public class ScheduleController extends HttpServlet {
 			for (int i = 0; i < prescriptionList.size(); i++) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				Prescription prescription = prescriptionList.get(i);
-				//map.put("id", prescription.getPrescriptionId());
 				map.put("id", prescription.getPrescriptionId());
 				map.put("start", prescription.getStartDate().toString());
 				map.put("end", prescription.getEndDate().toString() + "T23:59:59");
@@ -327,7 +334,6 @@ public class ScheduleController extends HttpServlet {
 			for (int i = 0; i < visitList.size(); i++) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				Visit visit = visitList.get(i);
-				//map.put("id", visit.getVisitNoticeCode());
 				map.put("id", visit.getVisitNoticeCode());
 				map.put("start", getDateStringFromTimestamp(visit.getNoticeDate()));
 				map.put("allDay", true);
@@ -606,7 +612,7 @@ public class ScheduleController extends HttpServlet {
 	}
 	
 	private String createVisitName(String hospital) {
-		if(hospital.length() != 0) {
+		if(hospital.length() == 0) {
 			return "병원 진료 예약 알림";
 		}
 		return hospital + "진료 예약 알림";

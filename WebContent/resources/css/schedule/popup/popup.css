@@ -70,4 +70,19 @@ thead{
 
 tbody{
 	text-align: center;
+	font-size: 13px;
+	line-height: 1.3;
 }
+
+tbody>tr{
+	height: 50px;
+}
+
+.line:hover .hospName, .line:hover .hospAddr{
+	text-decoration: underline;
+}
+
+.code{
+	visibility: hidden;
+}
+

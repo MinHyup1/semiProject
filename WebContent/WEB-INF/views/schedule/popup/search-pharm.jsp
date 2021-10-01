@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/schedule/popup/popup.css">
 </head>
 <body>
-	<div class="title"><i class="fas fa-book-medical"></i> 약귝 찾기</div>
+	<div class="title"><i class="fas fa-book-medical"></i> 약국 찾기</div>
 	<div class="wrap">
 		<div class="wrap_search">
 			<span class="desc">> 약을 처방받은 약국의 이름을 찾아 저장해보세요.</span>
