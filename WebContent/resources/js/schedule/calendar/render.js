@@ -129,7 +129,7 @@ let rendMedicalToTable = async (event) => {
 	date.innerHTML = '<label>진료 날짜 : <input type="date" value=' + datas.schedule_date + ' readonly></label>';
 	
 	let hospital = document.createElement('td');
-	hospital.innerHTML = "<label>진료 병원 : <a href='/HospitalController/searchByName?input=" + datas.hospital + "'>" + datas.hospital + "</a></label>";
+	hospital.innerHTML = "<label>진료 병원 : <a href='/HospitalController/searchByName?input=" + datas.hospital + "&hospCode=" + datas.hospCode + "'>" + datas.hospital + "</a></label>";
 	//hospital.innerHTML = '<label>진료 병원 : <input type="text" value=' + datas.hospital + ' readonly></label>';
 	
 	document.querySelector('.schedule_table>tbody').append(date);

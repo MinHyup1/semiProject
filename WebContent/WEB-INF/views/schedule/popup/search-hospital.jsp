@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,8 +16,10 @@
 		<div class="wrap_search">
 			<span class="desc">> 진료받는 병원의 이름을 찾아 저장해보세요.</span>
 			<div class="search">
-				<input type="text", placeholder="ex) ***병원">
-				<button onclick="searchHosp()">검색</button>
+				<form action="/HospitalController/searchByHospitalNameInPopup" class="search">
+					<input type="text" name="input" placeholder="ex) ***병원">
+					<button onclick="searchHosp()">검색</button>
+				</form>
 			</div>
 		</div>
 		<div>
@@ -28,8 +32,11 @@
 				</thead>
 				<tbody>
 					<!-- 검색된 병원 리스트 -->
+					<c:choose>
+						<%-- <c:when test="${}"> --%>
+					</c:choose>
 					<tr>
-						<td>**병원</td>
+						<td>${hospList[0]}</td>
 						<td>**도 **시 **구 ******</td>
 					</tr>
 				</tbody>

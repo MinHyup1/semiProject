@@ -261,7 +261,7 @@ public class ScheduleController extends HttpServlet {
 		Map<String, Object> datas = new HashMap<String, Object>();
 		datas.put("schedule_date", medical.getScheduleDate().toString());
 		datas.put("hospital", hospital.getHospName());
-		//datas.put("hospCode", medical.getHospCode()); //병원 검색 완성 시 병원 조회 후 넣기
+		datas.put("hospCode", medical.getHospCode()); //병원 검색 완성 시 병원 조회 후 넣기
 		
 		//key에 대한 value가 null이면 자동으로 json에서 빠지게 된다.
 		String responseBody = gson.toJson(datas);
