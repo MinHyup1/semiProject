@@ -220,7 +220,7 @@ let rendEventToTable = function (scheduleArray) {
 	
 	if(currentSchedule.length == 0) {
 		let th = document.createElement('th');
-		th.innerHTML = '등록된 일정이 없습니다.';
+		th.innerHTML = "등록된 일정이 없습니다.<br><i style='font-size: 12px'>날짜를 더블클릭하여 일정 및 알림을 등록해보세요.</i>";
 		document.querySelector('.schedule_table>tbody').appendChild(th);
 		return;
 	}

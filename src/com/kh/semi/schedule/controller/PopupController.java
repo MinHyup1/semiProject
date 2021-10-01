@@ -26,10 +26,25 @@ public class PopupController extends HttpServlet {
 		case "hospital-popup":
 			hospitalPopup(request, response);
 			break;
-
+		case "pharm-popup":
+			pharmPopup(request, response);
+			break;
+		case "medicine-popup":
+			medicinePopup(request, response);
+			break;
 		default: throw new PageNotFoundException();
 		}
 		
+	}
+
+	
+
+	private void medicinePopup(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/schedule/popup/search-medicine").forward(request, response);
+	}
+	
+	private void pharmPopup(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/schedule/popup/search-pharm").forward(request, response);
 	}
 
 	private void hospitalPopup(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

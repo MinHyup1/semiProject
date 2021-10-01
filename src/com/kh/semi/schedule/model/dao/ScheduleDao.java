@@ -185,6 +185,27 @@ public class ScheduleDao {
 			template.close(cstm);
 		}
 	}
+	
+	public void insertMedicineRecord(Connection conn, Integer[] mediCodeArr, String prescriptionId) {
+		CallableStatement cstm = null;
+		String query = "{call insert_medicine_record(?,?,?)}";
+		
+		try {
+			cstm = conn.prepareCall(query);
+			
+			ArrayDescriptor descriptor = ArrayDescriptor.createDescriptor("MED_CODE_ARR", conn);
+			ARRAY mediNumArr = new ARRAY(descriptor, conn, mediCodeArr);
+			
+			cstm.setArray(1, mediNumArr);
+			cstm.setInt(2, mediCodeArr.length);
+			cstm.setString(3, prescriptionId);
+			cstm.executeUpdate();
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(cstm);
+		}
+	}
 
 	public void updateHasMedicalRecord(Connection conn, String scheduleId, String status) {
 		PreparedStatement pstm = null;
@@ -240,6 +261,22 @@ public class ScheduleDao {
 	public void updateHasDoseNotice(Connection conn, String prescriptionId) {
 		PreparedStatement pstm = null;
 		String query = "update prescription_list set has_dose_notice = 1 "
+							+ "where prescription_id = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, prescriptionId);
+			pstm.executeUpdate();
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
+	
+	public void updateHasMedicine(Connection conn, String prescriptionId) {
+		PreparedStatement pstm = null;
+		String query = "update prescription_list set has_medicine = 'Y' "
 							+ "where prescription_id = ?";
 		
 		try {
@@ -452,6 +489,28 @@ public class ScheduleDao {
 			template.close(rset, pstm);
 		}
 		return timeSet;
+	}
+	
+	public List<Integer> selectMedNumById(Connection conn, String prescriptionId) {
+		PreparedStatement pstm = null;
+		String query = "select * from medicine_record where prescription_id = ?";
+		ResultSet rset = null;
+		List<Integer> medNumList = new ArrayList<Integer>();
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, prescriptionId);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				medNumList.add(rset.getInt("med_num"));
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return medNumList;
 	}
 	
 	public Visit selectVisitByCode(Connection conn, String visitNoticeCode) {
