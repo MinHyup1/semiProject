@@ -34,7 +34,7 @@
 						</table>
 					</form>
 					<div class="footBtwrap">
-						<button id="btn_login" onclick="location.href='/member/loginPage'">로그인</button>
+						<button id="btn_login"  onClick='window.close()'>닫기</button>
 						<button id="findPw" onclick="location.href='/member/findPassword'">비밀번호찾기</button>
 					</div>
 				</div>
