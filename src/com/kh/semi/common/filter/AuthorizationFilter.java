@@ -35,7 +35,7 @@ public class AuthorizationFilter implements Filter {
 			switch (uriArr[1]) {
 			
 			case "member": memberAuthorize(httpRequest, httpResponse, uriArr); break;
-			//case "index": index(httpRequest, httpResponse, uriArr); break; 
+			case "index": index(httpRequest, httpResponse, uriArr); break; 
 			case "schedule":
 				scheduleAuthorize(httpRequest, httpResponse, uriArr);
 				break;
@@ -49,25 +49,16 @@ public class AuthorizationFilter implements Filter {
 		chain.doFilter(request, response);
 	}
 
-
 	private void index(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String[] uriArr) throws ServletException, IOException {
-		HttpSession session = httpRequest.getSession();
-		Member member = (Member) session.getAttribute("authentication");
-		
-			switch (uriArr[2]) {
-			case "popup":
-				if(member == null) {
-					throw new HandlableException(ErrorCode.NOT_MEMBER_ERROR);
-				}
-				break;
-			default:
-				if(member == null) {
-					throw new HandlableException(ErrorCode.NOT_MEMBER_ERROR.setCLOSE("close"));
-				}
-				break;
-			}
-	}
-
+		      HttpSession session = httpRequest.getSession();
+		      Member member = (Member) session.getAttribute("authentication");
+		      
+		      if(member==null) {
+		         httpRequest.getRequestDispatcher("/index").forward(httpRequest, httpResponse);
+		      }else if(member.getPhone()==null||member.getName()==null || member.getEmail()==null||member.getNick()==null) {
+		          throw new HandlableException(ErrorCode.REDIRECT.setURL("/member/kakaoMemberForm"));
+		      }
+	 }
 	private void scheduleAuthorize(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String[] uriArr) {
 
 		HttpSession session = httpRequest.getSession();
