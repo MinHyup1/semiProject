@@ -6,11 +6,6 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
-<link href='${contextPath}/resources/css/schedule/calendar/main.css' rel='stylesheet'/>
-<script src='${contextPath}/resources/js/schedule/calendar/render.js'></script>
-<script src='${contextPath}/resources/js/schedule/calendar/main.js'></script>
-<script src='${contextPath}/resources/js/schedule/calendar/locales-all.js'></script>
-<link href='${contextPath}/resources/css/schedule/schedule_main.css' rel='stylesheet'/>
 <style type="text/css">
 * {
     margin: 0;
@@ -25,10 +20,11 @@ caption {
     display: none;
 }
 
-a {
+/* a {
     text-decoration: none;
     color: inherit;
-}
+} */
+
 th{
 	text-align: center;
 }
