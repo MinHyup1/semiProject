@@ -3,7 +3,7 @@ package com.kh.semi.pharmacy.model.dto;
 public class Pharmacy {
 
 	private String pharName;// 약국이름
-	private String pharLoc;// 약국 위치
+	private String pharLoc;// 약국 주소
 	private String pharLat;// 약국 위도
 	private String pharLon;// 약국 경도
 	private String pharCode;// 약국 ID

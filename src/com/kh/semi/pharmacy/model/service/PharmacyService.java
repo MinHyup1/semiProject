@@ -1,6 +1,7 @@
 package com.kh.semi.pharmacy.model.service;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.semi.common.db.JDBCTemplate;
@@ -27,4 +28,28 @@ public class PharmacyService {
 		}
 		return res;
 	}
+	
+	public List<Pharmacy> pharmacyFindByName(String name) {
+		Connection conn = template.getConnection();
+		List<Pharmacy> pharmacyList = new ArrayList<Pharmacy>();
+		try {
+		pharmacyList = pharmacyDao.pharmacyFindByName(name,conn);
+		} finally {
+			template.close(conn);
+		}
+		return pharmacyList;
+	}
+	
+	public List<Pharmacy> pharmacyFindByaddress(String address) {
+		Connection conn = template.getConnection();
+		List<Pharmacy> pharmacyList = new ArrayList<Pharmacy>();
+		try {
+		pharmacyList = pharmacyDao.pharmacyFindByaddress(address,conn);
+		} finally {
+			template.close(conn);
+		}
+		return pharmacyList;
+	}
+
+	
 }
