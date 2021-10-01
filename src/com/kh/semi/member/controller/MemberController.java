@@ -158,16 +158,10 @@ public class MemberController extends HttpServlet {
 		
 		Member member = new Member();
 		member = (Member) request.getSession().getAttribute("authentication");
+ 
+		System.out.println("넘어온 어트리뷰트 확인 : "+ member);
 		
-		String userId = "";
-		if(member.getId().equals("undefined")) {
-			userId = request.getParameter("userId");
-		} else {
-			userId = member.getId(); 
-		}
-		
-		System.out.println(member);
-		
+		String userId = member.getId(); 
 		String name = request.getParameter("name");
 		String nick = request.getParameter("nick");
 		String phone = request.getParameter("phone");
@@ -176,7 +170,6 @@ public class MemberController extends HttpServlet {
 		String address2 = request.getParameter("address2");
 		String email = request.getParameter("email");
 		String gender = request.getParameter("gender");
-		String userCode = member.getUserCode();
 
 		member.setId(userId);
 		member.setName(name);
@@ -186,10 +179,8 @@ public class MemberController extends HttpServlet {
 		member.setEmail(email);
 		member.setGender(gender);
 		member.setKakaoNum(2);
-		member.setUserCode(userCode);
-		System.out.println("아이디 뭐냐? : " + userId);
-		System.out.println("유저코드  : " + userCode);
-		memberService.UpdateKakaoMember(member);
+		
+		memberService.UpdateMember(member);
 		
 		request.setAttribute("msg", "회원 수정이 완료되었습니다."); 
 		request.setAttribute("url", "/index");
@@ -353,7 +344,7 @@ public class MemberController extends HttpServlet {
 	//카카오 로그인 구현
 	private void kakaoLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String kakaoId = request.getParameter("kakaoEmail"); //카카오 이메일을 아이디로 넣을 예정
+		String kakaoId = request.getParameter("kakaoId"); // 카카오 회원번호를 아이디로 넣기
 		String kakaoNick = request.getParameter("kakaoNick");
 		
 		Member kakaoUser = memberService.selectMemberById(kakaoId); //아이디 존재하는지 체크
@@ -361,21 +352,21 @@ public class MemberController extends HttpServlet {
 		Member kakaoMember = new Member();
 		HttpSession session = request.getSession();
 		
-		if (kakaoUser == null) { //아이디가 존재하지 않는다면,
-			System.out.println("카카오 로그인 성공");
-			kakaoMember.setEmail(kakaoId);
-			kakaoMember.setId(kakaoId);
-			kakaoMember.setNick(kakaoNick);
-			kakaoMember.setKakaoNum(1); //혹시 나중에 쓸 수도 있어서 테이블 하나 추가해서 넣어놓음
+			if (kakaoUser == null) { //아이디가 존재하지 않는다면,
+			 System.out.println("카카오 로그인 성공");
 			
-			memberService.insertMember(kakaoMember);
-			
-			session.setAttribute("authentication", kakaoMember);
-			
-			request.setAttribute("msg", "나머지 정보를 입력하셔야 카카오 연동 회원가입이 완료됩니다. 회원정보 입력창으로 넘어갑니다."); 
-			request.setAttribute("url", "/member/newKakaoMember"); //나머지 정보 입력하도록 이동시킴
-			request.getRequestDispatcher("/error/result").forward(request, response);
-			return;
+			 kakaoMember.setId(kakaoId);
+			 kakaoMember.setNick(kakaoNick);
+			 kakaoMember.setKakaoNum(1); //혹시 나중에 쓸 수도 있어서 테이블 하나 추가해서 넣어놓음
+
+			 memberService.insertMember(kakaoMember);
+					
+			 session.setAttribute("authentication", kakaoMember);
+					
+			 request.setAttribute("msg", "나머지 정보를 입력하셔야 카카오 연동 회원가입이 완료됩니다. 회원정보 입력창으로 넘어갑니다."); 
+			 request.setAttribute("url", "/member/newKakaoMember"); //나머지 정보 입력하도록 이동시킴
+			 request.getRequestDispatcher("/error/result").forward(request, response);
+			 return;
 		} /*
 			 * else if(kakaoUser != null && kakaoUser.getKakaoNum() == 1) {
 			 * session.setAttribute("authentication", kakaoUser);

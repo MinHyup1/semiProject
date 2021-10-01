@@ -120,15 +120,6 @@ public class MemberDao {
 		return res;	
 	}
 
-	// userId로 ' or 1=1 or user_id = ' 값을 전달받으면 모든 회원의 비밀번호가 수정
-	// SQL Injection 공격
-	// 악의적인 SQL구문을 주입해서 상대방의 DataBase를 공격하는 기법
-
-	// SQL Injection 공격 막기 위해 PreparedStatement 사용
-	// 인스턴스를 생성할 때 쿼리 템플릿을 미리 등록
-	// 생성시 등록된 쿼리 템플릿의 구조가 변경되는 것을 방지
-	// 문자열에 대해서 자동으로 이스케이프 처리
-	// ex) ->\' or 1=1 or user_id = \'
 	public int updatePassword(String userId, String password, Connection conn) {
 		int res = 0;
 		PreparedStatement pstm = null;
@@ -308,35 +299,6 @@ public class MemberDao {
 		return member;
 	}
 	
-	public int updateKaKaoMember(Member member, Connection conn) {
-		int res = 0;
-		PreparedStatement pstm = null;
-		String query = "update member set id = ?, password = ?, name = ?, nick = ?, phone = ?, address = ?, email = ?, gender = ?, kakaoNum = ?"
-						+ " where USER_CODE = ?";
-		
-		try {
-			pstm = conn.prepareStatement(query);
-			pstm.setString(1, "왜안돼");
-			pstm.setString(2, member.getPassword());
-			pstm.setString(3, member.getName());
-			pstm.setString(4, member.getNick());
-			pstm.setString(5, member.getPhone());
-			pstm.setString(6, member.getAddress());
-			pstm.setString(7, member.getEmail());
-			pstm.setString(8, member.getGender());
-			pstm.setInt(9, member.getKakaoNum());
-			pstm.setString(10, member.getUserCode());
-
-			res = pstm.executeUpdate();
-		} catch (SQLException e) {
-			throw new DataAccessException(e);
-		} finally {
-			template.close(pstm);
-		}
-		return res;
-	}
-	
-	
 	private Member convertAllToMember(ResultSet rset) throws SQLException {
 		Member member = new Member();
 		member.setUserCode(rset.getString("user_code"));
@@ -377,6 +339,7 @@ public class MemberDao {
 		}
 		return member;
 	}
+
 
 
 

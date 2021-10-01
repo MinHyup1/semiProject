@@ -20,19 +20,6 @@
 			<td class="aTag" colspan="2" align="right">
 			<a>*필수입력사항</a></td>
 		</tr>
-
-		<c:choose>
-		    <c:when test="${undefined != authentication.id}"></c:when>
-		    <c:otherwise>
-		    	<tr>
-				<td width="200" align="center" class="title">* 아이디</td>
-				<td width="500">
-					<span class="fixedSpan">${authentication.id}</span>
-				</td>
-			
-				</tr>
-		    </c:otherwise>
-		</c:choose>
 		<tr>
 			<td width="200" align="center" class="title">* 이름</td>
 			<td width="500">

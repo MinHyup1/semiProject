@@ -24,6 +24,7 @@
 								<div class="form-group" id="kakaoLogin">
 									<div class="kakaoBtn">
 										<!-- 카카오 정보 넣어줄 input 숨김처리로 넣어놓음 -->
+										<input type="hidden" name="kakaoId" id="kakaoId" />
 										<input type="hidden" name="kakaoEmail" id="kakaoEmail" />
 										<input type="hidden" name="kakaoNick" id="kakaoNick" />
 										<input type="hidden" name="kakaoGender" id="kakaoGender" />
