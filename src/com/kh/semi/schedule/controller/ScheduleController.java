@@ -27,6 +27,7 @@ import com.kh.semi.hospitalInfo.model.dto.HospitalInfo;
 import com.kh.semi.hospitalInfo.model.service.HospitalService;
 import com.kh.semi.medicine.model.service.MedicineService;
 import com.kh.semi.member.model.dto.Member;
+import com.kh.semi.pharmacy.model.service.PharmacyService;
 import com.kh.semi.schedule.model.dto.Medical;
 import com.kh.semi.schedule.model.dto.Prescription;
 import com.kh.semi.schedule.model.dto.Visit;
@@ -38,6 +39,7 @@ public class ScheduleController extends HttpServlet {
 	private ScheduleService scheduleService = new ScheduleService();
 	private HospitalService hospitalService = new HospitalService();
 	private MedicineService medicineService = new MedicineService();
+	private PharmacyService pharmacyService = new PharmacyService();
 	private static Gson gson = new Gson();
 	//private Member member = null;
 	
@@ -159,18 +161,16 @@ public class ScheduleController extends HttpServlet {
 
 	private void deleteSchedule(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Object object = request.getSession().getAttribute("currentSchedule");
-		if(object instanceof Medical) {
-			Medical medical = (Medical) object;
+		Map<String, Object> map = (Map<String, Object>) object;
+		if(map.get("medical") != null) {
+			Medical medical = (Medical) map.get("medical");
 			scheduleService.deleteMedical(medical);
+		}else if(map.get("prescription") != null) {
+			Prescription prescription = (Prescription) map.get("prescription");
+			scheduleService.deletePrescription(prescription);
 		}else {
-			Map<String, Object> map = (Map<String, Object>) object;
-			if(map.get("prescription") != null) {
-				Prescription prescription = (Prescription) map.get("prescription");
-				scheduleService.deletePrescription(prescription);
-			}else {
-				Visit visit = (Visit) map.get("visit");
-				scheduleService.deleteVisit(visit);
-			}
+			Visit visit = (Visit) map.get("visit");
+			scheduleService.deleteVisit(visit);
 		}
 		request.setAttribute("msg", "스케줄이 성공적으로 삭제되었습니다.");
 		request.setAttribute("url", "/schedule/schedule-main");
@@ -227,28 +227,31 @@ public class ScheduleController extends HttpServlet {
 		String prescriptionId = request.getParameter("prescriptionId");
 		Map<String, Object> prescMap = scheduleService.selectPrescriptionById(prescriptionId);
 		List<String> medicineList = null;
+		Prescription prescription = (Prescription) prescMap.get("prescription");
+		String pharmName = null;
+		
+		if(prescription.getPharmCode() != null) {
+			pharmName = pharmacyService.getPharmNameByCode(prescription.getPharmCode());
+			prescMap.put("pharmName", pharmName);
+		}
 		
 		if(prescMap.get("medNumList") != null) {
 			List<Integer> medNumList = (List<Integer>) prescMap.get("medNumList");
 			medicineList = medicineService.selectMedNameByNum(medNumList);
-			System.out.println(medicineList);
-			//fetch로 보낼거랑 session에 저장할거 하기
 			prescMap.put("medicineList", medicineList);
 		}
 		
 		request.getSession().setAttribute("currentSchedule", prescMap);
 		
-		
-		Prescription prescription = (Prescription) prescMap.get("prescription");
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("start", prescription.getStartDate().toString());
 		map.put("end", prescription.getEndDate().toString());
-		map.put("pharm", prescription.getPharmCode());
+		map.put("pharmName", pharmName);
+		map.put("pharmCode", prescription.getPharmCode());
 		map.put("timesPerDay", prescription.getTimesPerDay());
 		
 		if(prescMap.get("timeSet") != null) map.put("doseTime", (Set<String>) prescMap.get("timeSet"));
-		if(medicineList != null) map.put("medicineList", medicineList);
+		/* if(medicineList != null) */map.put("medicineList", medicineList);
 		
 		String responseBody = gson.toJson(map);
 		try {
@@ -622,10 +625,14 @@ public class ScheduleController extends HttpServlet {
 		String name = "";
 		
 		if(medicine != null) {
+			String firstMed = medicine[0];
+			if(firstMed.length() > 9) {
+				firstMed = firstMed.substring(0, 10) + "...";
+			}
 			if(medicine.length > 1) {
-				name = medicine[0] + " 외" + medicine.length + " ";
+				name = firstMed + " 외" + (medicine.length - 1) + " ";
 			}else {
-				name = medicine[0] + " ";
+				name = firstMed + " ";
 			}
 		}else if(pharm.length() != 0) {
 			name = pharm + " 약";
