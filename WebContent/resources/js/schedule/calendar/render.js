@@ -162,7 +162,7 @@ let rendPrescriptionToTable = async (event) => {
 	tbody.append(end);
 	
 	if(datas.pharmName) {
-		pharm.innerHTML = "<label>처방 약국 : <a href='/pharmacy/pharmacy?pharmName=" + datas.pharmName + "&pharmCode=" + datas.pharmCode + "'>" + datas.pharmName + "</a></label>";
+		pharm.innerHTML = "<label>처방 약국 : <a href='/pharmacy/byname?byname=" + datas.pharmName + "&pharmCode=" + datas.pharmCode + "'>" + datas.pharmName + "</a></label>";
 		//pharm.innerHTML = '<label>처방 약국 : <input type="text" value=' + datas.pharm + ' readonly></label>';
 	}
 	

@@ -6,9 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>병원 검색</title>
+<title>의약품 검색</title>
 <link rel="stylesheet" href="${contextPath}/resources/css/all.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/schedule/popup/popup.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/schedule/popup/popup-for-medicine.css">
 </head>
 <body>
 	<div class="title"><i class="fas fa-book-medical"></i> 의약품 찾기</div>

@@ -34,7 +34,7 @@
 					<!-- 검색된 병원 리스트 -->
 					<c:choose>
 						<c:when test="${empty hospList}">
-							<tr><td colspan="2">검색된 결과가 없습니다.</td></tr>
+							<tr><td colspan="2" style="text-align: center">검색된 결과가 없습니다.</td></tr>
 						</c:when>
 						<c:otherwise>
 							<c:forEach items="${hospList}" var="hosp">

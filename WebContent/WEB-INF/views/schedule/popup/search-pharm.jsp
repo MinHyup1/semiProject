@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>병원 검색</title>
+<title>약국 검색</title>
 <link rel="stylesheet" href="${contextPath}/resources/css/all.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/schedule/popup/popup.css">
 </head>
@@ -16,8 +16,10 @@
 		<div class="wrap_search">
 			<span class="desc">> 약을 처방받은 약국의 이름을 찾아 저장해보세요.</span>
 			<div class="search">
-				<input type="text", placeholder="ex) ***약국">
-				<button onclick="searchPharm()">검색</button>
+				<form action="/pharmacy/searchByNameInPopup" class="search">
+					<input type="text" name="byname" placeholder="ex) ***약국">
+					<button onclick="searchPharm()">검색</button>
+				</form>
 			</div>
 		</div>
 		<div>
@@ -30,10 +32,19 @@
 				</thead>
 				<tbody>
 					<!-- 검색된 병원 리스트 -->
-					<tr>
-						<td>**약국</td>
-						<td>**도 **시 **구 ******</td>
-					</tr>
+					<c:choose>
+						<c:when test="${empty pharmacyList}">
+							<tr><td colspan="2" style="text-align: center">검색된 결과가 없습니다.</td></tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${pharmacyList}" var="pharm">
+								<tr class='line'>
+									<td><a class='hospName'>${pharm.pharName}</a><span class="code">${pharm.pharCode}</span></td>
+									<td><a class='hospAddr'>${pharm.pharLoc}</a></td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</tbody>
 			</table>
 		</div>
