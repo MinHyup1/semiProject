@@ -43,7 +43,7 @@
 		})
 	}
 	
-	document.querySelector('#input_form').addEventListener('submit', e => {
+	/*document.querySelector('#input_form').addEventListener('submit', e => {
 		document.querySelectorAll('.valid-msg').forEach(element => {
 			element.innerHTML = '';
 		})
@@ -101,7 +101,7 @@
 				}
 			})
 		}
-	})
+	})*/
 	
 	
 	let validateDate = (inputDate) => {

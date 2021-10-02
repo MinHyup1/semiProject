@@ -24,30 +24,44 @@
 					</div>
 					<div class="input_list">
 						<form action="/schedule/visit-notice-register" method="post" class="input_form" id="input_form">
-							<span id="scheduleDateCheck" class="valid-msg"></span>
+							<span id="scheduleDateCheck" class="valid-msg">
+								<c:if test="${not empty param.err and not empty scheduleFailed.visitNoticeNotLater}">진료 알림일자는 내일 이후로 지정 가능합니다.</c:if>
+							</span>
 							<label>알림 날짜 : <input type="date" class='standard_date' id="schedule_date" name="schedule_date" value=
 								<c:choose>
+									<c:when test="${not empty param.err}">'${scheduleForm.scheduleDate}'</c:when>
 									<c:when test="${not empty param.edit}">'${currentSchedule.notice_date}'</c:when>
 									<c:otherwise>'${param.date}'</c:otherwise>
 								</c:choose>
 							autofocus required></label>
+							<span id="hospitalCheck" class="valid-msg">
+								<c:choose>
+									<c:when test="${not empty param.err and not empty scheduleFailed.hospCode}">검색을 통해 병원을 지정해주세요.</c:when>
+									<c:when test="${not empty param.err and not empty scheduleFailed.hospital}">병원명이 잘못되었습니다. 다시 검색하여 지정해주세요.</c:when>
+								</c:choose>
+							</span>
 							<label class="search_btn">진료 병원 : <input type="text" name="hospital" class="hospital"
 								<c:choose>
+									<c:when test="${not empty param.err and empty scheduleFailed.hospCode and empty scheduleFailed.hospital and not empty scheduleForm.hospital}">value="${scheduleForm.hospital}"</c:when>
 									<c:when test="${not empty param.edit and not empty currentSchedule.visit.hospCode}">value='${currentSchedule.hospName}'</c:when>
-									<c:otherwise></c:otherwise>
 								</c:choose>
 							placeholder="진료 병원을 기록해보세요" readonly> <button type="button" onclick='createHospitalPopup()'>검색</button></label>
 							<input class="hospCode" name="hospCode"
 								<c:choose>
+									<c:when test="${not empty param.err and empty scheduleFailed.hospCode and empty scheduleFailed.hospital and not empty scheduleForm.hospital}">value="${scheduleForm.hospCode}"</c:when>
 									<c:when test="${not empty param.edit and not empty currentSchedule.visit.hospCode}">value='${currentSchedule.visit.hospCode}'</c:when>
-									<c:otherwise></c:otherwise>
 								</c:choose>
 							id="code">
-							<span id="timeCheck" class="valid-msg"></span>
+							<span id="timeCheck" class="valid-msg">
+								<c:choose>
+									<c:when test="${not empty param.err and not empty scheduleFailed.noNoticeTime}">알림시간을 입력하세요.</c:when>
+									<c:when test="${not empty param.err and not empty scheduleFailed.noticeTime}">알림시간 입력이 잘못되었습니다.</c:when>
+								</c:choose>
+							</span>
 							<label>알림 시간 : <input type="time" class='time'
 								<c:choose>
+									<c:when test="${not empty param.err and empty scheduleFailed.noNoticeTime and empty scheduleFailed.noticeTime and not empty scheduleForm.noticeTime}">value='${scheduleForm.noticeTime}'</c:when>
 									<c:when test="${not empty param.edit}">value='${currentSchedule.notice_time}'</c:when>
-									<c:otherwise></c:otherwise>
 								</c:choose>
 							 name="visit_notice_time" required></label>
 						</form>
