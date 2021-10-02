@@ -6,18 +6,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,12 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 
 import com.kh.semi.common.exception.PageNotFoundException;
-import com.kh.semi.hospitalInfo.model.dto.HospitalInfo;
 import com.kh.semi.main.model.dto.Covid;
 import com.kh.semi.main.model.service.CovidService;
 
@@ -63,10 +52,24 @@ public class CovidController extends HttpServlet {
 		case "covidInfo":
 			covidInfo(request, response);
 			break;
+		case "covidChart":
+			covidChart(request, response);
+			break;
+		case "covid":
+			request.getRequestDispatcher("/main/covid").forward(request, response);
 		default:
 			throw new PageNotFoundException();
 		}
 
+	}
+
+	private void covidChart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		JSONArray covidJson = new JSONArray();
+		covidJson = covidService.covidDecideCnt();
+		System.out.println(covidJson);
+		
+		request.getSession().setAttribute("covidJson", covidJson);
+		request.getRequestDispatcher("/main/covid").forward(request, response);
 	}
 
 	private void covidInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -3,6 +3,8 @@ package com.kh.semi.main.model.service;
 import java.sql.Connection;
 import java.util.List;
 
+import org.json.JSONArray;
+
 import com.kh.semi.common.db.JDBCTemplate;
 import com.kh.semi.main.model.dao.CovidDao;
 import com.kh.semi.main.model.dto.Covid;
@@ -29,6 +31,17 @@ public class CovidService {
 		
 		return res;
 		
+	}
+
+	public JSONArray covidDecideCnt() {
+		Connection conn =  template.getConnection();
+		JSONArray covidJson = new JSONArray();
+		try {
+		covidJson = covidDao.covidDecideCnt(conn);
+		} finally {
+			template.close(conn);
+		}
+		return covidJson;
 	}
 
 }
