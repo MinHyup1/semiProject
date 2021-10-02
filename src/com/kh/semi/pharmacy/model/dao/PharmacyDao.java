@@ -135,5 +135,34 @@ public class PharmacyDao {
 		pharmacy.setPharCode(rset.getString("pharm_code"));
 		return pharmacy;
 	}
+
+
+	public List<Pharmacy> pharmacyFindByCode(String code, Connection conn) {
+		List<Pharmacy> pharmacyList = new ArrayList<Pharmacy>();
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+	
+		String query = "SELECT * FROM PHARM WHERE PHARM_CODE = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, code);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				Pharmacy pharmacy = new Pharmacy();
+				pharmacy = parseRsetToPharmacy(rset);				
+				pharmacyList.add(pharmacy);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			template.close(rset, pstm);
+		}
+		
+		return pharmacyList;		
+	}
 }
 

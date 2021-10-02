@@ -63,7 +63,8 @@ public class PharmacyController extends HttpServlet {
 	
 	private void pharmacyFindByNameInPopup(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String name = request.getParameter("byname");
+		String name = request.getParameter("byname");		
+		
 		List<Pharmacy> pharmacyList = pharmacyService.pharmacyFindByName(name);
 		
 		request.getSession().setAttribute("pharmacyList", pharmacyList);
@@ -74,8 +75,15 @@ public class PharmacyController extends HttpServlet {
 	private void pharmacyFindByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String name = request.getParameter("byname");
+		String code = request.getParameter("pharmCode");
 		List<Pharmacy> pharmacyList = null;
-		pharmacyList = pharmacyService.pharmacyFindByName(name);
+		
+		if (code != null) {
+			
+			pharmacyList = pharmacyService.pharmacyFindByCode(code);
+		} else {
+			pharmacyList = pharmacyService.pharmacyFindByName(name);
+		}
 		
 		request.setAttribute("pharmacyList", pharmacyList);
 		request.setAttribute("size", pharmacyList.size());

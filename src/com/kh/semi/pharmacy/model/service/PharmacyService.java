@@ -69,4 +69,17 @@ public class PharmacyService {
 		return pharmName;
 	}
 
+
+	public List<Pharmacy> pharmacyFindByCode(String code) {
+		Connection conn = template.getConnection();
+		List<Pharmacy> pharmacyList = null;
+		try {
+		pharmacyList = pharmacyDao.pharmacyFindByCode(code,conn);
+		} finally {
+			template.close(conn);
+		}
+		return pharmacyList;
+		
+	}
+
 }
