@@ -48,8 +48,8 @@ public class PharmacyDao {
 		List<Pharmacy> pharmacyList = new ArrayList<Pharmacy>();
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		Pharmacy pharmacy = null;
-		String query = "SELECT PHARM_NAME, PHARM_LOC, PHARM_LAT, PHARM_LON FROM PHARM WHERE PHARM_NAME like ?";
+		
+		String query = "SELECT * FROM PHARM WHERE PHARM_NAME like ?";
 		
 		try {
 			pstm = conn.prepareStatement(query);
@@ -57,11 +57,8 @@ public class PharmacyDao {
 			rset = pstm.executeQuery();
 			
 			while(rset.next()) {
-				pharmacy = new Pharmacy();
-				pharmacy.setPharName(rset.getString("pharm_name"));
-				pharmacy.setPharLoc(rset.getString("pharm_loc"));
-				pharmacy.setPharLat(rset.getString("pharm_lat"));
-				pharmacy.setPharLon(rset.getString("pharm_lon"));
+				Pharmacy pharmacy = new Pharmacy();
+				pharmacy = parseRsetToPharmacy(rset);				
 				pharmacyList.add(pharmacy);
 			}
 			
@@ -79,8 +76,8 @@ public class PharmacyDao {
 		List<Pharmacy> pharmacyList = new ArrayList<Pharmacy>();
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		Pharmacy pharmacy = null;
-		String query = "SELECT PHARM_NAME, PHARM_LOC, PHARM_LAT, PHARM_LON FROM PHARM WHERE PHARM_LOC like ?";
+	
+		String query = "SELECT * FROM PHARM WHERE PHARM_LOC like ?";
 		
 		try {
 			pstm = conn.prepareStatement(query);
@@ -88,11 +85,8 @@ public class PharmacyDao {
 			rset = pstm.executeQuery();
 			
 			while(rset.next()) {
-				pharmacy = new Pharmacy();
-				pharmacy.setPharName(rset.getString("pharm_name"));
-				pharmacy.setPharLoc(rset.getString("pharm_loc"));
-				pharmacy.setPharLat(rset.getString("pharm_lat"));
-				pharmacy.setPharLon(rset.getString("pharm_lon"));
+				Pharmacy pharmacy = new Pharmacy();
+				pharmacy = parseRsetToPharmacy(rset);				
 				pharmacyList.add(pharmacy);
 			}
 			

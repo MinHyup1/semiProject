@@ -5,14 +5,38 @@
 <head>
 <%@ include file="/WEB-INF/views/include/head.jsp"%>
 <style type="text/css">
-	
-	.medName{
-		width: 300px;
-		height: 30px;
-		background-color: lightyellow;
-		border-style: groove;	
-	}
-	
+.medName {
+	width: 300px;
+	height: 30px;
+	background-color: lightyellow;
+	border-style: groove;
+}
+
+table.medList {
+	border-collapse: separate;
+	border-spacing: 1px;
+	text-align: center;
+	line-height: 1.5;
+	margin: 20px 10px;
+}
+
+table.medList th {
+	width: 155px;
+	padding: 10px;
+	text-align: center;
+	font-weight: bold;
+	vertical-align: top;
+	color: #fff;
+	background: #6495ED;
+}
+
+table.medList td {
+	width: 155px;
+	padding: 10px;
+	vertical-align: center;
+	border-bottom: 1px solid #ccc;
+	background: #eee;
+}
 </style>
 </head>
 <body>
@@ -33,11 +57,11 @@
 				<th>주의사항</th>
 				<c:forEach var="i" begin="0" step="1" end="${size -1}" varStatus="status">
 				<tr><!-- 첫번째 줄 시작 -->
-				    <td><img src="${requestScope.medicineList[i].medImg}"style="width: 100px; height: auto;"/></td>
+				    <td><img src="${requestScope.medicineList[i].medImg}"style="width: 80px; height: auto;"/></td>
 				    <td>${requestScope.medicineList[i].medName}</td>
-				    <td>${requestScope.medicineList[i].medEfc}</td>
-				    <td>${requestScope.medicineList[i].medMethod}</td>
-				    <td>${requestScope.medicineList[i].medWarn}</td>				    
+				    <td style="width: 40%;">${requestScope.medicineList[i].medEfc}</td>
+				    <td style="width: 40%;">${requestScope.medicineList[i].medMethod}</td>
+				    <td style="width: 40%;">${requestScope.medicineList[i].medWarn}</td>				    
 				</tr><!-- 첫번째 줄 끝 -->
  			</c:forEach>
  			 </table>
@@ -45,7 +69,7 @@
  		<c:when test="${empty requestScope.medicineList}">
  		<br>
  		<table border="1" class="medList" style ="text-align: center">
- 		<th>검색결과가 없습니다.</th>
+ 		<th>검색결과가 없습니다. </th>
  		</table>
  		</c:when>
 	</c:choose>

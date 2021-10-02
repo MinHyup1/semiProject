@@ -32,7 +32,7 @@ public class PharmacyService {
 
 	public List<Pharmacy> pharmacyFindByName(String name) {
 		Connection conn = template.getConnection();
-		List<Pharmacy> pharmacyList = new ArrayList<Pharmacy>();
+		List<Pharmacy> pharmacyList = null;
 		try {
 		pharmacyList = pharmacyDao.pharmacyFindByName(name,conn);
 		} finally {
@@ -43,7 +43,7 @@ public class PharmacyService {
 	
 	public List<Pharmacy> pharmacyFindByaddress(String address) {
 		Connection conn = template.getConnection();
-		List<Pharmacy> pharmacyList = new ArrayList<Pharmacy>();
+		List<Pharmacy> pharmacyList = null;
 		try {
 		pharmacyList = pharmacyDao.pharmacyFindByaddress(address,conn);
 		} finally {

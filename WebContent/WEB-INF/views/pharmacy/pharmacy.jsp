@@ -6,16 +6,54 @@
 <%@ include file="/WEB-INF/views/include/head.jsp"%>
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a91d097e5c5d9764f91631e0ac40e115"></script>
 <style type="text/css">
- table {
-  z-index : 999;
- }
+.map_wrapper {
+	display: flex;
+	height: 300px;
+	justify-content: center;
+
+}
+
+.map_wrapper>div{
+	border: solid;
+	display: flex;
+	width: 90%;
+	
+}
+table.pharmacyList {
+  border-collapse: separate;
+  border-spacing: 1px;
+  text-align: center;
+  line-height: 1.5;
+  margin: 20px 10px;
+}
+table.pharmacyList th {
+  width: 155px;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  vertical-align: top;
+  color: #fff;
+  background: #6495ED ;
+}
+table.pharmacyList td {
+  width: 155px;
+  padding: 10px;
+  vertical-align: center;
+  border-bottom: 1px solid #ccc;
+  background: #eee;
+}
 </style>
 
 </head>
 <body>
 <!-- 지도를 표시할 div 입니다 -->
 <div class= "main">
-	<div id="map" style="width:500px;height:500px;"></div>
+	<p style="font-size: 50px; display: flex;"> 약국 찾기 </p><br>
+	<div class="map_wrapper">
+	<div class="map">
+	<div id="map" style="width:100%;height:100%;"></div>
+	</div>
+	</div>
 		<form method="post" action="byaddress" >
 		<label>검색할 지역 :     </label>
 		<input type="text" class="byaddress" name="byaddress" placeholder="동이름 또는 도로명을 입력하세요">
@@ -29,8 +67,8 @@
 	<c:choose>	
 	<c:when test="${not empty requestScope.pharmacyList}">  
 		 	<table border="1" class="pharmacyList" style ="text-align: center">
-				<th>약국 이름</th>
-				<th>약국 주소</th>				
+				<th style="width:20%;">약국 이름</th>
+				<th style="width:60%;">약국 주소</th>				
 				<c:forEach var="i" begin="0" step="1" end="${size -1}" varStatus="status">
 				<tr><!-- 첫번째 줄 시작 -->
 				    <td><a onclick="createKakaoMap(${requestScope.pharmacyList[i].pharLat},${requestScope.pharmacyList[i].pharLon})">${requestScope.pharmacyList[i].pharName}</a></td>
