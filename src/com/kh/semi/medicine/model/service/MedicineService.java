@@ -59,7 +59,20 @@ public class MedicineService {
 		return medicineList;
 	}
 	
-	
+	//[참고] 륜수 수정 10/02 21:28
+	public String selectMedNameByNum(int medNum) {
+		Connection conn = template.getConnection();
+		Medicine medicine = null;
+		String medName = null;
+		
+		try {
+				medicine = medicineDao.selectMedicineByNum(conn, medNum);
+				medName = medicine.getMedName();
+		} finally {
+			template.close(conn);
+		}
+		return medName;
+	}
 	
 	
 }

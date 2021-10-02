@@ -281,7 +281,7 @@ public class HospitalDao {
 			}
 			
 		}
-		String query = "select * " + 
+		String query = "select DISTINCT HOSP_CODE,HOSP_TELL,HOSP_NAME,HOSP_URL,HOSP_ADDRESS,HOSP_XPOS,HOSP_YPOS " + 
 				"from hospital_info " + 
 				"join search_treat using(hosp_code)" + 
 				"where hosp_name like '%' || ? || '%'"

@@ -69,6 +69,9 @@ public class HospitalController extends HttpServlet {
 		case "update-treatInfo":
 			updateTreatInfo(request, response);
 			break;
+		case "search-hospital-main":
+			request.getRequestDispatcher("/hospital/searchHospital").forward(request, response);
+			break;
 			
 
 		default:
@@ -222,23 +225,22 @@ public class HospitalController extends HttpServlet {
 		
 		if(keyWord == "" && treatCheckBox.length == 0  && hospCodeFromSchedule == "") {//키워드와 진료코드 모두 공백일경우
 			
-			request.setAttribute("msg", "검색어 입력해주세요 또는 진료과목을 체크해주세요.");
+			request.setAttribute("msg", "검색어를 입력해주세요.");
 			
 			
 		}else if(keyWord == "" && treatCheckBox.length > 0 && hospCodeFromSchedule == "" ) {//진료코드만 입력할경우
-			List<HospitalInfo> hospList = hospService.searchByHospitalCode(hospCodeList);
 			
-			request.setAttribute("hospList", hospList);
-			request.setAttribute("siez", hospList.size());
+			request.setAttribute("msg", "검색어를 입력해주세요.");
 			
 		}else if(keyWord != "" && treatCheckBox.length == 0 && hospCodeFromSchedule == "")  {//키워드만 입력할경우
 			List<HospitalInfo> hospList = hospService.searchByHospitalName(keyWord);
 			
 			request.setAttribute("hospList", hospList);
 			request.setAttribute("siez", hospList.size());
+			request.setAttribute("input", keyWord);
 			
 			if(hospList.size() == 0) {//검색결과가 없을경우
-				request.setAttribute("res", "null");
+				request.setAttribute("msg", "검색된 결과가 없습니다.");
 			}
 			
 		}else if(keyWord != "" && hospCodeFromSchedule != "" ) {//진료코드와 진료코드가 륜수씨스케줄에서 넘어올때
@@ -252,16 +254,19 @@ public class HospitalController extends HttpServlet {
 			}
 			request.setAttribute("hospList", hospList);
 			request.setAttribute("siez", hospList.size());
+			request.setAttribute("input", keyWord);
 			
 		}else if(keyWord != "" && treatCheckBox.length != 0 && hospCodeFromSchedule == "")  {//키워드랑 코드값넘어올때
 			List<HospitalInfo> hospList = hospService.searchByKeywordAndTreatCode(keyWord,treatCheckBox);
 			
 			request.setAttribute("hospList", hospList);
 			request.setAttribute("siez", hospList.size());
+			request.setAttribute("input", keyWord);
 			
-			if(hospList == null) {//검색결과가 없을경우
-				request.setAttribute("meg", "검색결과가 없습니다.");
+			if(hospList.size() == 0) {//검색결과가 없을경우
+				request.setAttribute("msg", "검색된 결과가 없습니다.");
 			}
+			
 		}
 		
 		
