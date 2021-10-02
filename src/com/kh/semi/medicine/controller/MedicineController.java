@@ -50,7 +50,9 @@ public class MedicineController extends HttpServlet {
 		case "medicineInfo":
 			medicineInfo(request,response);
 			break;
-
+		case "medicineInfoInPopup":
+			medicineInfoInPopup(request,response);
+			break;
 		default:throw new PageNotFoundException();
 		}
 	}
@@ -173,6 +175,25 @@ public class MedicineController extends HttpServlet {
 		}
         
         return medicineList; //view 뿌리기 위해 리턴
+	}
+	
+	//[참고] 륜수 수정 10/01 11:16
+	private void medicineInfoInPopup(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+		// 검색하고 싶은 약품 이름 받아오기
+		String medName = request.getParameter("medName");
+		List<Medicine> medicineList = null;
+		medicineList = medicineService.selectMedicineByName(medName); //DB 에 있는지 확인 
+		
+		if(medicineList.isEmpty()) { //DB에 없을경우 API에 접속해서 확인후  DB에 저장
+			medicineList = null;
+			medicineList = medicineAPI(medName);//DB저장 따로 ,API에서 바로 출력	
+		}
+					
+		request.getSession().setAttribute("medicineList", medicineList);
+		/* request.getSession().setAttribute("size", medicineList.size()); */
+		
+		response.sendRedirect("/schedule/popup/medicine-popup");
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

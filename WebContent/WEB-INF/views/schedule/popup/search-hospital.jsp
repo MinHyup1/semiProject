@@ -33,12 +33,18 @@
 				<tbody>
 					<!-- 검색된 병원 리스트 -->
 					<c:choose>
-						<%-- <c:when test="${}"> --%>
+						<c:when test="${empty hospList}">
+							<tr><td colspan="2">검색된 결과가 없습니다.</td></tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${hospList}" var="hosp">
+								<tr class='line'>
+									<td><a class='hospName'>${hosp.hospName}</a><span class="code">${hosp.hospCode}</span></td>
+									<td><a class='hospAddr'>${hosp.address}</a></td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
 					</c:choose>
-					<tr>
-						<td>${hospList[0]}</td>
-						<td>**도 **시 **구 ******</td>
-					</tr>
 				</tbody>
 			</table>
 		</div>

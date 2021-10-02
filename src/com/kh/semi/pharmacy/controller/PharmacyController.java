@@ -29,9 +29,8 @@ import com.kh.semi.pharmacy.model.service.PharmacyService;
 public class PharmacyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+	private PharmacyService pharmacyService = new PharmacyService();
+	
     public PharmacyController() {
         super();
         // TODO Auto-generated constructor stub
@@ -50,7 +49,37 @@ public class PharmacyController extends HttpServlet {
 		case "update":
 			pharmacyupdate(request,response);
 			break;
+		case "byaddress":
+			pharmacyFindByaddress(request,response);
+			break;
+		case "byname":
+			pharmacyFindByName(request,response);
+			break;
 		}
+	}
+
+	private void pharmacyFindByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String name = request.getParameter("byname");
+		List<Pharmacy> pharmacyList = null;
+		pharmacyList = pharmacyService.pharmacyFindByName(name);
+		
+		request.setAttribute("pharmacyList", pharmacyList);
+		request.setAttribute("size", pharmacyList.size());
+		System.out.println(pharmacyList);
+		request.getRequestDispatcher("/pharmacy/pharmacy").forward(request, response);
+	}
+
+	private void pharmacyFindByaddress(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String address = request.getParameter("byaddress");
+		List<Pharmacy> pharmacyList = null;
+		pharmacyList = pharmacyService.pharmacyFindByaddress(address);
+		
+		request.setAttribute("pharmacyList", pharmacyList);
+		request.setAttribute("size", pharmacyList.size());
+		
+		request.getRequestDispatcher("/pharmacy/pharmacy").forward(request, response);
+		
 	}
 
 	private void pharmacyupdate(HttpServletRequest request, HttpServletResponse response) throws IOException {

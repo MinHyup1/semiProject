@@ -50,7 +50,7 @@
                         <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
                         <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
                         <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li> -->
-                        <li><a href="#" class="/schedule/schedule-main">진행 중이거나 곧 예정인 알림이 없습니다.</a></li>
+                        <li><a href="#" class="more">진행 중이거나 곧 예정인 알림이 없습니다.</a></li>
                      </ul>
                   </li>
                   <li class="dropdown"> <!-- dropdown open -->

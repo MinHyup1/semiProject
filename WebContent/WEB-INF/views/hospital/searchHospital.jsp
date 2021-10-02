@@ -20,29 +20,25 @@
 
 .map_wrapper {
 	display: flex;
-	width: 1200px;
-	border: solid;
-	margin-right: 0px;
+	height: 400px;
 	height: 300px;
+	justify-content: center;
+	
 	
 }
 
 .map_wrapper>div{
 	border: solid;
 	display: flex;
-	width: 50%;
+	width: 90%;
 	
 }
 .hospital_list{
-	border: solid;
 	
 }
 .check_box{
-	overflow: hidden;
-    height: 104px;
+    height: 100%;
     padding: 8px 0 10px 17px;
-    border: 1px solid #d7d7d7;
-    overflow-y: scroll;
 }
 .check_box label {
     margin: 0px;
@@ -70,6 +66,22 @@
     cursor: pointer;
     }
  button.searchByName{
+  text-align: center;
+    width: 80px;
+    height: auto;
+    padding: 3px 0 3px 0;
+    background: #0080c0;
+    border-top: none;
+    border-right: 1px solid #5c90a6;
+    border-bottom: 1px solid #5c90a6;
+    border-left: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    text-indent: 0;
+    cursor: pointer;
+ }
+ button.searchByMyLocation{
   text-align: center;
     width: 80px;
     height: auto;
@@ -118,7 +130,7 @@ table.hospital_info_table th {
   font-weight: bold;
   vertical-align: top;
   color: #fff;
-  background: #ce4869 ;
+  background: #6495ED ;
 }
 table.hospital_info_table td {
   width: 155px;
@@ -138,17 +150,18 @@ table.hospital_info_table td {
  <div>
  	<div class="search_title_wrapper">
 	 	<p>의료기관 찾기</p><br>
-	 	<button id="search_hospName_bnt">병원이름으로 검색</button><button id="search_f_bnt">내 위치로 검색</button>
  		<div class="map_wrapper">
- 		<div class="map"><div id="map" style="width:100%;height:100%;"></div></div>
- 		<div><div id="tabNav0101" style="display: block;">
+ 		<div class="map"><div id="map" style="width:100%;height:100%;">
+ 		</div>
+ 		</div></div>
+ 		<div><div id="tabNav0101" >
  		<form action="/HospitalController/searchByName" method="get">
 		<div class="d_search_box">
-			
+		
 			<div class="check_wrap">
-				
+			
 				<div class="sb_con">
-					
+				
 					<div class="check_box">
 					
 					<label class="checkbox"><input type="checkbox" name="treatCheckBox" class="chk_dgsbjt_cd1" title="내과체크" value="01"> 내과</label>
@@ -252,19 +265,19 @@ table.hospital_info_table td {
 			</div>
 			
 			<div class="last_search">
-				<div class="title">기관명</div>
+				<div class="title">병원명</div>
 				<div class="sb_con">
 					
 					<input type ="text"  name="input"id="input"  class="input_l_t1" title="기관명 적기">
-					<button class="searchByName" >검색</button>
+					<button class="searchByName" >검색</button> <!-- <button class="searchByMyLocation" style="width: 100px;">내 위치로검색</button> -->
 					<c:if test="${not empty msg}"><p id="is_empty" style="color: red">${msg}</p></c:if>
 				</div>
 			</div>
 			
 		</div>
 		</form>
+		
 	</div></div>
- 		</div>
  		
  		<div class="hospital_list">
  		
@@ -323,6 +336,50 @@ table.hospital_info_table td {
 selectedMenu = 'searchHosp';	
 
 
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+mapOption = { 
+    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+    level: 5 // 지도의 확대 레벨 
+};
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+//HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+if (navigator.geolocation) {
+
+// GeoLocation을 이용해서 접속 위치를 얻어옵니다
+navigator.geolocation.getCurrentPosition(function(position) {
+    
+    var lat = position.coords.latitude, // 위도
+        lon = position.coords.longitude; // 경도
+    
+    var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+        message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
+    
+   
+    map.setCenter(locPosition);
+        
+  });
+
+} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+
+var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
+    message = 'geolocation을 사용할수 없어요..'
+    
+
+}
+
+//지도에 마커를 표시하는 함수입니다
+function displayMarker(place) {
+// 마커를 생성하고 지도에 표시합니다
+var marker = new kakao.maps.Marker({
+    map: map,
+    position: new kakao.maps.LatLng(place.y, place.x) 
+});
+
+}
+
+
 function createKakaoMap(xPos,yPos) {
 		  
 	
@@ -377,6 +434,7 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 
   
 } 
+
 
 	  
 
