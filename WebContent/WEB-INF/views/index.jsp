@@ -17,6 +17,9 @@
 	
 	<button formaction="/test/schedule">진료스케줄</button>
 	<button formaction="/test/searchHos">병원검색</button>
+
+<%@ include file="/WEB-INF/views/main/covid.jsp"%>
+	
 </div>
 
 
