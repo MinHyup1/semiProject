@@ -400,10 +400,7 @@ public class MemberController extends HttpServlet {
 	}
 
 	private void basicJoin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Member member = new Member();
-		HttpSession session = request.getSession();
-		
-		session.setAttribute("authentication", member);
+				
 		request.getRequestDispatcher("/member/joinForm").forward(request, response);
 		
 	}
@@ -439,6 +436,9 @@ public class MemberController extends HttpServlet {
 		member.setKakaoNum(6); //일반회원은 kakaoNum 6으로 고정
 		
 		memberService.insertMember(member);
+		//수정
+		HttpSession session = request.getSession();
+		session.setAttribute("authentication", member);
 		
 		request.setAttribute("msg", "회원가입이 완료되었습니다."); 
 		request.setAttribute("url", "/member/loginPage");
