@@ -1,4 +1,4 @@
-package com.kh.semi.main;
+package com.kh.semi.main.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,18 +30,23 @@ import org.json.JSONObject;
 import org.json.XML;
 
 import com.kh.semi.common.exception.PageNotFoundException;
+import com.kh.semi.hospitalInfo.model.dto.HospitalInfo;
+import com.kh.semi.main.model.dto.Covid;
+import com.kh.semi.main.model.service.CovidService;
 
 /**
  * Servlet implementation class ApiExplorer
  */
 @WebServlet("/covid/*")
-public class covid extends HttpServlet {
+public class CovidController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
+	private CovidService covidService = new CovidService();
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public covid() {
+	public CovidController() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -66,20 +71,20 @@ public class covid extends HttpServlet {
 
 	private void covidInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		LocalTime nowTime = LocalTime.now();
-		LocalTime setTime = LocalTime.of(12, 00);  //api에서 당일 데이터가 보통 오전 10시쯤 나옴
+		LocalTime nowTime = LocalTime.now(); //현재 시간 구해오기
+		LocalTime setTime = LocalTime.of(12, 00);  //api에서 당일 데이터가 보통 오전 10시쯤 나오니까 오후12시를 셋팅시간으로 잡아놓고
 
-		boolean res = nowTime.isBefore(setTime); //현재시간이 세팅시간보다 이전인지 확인		
+		boolean res = nowTime.isBefore(setTime); //현재시간이 셋팅시간보다 이전인지 확인		
 		
-		LocalDate nowDate = LocalDate.now();
+		LocalDate nowDate = LocalDate.now(); //현재 날짜 구해오기
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 		
-		if(res == true) { //PM 12시 이전이면 날짜 하루 빼줌
+		if(res == true) { //오후 12시 이전이면 날짜 하루 빼줌
 			nowDate = LocalDate.now().minusDays(1);
 		}
 		
 		String nowDateFormat = nowDate.format(formatter);
-		String yesterdayFormat = nowDate.minusDays(7).format(formatter);
+		String yesterdayFormat = nowDate.minusDays(30).format(formatter);
 	
 
         StringBuilder urlBuilder = new StringBuilder("http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson"); /*URL*/
@@ -107,12 +112,9 @@ public class covid extends HttpServlet {
         }
         rd.close();
         conn.disconnect();
-        //System.out.println(sb.toString());
-		  
-		//List<Integer> covidList = new ArrayList<Integer>(7);
-		//List<String> covidDate = new ArrayList<String>(7);
-		Map<String, Integer> covidData = new LinkedHashMap<String, Integer>();
 
+		Covid covidInfo = new Covid();
+		
 		JSONObject jObject = XML.toJSONObject(sb.toString());
 		JSONObject jsonResponse = jObject.getJSONObject("response").getJSONObject("body").getJSONObject("items");
 
@@ -126,33 +128,40 @@ public class covid extends HttpServlet {
 		int onedaytCnt = 0;
 		String date ="";
 		
-		for (int i = 0; i < jArray.length(); i++) {
-			if (i == 7) {
+		for (int i = 29, j = 0; i < jArray.length(); i--,j++) {
+			if (i == -1) {
 				break;
 			}
 
 			JSONObject obj = jArray.getJSONObject(i);
 			JSONObject obj2 = jArray.getJSONObject(i + 1);
 
-			date = obj2.getString("createDt"); //날짜   2021-09-25 10:49:15.225
-			String[] str = date.split("\\s");
-			//System.out.println(str[0]);
+			date = obj2.getString("createDt"); //ex) 2021-09-25 10:49:15.225
+			String str = date.substring(5, 10);
+	
+			String[] arrayStr = str.split("-");
+			str = String.join(".", arrayStr);
 			
-			todayCnt = obj.getInt("decideCnt"); // 최근확진자 수
+			todayCnt = obj.getInt("decideCnt"); // 최근 확진자 수
 			yesterdayCnt = obj2.getInt("decideCnt"); // 전 날 확진자 수
-			onedaytCnt = todayCnt - yesterdayCnt;
+			onedaytCnt = todayCnt - yesterdayCnt; //하루 확진자 수
 			
-			covidData.put(str[0], onedaytCnt);
+			covidInfo.setNum(j);
+			covidInfo.setDays(str);
+			covidInfo.setDecideCnt(onedaytCnt);
+			System.out.println(covidInfo);
 			
-			//covidList.add(i, onedaytCnt);
-			//System.out.println(date);
+
+			try {
+				covidService.updateCovidInfo(covidInfo);
+				//request.getRequestDispatcher("/covid").forward(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
-		//System.out.println(covidList.get(0));
-		//System.out.println(covidList.toString());
-		System.out.println(covidData);
 
-		request.getRequestDispatcher("/covid").forward(request, response);
 
 	}
 

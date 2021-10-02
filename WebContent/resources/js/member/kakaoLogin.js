@@ -43,13 +43,13 @@ function loginWithKakao(){
 function unlinkApp() {
 	Kakao.API.request({
 		url: '/v1/user/unlink',
-		success: function(res) {
-			console.log(res);
-			alert('success: ' + JSON.stringify(res));
+		success: function(response) {
+			console.log(response);
+			alert('success: ' + JSON.stringify(response));
       	},
-		fail: function(err) {
-    		console.log(err);
-        	alert('fail: ' + JSON.stringify(err));
+		fail: function(error) {
+    		console.log(error);
+        	alert('fail: ' + JSON.stringify(error));
       	},
     });
 	alert("카카오 계정 연결이 끊겼습니다.");
