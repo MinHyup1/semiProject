@@ -10,19 +10,26 @@
 <body>
 
 <div id="chart"></div>
-<b>Json = <% String json = request.getParameter("covidJson");
+<b>값 확인용 = ${covidJson}</b>
+
+<%-- <% String json = request.getParameter("covidJson");
 			out.print(json);
-			%></b>
+			%></b> --%>
 
 
 <script type="text/javascript">
 //Bar chart
 var chart = c3.generate({
     data: {
-        json: {
-        	${requestScope.covidJson}
-        }
+        json: ${covidJson},
+        keys: {
+        	//value: Object.keys(${covidJson}),
+        	value: ['decideCnt', 'days']
+        },
+        //x : 'days',
+        type: 'bar'
     }
+
 });
 
 
