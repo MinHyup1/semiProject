@@ -157,12 +157,15 @@ public class CovidController extends HttpServlet {
 
 			try {
 				covidService.updateCovidInfo(covidInfo);
-				//request.getRequestDispatcher("/covid").forward(request, response);
+	
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		
+		request.setAttribute("url", "/covid/covidChart");
+		request.getRequestDispatcher("/error/result").forward(request, response);
 
 
 

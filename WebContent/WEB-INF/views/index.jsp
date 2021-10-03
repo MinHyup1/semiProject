@@ -10,7 +10,7 @@
 <div class="main">
 	
 	<button formaction="/covid/covidInfo">코로나현황</button><br>
-	<button formaction="/covid/covidChart">그래프테스트</button><br>
+
 	<iframe src="${contextPath}/covid/covid" width="100%" height="100%"></iframe>
 	
 </div>
