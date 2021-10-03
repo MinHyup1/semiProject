@@ -48,10 +48,11 @@ var chart = c3.generate({
     	x: {
     		type : 'timeseries',
     		tick : {
+    			
     			format: '%m-%d'
     		}
     	}
-    } 
+    }
 
 });
 
