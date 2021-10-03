@@ -9,7 +9,7 @@ public class CommentDTO {
 	private String NAME;
 	private String USER_CODE;
 	private String DELETE_AT;
-	private String REGDATE;
+	private String REGDATE; //String -> Date or int 로 바꿔야하는지
 
 	public String getNAME() {
 		return NAME;

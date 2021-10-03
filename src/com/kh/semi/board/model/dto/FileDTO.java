@@ -7,7 +7,7 @@ public class FileDTO {
 	private String ORG_FILE_NAME;
 	private String STORED_FILE_NAME;
 	private int FILE_SIZE;
-	private String REGDATE;
+	private String REGDATE; //String -> Date or int 로 바꿔야하는지
 
 	public int getFILE_NO() {
 		return FILE_NO;

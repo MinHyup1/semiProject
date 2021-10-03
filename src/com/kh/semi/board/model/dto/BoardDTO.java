@@ -6,7 +6,7 @@ public class BoardDTO {
 	private String BBS_TYPE;
 	private String TITLE;
 	private String CONTENT;
-	private String REGDATE;
+	private String REGDATE; //String -> Date or int 로 바꿔야하는지
 	private String USER_CODE;
 	private String ID;
 	private String NAME;
