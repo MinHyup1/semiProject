@@ -37,7 +37,6 @@ public class FileFilter implements Filter {
 
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		
 		String originFileName = URLEncoder.encode(httpRequest.getParameter("originFileName"), "UTF-8");
 		
 		httpResponse.setHeader("Content-Disposition", "attachment; filename="+originFileName);

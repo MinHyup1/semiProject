@@ -8,14 +8,14 @@ import java.util.List;
 import com.kh.semi.common.code.ErrorCode;
 import com.kh.semi.common.db.JDBCTemplate;
 import com.kh.semi.common.exception.HandlableException;
-import com.kh.semi.hospitalInfo.model.dao.HospitalDao;
+import com.kh.semi.hospitalInfo.model.dao.UpdateHospitalDao;
 import com.kh.semi.hospitalInfo.model.dto.HospitalInfo;
 import com.kh.semi.hospitalInfo.model.dto.SearchTreat;
 
-public class HospitalService {
+public class UpdateHospitalService {
 
 	JDBCTemplate template = JDBCTemplate.getInstance();
-	HospitalDao hospDao =  new HospitalDao();
+	UpdateHospitalDao hospDao =  new UpdateHospitalDao();
 
 	public int updateHospInfo(List<HospitalInfo> hospList) throws Exception {
 		
@@ -88,53 +88,8 @@ public class HospitalService {
 		return res;
 	}
 
-	public List<String> searchByTreatCode(String[] treatCheckBox) {
-		Connection conn = template.getConnection();
-		List<String> hospCodeList = null;
-		
-		try {
-			hospCodeList = hospDao.searchByTreatCode(conn,treatCheckBox);
-			conn.commit();
-		} catch (Exception e) {
-			
-		}finally {
-			template.close(conn);
-		}
-		
-		return hospCodeList;
-		
-	}
+	
 
-	public List<HospitalInfo> searchByHospitalCode(List<String> hospCodeList) {
-		Connection conn = template.getConnection();
-		List<HospitalInfo> hospInfoList = null;
-		
-		try {
-			hospInfoList = hospDao.searchByHospitalCode(conn,hospCodeList);
-			conn.commit();
-		} catch (Exception e) {
-			
-		}finally {
-			template.close(conn);
-		}
-		
-		return hospInfoList;
-	}
-
-	public List<HospitalInfo> searchByKeywordAndTreatCode(String keyWord, String[] treatCheckBox) {
-		Connection conn = template.getConnection();
-		List<HospitalInfo> hospInfoList = null;
-		
-		try {
-			hospInfoList = hospDao.searchByKeywordAndTreatCode(conn,keyWord,treatCheckBox);
-		} catch (Exception e) {
-			
-		}finally {
-			template.close(conn);
-		}
-		
-		return hospInfoList;
-	}
 	
 	//[참고] 륜수 수정(10/01 01:29)
 	public HospitalInfo searchByHospitalCode(String hospCode) {
@@ -148,5 +103,18 @@ public class HospitalService {
 		}
 		return hospital;
 	}
+
+	public int searchByUniqeCode(String uniqeCode) {
+		int res = 0;
+		Connection conn = template.getConnection();
+		
+		try {
+			res = hospDao.searchByUniqeCode(conn, uniqeCode);
+		} finally {
+			template.close(conn);
+		}
+		return res;
+	}
+	
 	
 }
