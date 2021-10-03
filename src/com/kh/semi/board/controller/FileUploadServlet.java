@@ -45,7 +45,7 @@ public class FileUploadServlet extends HttpServlet {
 
 			// 2. 업로드 요청을 처리하는 ServletFileUpload생성
 			ServletFileUpload upload = new ServletFileUpload(diskFactory);
-			upload.setSizeMax(3 * 1024 * 1024); // 3MB : 전체 최대 업로드 파일 크기
+			upload.setSizeMax(20 * 1024 * 1024); // 20MB : 전체 최대 업로드 파일 크기
 			@SuppressWarnings("unchecked")
 			// 3. 업로드 요청파싱해서 FileItem 목록구함​​
 			List<FileItem> items = upload.parseRequest(request);
