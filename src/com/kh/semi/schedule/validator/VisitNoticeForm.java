@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.kh.semi.hospitalInfo.model.service.UpdateHospitalService;
+import com.kh.semi.hospitalInfo.model.service.SearchHospitalService;
 
 public class VisitNoticeForm {
 
@@ -16,7 +16,7 @@ public class VisitNoticeForm {
 	private String hospCode;
 	private String noticeTime;
 	private HttpServletRequest request;
-	private UpdateHospitalService hospitalService = new UpdateHospitalService();
+	private SearchHospitalService hospitalService = new SearchHospitalService();
 	private Map<String, String> failedAttribute = new HashMap<String, String>();
 	
 	public VisitNoticeForm(HttpServletRequest request) {
