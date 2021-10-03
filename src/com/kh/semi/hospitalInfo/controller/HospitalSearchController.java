@@ -46,8 +46,30 @@ public class HospitalSearchController extends HttpServlet {
 		case "search-hospital-main":
 			request.getRequestDispatcher("/hospital/searchHospital").forward(request, response);
 			break;
+		case "searchByHospitalNameInPopup":
+			searchByHospitalNameInPopup(request, response);
+			break;
 		default:
 			throw new PageNotFoundException();
+		}
+	}
+	private void searchByHospitalNameInPopup(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String keyWord = request.getParameter("input");
+		
+		if(keyWord == null || keyWord == "") {//공백을 입력할경우
+			//response.sendRedirect("/test/searchHos");
+		}else {
+			List<HospitalInfo> hospList = hospService.searchByHospitalName(keyWord);
+			request.getSession().setAttribute("hospList", hospList);
+			request.getSession().setAttribute("siez", hospList.size());
+			
+			if(hospList == null) {//검색결과가 없을경우
+				request.setAttribute("res", "null");
+			}
+			
+			//request.getRequestDispatcher("/schedule/popup/hospital-popup").forward(request, response);
+			response.sendRedirect("/schedule/popup/hospital-popup");
 		}
 	}
 

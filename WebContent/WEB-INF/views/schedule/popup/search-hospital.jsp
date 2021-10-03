@@ -16,7 +16,7 @@
 		<div class="wrap_search">
 			<span class="desc">> 진료받는 병원의 이름을 찾아 저장해보세요.</span>
 			<div class="search">
-				<form action="/HospitalController/searchByHospitalNameInPopup" class="search">
+				<form action="/searchHospital/searchByHospitalNameInPopup" class="search">
 					<input type="text" name="input" placeholder="ex) ***병원">
 					<button onclick="searchHosp()">검색</button>
 				</form>
