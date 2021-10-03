@@ -43,14 +43,6 @@ var chart = c3.generate({
     			{value: 3000, text : '3000 명', position: 'middle'}
     		]
     	}
-    },
-    axis : {
-    	x: {
-    		type : 'timeseries',
-    		tick : {
-    			format: '%m-%d'
-    		}
-    	}
     }
 
 });

@@ -11,7 +11,7 @@
 	
 	<button formaction="/covid/covidInfo">코로나현황</button><br>
 
-	<iframe src="${contextPath}/covid/covid" width="100%" height="100%"></iframe>
+	<iframe src="${contextPath}/covid/covid" width="100%" height="800px"></iframe>
 	
 </div>
 
