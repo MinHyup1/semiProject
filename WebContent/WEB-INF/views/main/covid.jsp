@@ -24,7 +24,7 @@ var chart = c3.generate({
         json: ${covidJson},
         keys: {
         	x:'days',
-        		xFormat:'%m.%d',
+        		//xFormat:'%m.%d',
         	value: ['decideCnt']
         },
         names:{
@@ -51,7 +51,7 @@ var chart = c3.generate({
     			format: '%m-%d'
     		}
     	}
-    }
+    } 
 
 });
 
