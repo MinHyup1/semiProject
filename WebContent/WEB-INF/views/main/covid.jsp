@@ -23,11 +23,34 @@ var chart = c3.generate({
     data: {
         json: ${covidJson},
         keys: {
-        	//value: Object.keys(${covidJson}),
-        	value: ['decideCnt', 'days']
+        	x:'days',
+        		xFormat:'%m.%d',
+        	value: ['decideCnt']
         },
-        //x : 'days',
+        names:{
+        	decideCnt: '확진자수'        	
+        },
+        
         type: 'bar'
+    
+    },
+    grid: {
+    	y: {
+    		show : true,
+    		lines : [
+    			{value: 1000, text : '1000 명', position: 'middle'},
+    			{value: 2000, text : '2000 명', position: 'middle'},
+    			{value: 3000, text : '3000 명', position: 'middle'}
+    		]
+    	}
+    },
+    axis : {
+    	x: {
+    		type : 'timeseries',
+    		tick : {
+    			format: '%m-%d'
+    		}
+    	}
     }
 
 });
