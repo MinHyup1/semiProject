@@ -491,13 +491,12 @@ public class MemberController extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		Member userNick = (Member)session.getAttribute("authentication");
-		int num = userNick.getKakaoNum();
 		
 		if(member == null) {
 			response.getWriter().print("available");
-		} else if(num == 6 && nick.equals(userNick.getNick())) { //일반회원이 닉네임 변경 원할 시
+		} else if(userNick.getKakaoNum() == 6 && nick.equals(userNick.getNick())) { //일반회원이 닉네임 변경 원할 시
 			response.getWriter().print("available");
-		} else if(num == 2 && nick.equals(userNick.getNick())) { //카카오 회원이 닉네임 변경 원할 시
+		} else if(userNick.getKakaoNum() == 2 && nick.equals(userNick.getNick())) { //카카오 회원이 닉네임 변경 원할 시
 			response.getWriter().print("available");
 		} else {
 			response.getWriter().print("disable"); //이미 다른 사람 정보로 존재하는 경우
@@ -510,13 +509,12 @@ public class MemberController extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		Member userPhone = (Member)session.getAttribute("authentication");
-		int num = userPhone.getKakaoNum();
 		
 		if(member == null) {
 			response.getWriter().print("available");
-		} else if(num == 6 && phone.equals(userPhone.getPhone())){ //일반회원이 핸드폰 번호 변경 원할 시
+		} else if(userPhone.getKakaoNum() == 6 && phone.equals(userPhone.getPhone())){ //일반회원이 핸드폰 번호 변경 원할 시
 			response.getWriter().print("available");
-		} else if(num == 2 && phone.equals(userPhone.getPhone())) { //카카오 회원이 핸드폰 번호 변경 원할 시
+		} else if(userPhone.getKakaoNum() == 2 && phone.equals(userPhone.getPhone())) { //카카오 회원이 핸드폰 번호 변경 원할 시
 			response.getWriter().print("available");
 		} else {
 			response.getWriter().print("disable"); //이미 다른 사람 정보로 존재하는 경우
@@ -529,13 +527,12 @@ public class MemberController extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		Member userEmail = (Member)session.getAttribute("authentication");
-		int num = userEmail.getKakaoNum();
 		
 		if(member == null) {
 			response.getWriter().print("available");
-		} else if(num == 6 && email.equals(userEmail.getEmail())) { //일반회원이 이메일 변경 원할 시
+		} else if(userEmail.getKakaoNum() == 6 && email.equals(userEmail.getEmail())) { //일반회원이 이메일 변경 원할 시
 			response.getWriter().print("available");
-		} else if(num == 2 && email.equals(userEmail.getEmail())) { //카카오 회원이 이메일 변경 원할 시
+		} else if(userEmail.getKakaoNum() == 2 && email.equals(userEmail.getEmail())) { //카카오 회원이 이메일 변경 원할 시
 			response.getWriter().print("available");
 		} else {  
 			response.getWriter().print("disable");  //이미 다른 사람 정보로 존재하는 경우
