@@ -28,21 +28,21 @@ import com.kh.semi.common.exception.HandlableException;
 import com.kh.semi.common.exception.PageNotFoundException;
 import com.kh.semi.hospitalInfo.model.dto.HospitalInfo;
 import com.kh.semi.hospitalInfo.model.dto.SearchTreat;
-import com.kh.semi.hospitalInfo.model.service.HospitalService;
+import com.kh.semi.hospitalInfo.model.service.UpdateHospitalService;
 
 /**
  * Servlet implementation class HospitalController
  */
-@WebServlet("/HospitalController/*")
-public class HospitalController extends HttpServlet {
+@WebServlet("/UpdateHospitalController/*")
+public class UpdateHospitalController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	HospitalService hospService = new HospitalService();
+	UpdateHospitalService hospService = new UpdateHospitalService();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public HospitalController() {
+	public UpdateHospitalController() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -57,11 +57,8 @@ public class HospitalController extends HttpServlet {
 		String[] uriArr = request.getRequestURI().split("/");
 
 		switch (uriArr[uriArr.length - 1]) {
-		case "insert-info":
-			insertInfo(request, response);
-			break;
-		case "searchByName":
-			searchByHospitalName(request, response);
+		case "update-info":
+			updateInfo(request, response);
 			break;
 		case "searchByHospitalNameInPopup":
 			searchByHospitalNameInPopup(request, response);
@@ -69,9 +66,7 @@ public class HospitalController extends HttpServlet {
 		case "update-treatInfo":
 			updateTreatInfo(request, response);
 			break;
-		case "search-hospital-main":
-			request.getRequestDispatcher("/hospital/searchHospital").forward(request, response);
-			break;
+		
 			
 
 		default:
@@ -161,7 +156,6 @@ public class HospitalController extends HttpServlet {
 						uniqeCode = String.valueOf(obj.get("ykiho"));
 					}
 					
-					
 					int hospCode = hospService.bringHospCode(uniqeCode);
 					
 					if(hospCode == 0) {//uniqeCode에 맞는 hospCode가 없을경우
@@ -203,77 +197,7 @@ public class HospitalController extends HttpServlet {
 		
 	}
 
-	private void searchByHospitalName(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String keyWord = request.getParameter("input"); //병원검색어
-		String hospCodeFromSchedule = request.getParameter("hospCode");
-		
-		if(request.getParameter("hospCode") == null) {
-			hospCodeFromSchedule = "";
-		}
-		
-		String[] treatCheckBox = null;
-		List<String> hospCodeList = null;
-		request.removeAttribute("msg");
-		if(request.getParameterValues("treatCheckBox") == null ) {
-			treatCheckBox = new String[0];
-			
-		}else {
-			treatCheckBox = request.getParameterValues("treatCheckBox");
-			hospCodeList = hospService.searchByTreatCode(treatCheckBox);
-		}
-		
-		if(keyWord == "" && treatCheckBox.length == 0  && hospCodeFromSchedule == "") {//키워드와 진료코드 모두 공백일경우
-			
-			request.setAttribute("msg", "검색어를 입력해주세요.");
-			
-			
-		}else if(keyWord == "" && treatCheckBox.length > 0 && hospCodeFromSchedule == "" ) {//진료코드만 입력할경우
-			
-			request.setAttribute("msg", "검색어를 입력해주세요.");
-			
-		}else if(keyWord != "" && treatCheckBox.length == 0 && hospCodeFromSchedule == "")  {//키워드만 입력할경우
-			List<HospitalInfo> hospList = hospService.searchByHospitalName(keyWord);
-			
-			request.setAttribute("hospList", hospList);
-			request.setAttribute("siez", hospList.size());
-			request.setAttribute("input", keyWord);
-			
-			if(hospList.size() == 0) {//검색결과가 없을경우
-				request.setAttribute("msg", "검색된 결과가 없습니다.");
-			}
-			
-		}else if(keyWord != "" && hospCodeFromSchedule != "" ) {//진료코드와 진료코드가 륜수씨스케줄에서 넘어올때
-			
-			List<HospitalInfo> hospList = hospService.searchByHospitalName(keyWord);
-			
-			for(int i = 0; i < hospList.size(); i++) {
-				if( !hospCodeFromSchedule.equals(String.valueOf(hospList.get(i).getHospCode()))) {
-					hospList.remove(i);
-				}
-			}
-			request.setAttribute("hospList", hospList);
-			request.setAttribute("siez", hospList.size());
-			request.setAttribute("input", keyWord);
-			
-		}else if(keyWord != "" && treatCheckBox.length != 0 && hospCodeFromSchedule == "")  {//키워드랑 코드값넘어올때
-			List<HospitalInfo> hospList = hospService.searchByKeywordAndTreatCode(keyWord,treatCheckBox);
-			
-			request.setAttribute("hospList", hospList);
-			request.setAttribute("siez", hospList.size());
-			request.setAttribute("input", keyWord);
-			
-			if(hospList.size() == 0) {//검색결과가 없을경우
-				request.setAttribute("msg", "검색된 결과가 없습니다.");
-			}
-			
-		}
-		
-		
-		request.getRequestDispatcher("/hospital/searchHospital").forward(request, response);
-		
-		
-	}
+	
 	
 	private void searchByHospitalNameInPopup(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -295,7 +219,7 @@ public class HospitalController extends HttpServlet {
 		}
 	}
 
-	private void insertInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, JSONException {
+	private void updateInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, JSONException {
 		
 		boolean flg = true;
 		int pageNum = 1;
@@ -390,6 +314,7 @@ public class HospitalController extends HttpServlet {
 						uniqeCode = String.valueOf(obj.get("ykiho"));
 					}
 
+					
 					hosp = new HospitalInfo();
 					
 					hosp.setHospTell(hospTell);
@@ -401,18 +326,17 @@ public class HospitalController extends HttpServlet {
 					hosp.setUniqeCode(uniqeCode);
 					
 					hospList.add(hosp);
-
 				}
-
-				
-				
-				
-				if (hospService.updateHospInfo(hospList) >= 1) {
+				int updateCount = hospService.updateHospInfo(hospList);
+				if (updateCount >= 1) {
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					Date time = new Date();
 					String time1 = format.format(time);
 
-					System.out.println("[" + time1 + "]" + pageNum +" 페이지 병원정보 업데이트 완료.");
+					System.out.println("[" + time1 + "]" + pageNum +" 페이지 병원정보 업데이트 완료." 
+					+ updateCount + "개 업데이트 완료");
+				}else {
+					System.out.println( pageNum + "업데이트할 병원정보가 없습니다.");
 				}
 				
 				pageNum++;
@@ -424,10 +348,17 @@ public class HospitalController extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			
 
 		}
-
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date time = new Date();
+		String time1 = format.format(time);
+		String updateDate = "마지막 업데이트 :" + time1  ;
+		
+		request.setAttribute("update", updateDate);
+		
+		request.getRequestDispatcher("/hospital/searchHospital").forward(request, response);
+		
 	}
 
 	/**
