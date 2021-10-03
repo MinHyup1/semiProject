@@ -44,10 +44,12 @@ var chart = c3.generate({
     axis : {
     	x: {
     		show: true,
-    		type : 'timeseries',
+    		type : 'timeseries', 
     		tick : {
-    			centered: true,
-    			format: '%m-%d'
+    			format: '%m-%d',
+    			culling: {
+    		        max: 30
+    		      }
     		}
     	}
     } 
