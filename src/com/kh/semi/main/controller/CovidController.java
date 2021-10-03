@@ -63,13 +63,13 @@ public class CovidController extends HttpServlet {
 
 	}
 
-	private void covidChart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void covidChart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		JSONArray covidJson = new JSONArray();
 		covidJson = covidService.covidDecideCnt();
 		System.out.println(covidJson);
 		
 		request.getSession().setAttribute("covidJson", covidJson);
-		request.getRequestDispatcher("/main/covid").forward(request, response);
+		request.getRequestDispatcher("/index").forward(request, response);
 	}
 
 	private void covidInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

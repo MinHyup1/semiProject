@@ -10,11 +10,7 @@
 <body>
 
 <div id="chart"></div>
-<b>값 확인용 = ${covidJson}</b>
 
-<%-- <% String json = request.getParameter("covidJson");
-			out.print(json);
-			%></b> --%>
 
 
 <script type="text/javascript">
@@ -24,14 +20,15 @@ var chart = c3.generate({
         json: ${covidJson},
         keys: {
         	x:'days',
-        		//xFormat:'%m.%d',
+        		
         	value: ['decideCnt']
         },
         names:{
         	decideCnt: '확진자수'        	
         },
         
-        type: 'bar'
+        type: 'bar',
+        labels: true
     
     },
     grid: {
@@ -46,13 +43,16 @@ var chart = c3.generate({
     },
     axis : {
     	x: {
-    		type : 'timeseries',
+    		show: true,
+    		type : 'timeseries', 
     		tick : {
-    			
-    			format: '%m-%d'
+    			format: '%m-%d',
+    			culling: {
+    		        max: 30
+    		      }
     		}
     	}
-    }
+    } 
 
 });
 

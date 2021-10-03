@@ -150,35 +150,6 @@ public class UpdateHospitalDao {
 		return res;
 	}
 	
-	//[참고] 륜수 수정(10/01 01:32)
-	public HospitalInfo searchByHospitalCode(Connection conn, String hospCode) {
-		PreparedStatement pstm = null;
-		ResultSet rset = null;
-		HospitalInfo hospital = null;
-		String query = "select * from hospital_info where hosp_code = ?";
-		
-		try {
-			pstm = conn.prepareStatement(query);
-			pstm.setString(1, hospCode);
-			rset = pstm.executeQuery();
-			
-			while(rset.next()) {
-				hospital = new HospitalInfo();
-				hospital.setHospCode(rset.getInt("HOSP_CODE"));
-				hospital.setHospTell(rset.getString("HOSP_TELL"));
-				hospital.setHospName(rset.getString("HOSP_NAME"));
-				hospital.setHospUrl(rset.getString("HOSP_URL"));
-				hospital.setAddress(rset.getString("HOSP_ADDRESS"));
-				hospital.setxPos(rset.getString("HOSP_XPOS"));
-				hospital.setyPos(rset.getString("HOSP_YPOS"));
-			}
-		} catch (Exception e) {
-			throw new DataAccessException(e);
-		} finally {
-			template.close(rset, pstm);
-		}
-		return hospital;
-	}
 
 	public List<HospitalInfo> searchByHospitalCode(Connection conn, List<String> hospCodeList) {
 		List<HospitalInfo> hospInfoList = new ArrayList<HospitalInfo>();
