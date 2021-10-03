@@ -13,10 +13,13 @@ import javax.servlet.http.HttpSession;
 
 import com.kh.semi.common.code.ErrorCode;
 import com.kh.semi.common.exception.HandlableException;
+import com.kh.semi.main.controller.CovidController;
 import com.kh.semi.member.model.dto.Member;
 
 public class AuthorizationFilter implements Filter {
-
+	
+	CovidController covidController = new CovidController();
+	
 	public AuthorizationFilter() {
 		// TODO Auto-generated constructor stub
 	}
@@ -52,12 +55,14 @@ public class AuthorizationFilter implements Filter {
 	private void index(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String[] uriArr) throws ServletException, IOException {
 		      HttpSession session = httpRequest.getSession();
 		      Member member = (Member) session.getAttribute("authentication");
-		      
+		      covidController.covidChart(httpRequest, httpResponse);
 		      if(member==null) {
+		    	 
 		         httpRequest.getRequestDispatcher("/index").forward(httpRequest, httpResponse);
 		      }else if(member.getPhone()==null||member.getName()==null || member.getEmail()==null||member.getNick()==null) {
 		          throw new HandlableException(ErrorCode.REDIRECT.setURL("/member/kakaoMemberForm"));
 		      }
+		      
 	 }
 	private void scheduleAuthorize(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String[] uriArr) {
 
