@@ -72,7 +72,7 @@
          <div class="sidebar-scroll">
             <nav>
                <ul class="nav asdasd">
-                  <li><a href="${contextPath}/HospitalController/search-hospital-main" class="" data-loc="searchHosp"><i class="fas fa-hospital"></i> <span>병원 검색</span></a></li>
+                  <li><a href="${contextPath}/searchHospital/search-hospital-main" class="" data-loc="searchHosp"><i class="fas fa-hospital"></i> <span>병원 검색</span></a></li>
                   <li><a href="${contextPath}/pharmacy/pharmacy" class="" data-loc="searchPharm"><i class="fas fa-vial"></i> <span>약국 검색</span></a></li>
                   <li><a href="${contextPath}/Medicine/medicineMain" class="" data-loc="searchMedi"><i class="fas fa-pills"></i> <span>의약품 검색</span></a></li>
                   <li><a href="${contextPath}/schedule/schedule-main" class="" data-loc="schedule"><i class="far fa-calendar-check"></i> <span>진료 스케줄</span></a></li> <!-- href 수정 -->

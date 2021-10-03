@@ -24,7 +24,7 @@ import com.kh.semi.common.code.ErrorCode;
 import com.kh.semi.common.exception.HandlableException;
 import com.kh.semi.common.exception.PageNotFoundException;
 import com.kh.semi.hospitalInfo.model.dto.HospitalInfo;
-import com.kh.semi.hospitalInfo.model.service.HospitalService;
+import com.kh.semi.hospitalInfo.model.service.SearchHospitalService;
 import com.kh.semi.medicine.model.service.MedicineService;
 import com.kh.semi.member.model.dto.Member;
 import com.kh.semi.pharmacy.model.service.PharmacyService;
@@ -37,7 +37,7 @@ import com.kh.semi.schedule.model.service.ScheduleService;
 public class ScheduleController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ScheduleService scheduleService = new ScheduleService();
-	private HospitalService hospitalService = new HospitalService();
+	private SearchHospitalService hospitalService = new SearchHospitalService();
 	private MedicineService medicineService = new MedicineService();
 	private PharmacyService pharmacyService = new PharmacyService();
 	private static Gson gson = new Gson();

@@ -63,13 +63,13 @@ public class CovidController extends HttpServlet {
 
 	}
 
-	private void covidChart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void covidChart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		JSONArray covidJson = new JSONArray();
 		covidJson = covidService.covidDecideCnt();
 		System.out.println(covidJson);
 		
 		request.getSession().setAttribute("covidJson", covidJson);
-		request.getRequestDispatcher("/main/covid").forward(request, response);
+		request.getRequestDispatcher("/index").forward(request, response);
 	}
 
 	private void covidInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -140,10 +140,9 @@ public class CovidController extends HttpServlet {
 			JSONObject obj2 = jArray.getJSONObject(i + 1);
 
 			date = obj2.getString("createDt"); //ex) 2021-09-25 10:49:15.225
-			String str = date.substring(5, 10);
+			String str = date.substring(0, 10);
 	
 			String[] arrayStr = str.split("-");
-			str = String.join(".", arrayStr);
 			
 			todayCnt = obj.getInt("decideCnt"); // 최근 확진자 수
 			yesterdayCnt = obj2.getInt("decideCnt"); // 전 날 확진자 수
