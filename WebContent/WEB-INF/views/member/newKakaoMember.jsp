@@ -87,7 +87,7 @@
 	</table>
 		<div class="footBtwrap">
 			<a id="modify"><input type="submit" value="회원정보수정" class="fpmgBt1"></a>
-			<a href="/member/delete" onclick="unlinkApp()"id="out"><input type="button" value="회원탈퇴" class="fpmgBt3"></a>
+			<a onclick="unlinkApp()"id="out"><input type="button" value="회원탈퇴" class="fpmgBt3"></a>
 		</div>
 	
 </form>

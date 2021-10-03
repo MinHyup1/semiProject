@@ -13,13 +13,13 @@ function loginWithKakao(){
 			Kakao.API.request({
 				url: '/v2/user/me', //사용자 정보를 읽어들이는 고정된 url
 				success: function(res) {
-				alert(JSON.stringify(res));	
+				
 				
 				const id = res.id;		
 				const email = res.kakao_account.email;
 				const nick = res.properties.nickname;
 				const gender = res.kakao_account.gender;
-							
+				alert(nick+' 환영합니다!');	
 				console.log(email);
 				console.log(nick);
 				console.log(gender);
@@ -46,13 +46,14 @@ function unlinkApp() {
 		success: function(response) {
 			console.log(response);
 			alert('success: ' + JSON.stringify(response));
+			alert("카카오 계정 연결이 끊겼습니다.");
+			location.href="/member/delete";
       	},
 		fail: function(error) {
     		console.log(error);
         	alert('fail: ' + JSON.stringify(error));
       	},
     });
-	alert("카카오 계정 연결이 끊겼습니다.");
 	//Kakao.Auth.setAccessToken(undefined);
 	
 }
@@ -63,6 +64,7 @@ function kakaoLogout() {
       return;
     }
     Kakao.Auth.logout(function() {
-      alert('logout ok\naccess token -> ' + Kakao.Auth.getAccessToken());
-    })
+      alert('로그아웃 완료!');
+      location.href="/member/logout";
+	})
  }

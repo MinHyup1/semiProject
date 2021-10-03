@@ -58,7 +58,7 @@
                      <ul class="dropdown-menu">
                      	<!-- 카카오톡 연동으로 로그인 한 회원에게 보여주는 회원정보수정 페이지  -->
                      		<li><a href="/member/mypage"><i class="far fa-user"></i> <span>My Profile</span></a></li>
-                     		<li><a href="/member/logout" onclick="kakaoLogout()"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+                     		<li><a onclick="kakaoLogout()"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
                      </ul>
                   </li>
                </ul>
