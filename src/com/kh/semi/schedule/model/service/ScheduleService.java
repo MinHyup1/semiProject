@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.kh.semi.common.db.JDBCTemplate;
+import com.kh.semi.notice.dto.Notice;
 import com.kh.semi.schedule.model.dao.ScheduleDao;
 import com.kh.semi.schedule.model.dto.Medical;
 import com.kh.semi.schedule.model.dto.Prescription;
@@ -340,6 +341,58 @@ public class ScheduleService {
 		}
 	}
 	
+	public List<Notice> selectEmailAndTimeInDoseNotice() {
+		Connection conn = template.getConnection();
+		List<Notice> noticeList = null;
+		
+		try {
+			noticeList = scheduleDao.selectEmailAndTimeInDoseNotice(conn);
+		} finally {
+			template.close(conn);
+		}
+		return noticeList;
+	}
+	
+	public void updateDoseNotice(String doseNoticeCode) {
+		Connection conn = template.getConnection();
+		
+		try {
+			scheduleDao.updateDoseNotice(conn, doseNoticeCode);
+			template.commit(conn);
+		} catch (Exception e) {
+			template.rollback(conn);
+			throw e;
+		} finally {
+			template.close(conn);
+		}
+	}
+	
+	public List<Notice> selectEmailAndTimeInVisitNotice() {
+		Connection conn = template.getConnection();
+		List<Notice> noticeList = null;
+		
+		try {
+			noticeList = scheduleDao.selectEmailAndTimeInVisitNotice(conn);
+		} finally {
+			template.close(conn);
+		}
+		return noticeList;
+	}
+	
+	public void updateVisitNotice(String visitNoticeCode) {
+		Connection conn = template.getConnection();
+		
+		try {
+			scheduleDao.updateVisitNotice(conn, visitNoticeCode);
+			template.commit(conn);
+		} catch (Exception e) {
+			template.rollback(conn);
+			throw e;
+		} finally {
+			template.close(conn);
+		}
+	}
+	
 	private String insertScheduleList(Connection conn, String userCode) {
 		scheduleDao.insertScheduleList(conn, userCode);
 		return scheduleDao.getCurrentScheduleId(conn);
@@ -366,22 +419,4 @@ public class ScheduleService {
 		scheduleDao.updateHasMedicine(conn, prescriptionId);
 	}
 
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-	
 }
