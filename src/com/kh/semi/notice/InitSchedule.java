@@ -31,7 +31,7 @@ public class InitSchedule {
 
 			// Trigger the job to run now, and then repeat every 40 seconds
 			Trigger trigger = newTrigger().withIdentity("trigger1", "group1").startNow()
-					.withSchedule(simpleSchedule().withIntervalInSeconds(300).repeatForever()).build();
+					.withSchedule(simpleSchedule().withIntervalInSeconds(60).repeatForever()).build();
 
 			// Tell quartz to schedule the job using our trigger
 			scheduler.scheduleJob(job, trigger);
