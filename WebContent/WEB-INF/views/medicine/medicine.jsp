@@ -57,7 +57,7 @@ table.medList td {
 				<th>주의사항</th>
 				<c:forEach var="i" begin="0" step="1" end="${size -1}" varStatus="status">
 				<tr><!-- 첫번째 줄 시작 -->
-				    <td><img src="${requestScope.medicineList[i].medImg}"style="width: 80px; height: auto;"/></td>
+					<td><img src="${requestScope.medicineList[i].medImg}"style="width: 80px; height: auto;"/></td>
 				    <td>${requestScope.medicineList[i].medName}</td>
 				    <td style="width: 40%;">${requestScope.medicineList[i].medEfc}</td>
 				    <td style="width: 40%;">${requestScope.medicineList[i].medMethod}</td>
@@ -69,7 +69,7 @@ table.medList td {
  		<c:when test="${empty requestScope.medicineList}">
  		<br>
  		<table border="1" class="medList" style ="text-align: center">
- 		<th>검색결과가 없습니다. </th>
+ 		<td style="width: 200px;">검색결과가 없습니다.</td>
  		</table>
  		</c:when>
 	</c:choose>

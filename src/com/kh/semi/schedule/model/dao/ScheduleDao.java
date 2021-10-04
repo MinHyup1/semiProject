@@ -13,6 +13,7 @@ import java.util.Set;
 
 import com.kh.semi.common.db.JDBCTemplate;
 import com.kh.semi.common.exception.DataAccessException;
+import com.kh.semi.notice.dto.Notice;
 import com.kh.semi.schedule.model.dto.Medical;
 import com.kh.semi.schedule.model.dto.Prescription;
 import com.kh.semi.schedule.model.dto.Schedule;
@@ -618,10 +619,94 @@ public class ScheduleDao {
 		}
 	}
 	
+	public List<Notice> selectEmailAndTimeInDoseNotice(Connection conn) {
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		List<Notice> noticeList = new ArrayList<Notice>();
+		String query = "select email, dose_notice_code, prescription_name, notice_time "
+						+ "from member join schedule_list using(user_code) "
+						+ "join prescription_list using(schedule_id) "
+						+ "join dose_notice_list using(prescription_id) "
+						+ "where is_noticed = 'N' and trunc(current_date) - cast(notice_time as date) > -1";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				Notice notice = new Notice();
+				notice.setEmail(rset.getString("email"));
+				notice.setNoticeCode(rset.getString("dose_notice_code"));
+				notice.setNoticeName(rset.getString("prescription_name"));
+				notice.setNoticeTime(rset.getTimestamp("notice_time"));
+				noticeList.add(notice);
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return noticeList;
+	}
 	
+	public void updateDoseNotice(Connection conn, String doseNoticeCode) {
+		PreparedStatement pstm = null;
+		String query = "update dose_notice_list set is_noticed = 'Y' where dose_notice_code = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, doseNoticeCode);
+			pstm.executeUpdate();
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
 	
+	public List<Notice> selectEmailAndTimeInVisitNotice(Connection conn) {
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		List<Notice> noticeList = new ArrayList<Notice>();
+		String query = "select email, visit_notice_code, notice_name, notice_date "
+						+ "from member join schedule_list using(user_code) "
+						+ "join visit_notice using(schedule_id) "
+						+ "where is_noticed = 'N' and trunc(current_date) - cast(notice_date as date) > -1";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				Notice notice = new Notice();
+				notice.setEmail(rset.getString("email"));
+				notice.setNoticeCode(rset.getString("visit_notice_code"));
+				notice.setNoticeName(rset.getString("notice_name"));
+				notice.setNoticeTime(rset.getTimestamp("notice_date"));
+				noticeList.add(notice);
+			}
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(rset, pstm);
+		}
+		return noticeList;
+	}
 	
-	
+	public void updateVisitNotice(Connection conn, String visitNoticeCode) {
+		PreparedStatement pstm = null;
+		String query = "update visit_notice set is_noticed = 'Y' where visit_notice_code = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setString(1, visitNoticeCode);
+			pstm.executeUpdate();
+		} catch (Exception e) {
+			throw new DataAccessException(e);
+		} finally {
+			template.close(pstm);
+		}
+	}
 
 	private Schedule parseResultSetToSchedule(ResultSet rset) throws SQLException {
 		Schedule schedule = new Schedule();
@@ -672,12 +757,4 @@ public class ScheduleDao {
 		return visit;
 	}
 
-	
-
-
-	
-
-	
-	
-	
 }

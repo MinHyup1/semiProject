@@ -55,13 +55,13 @@ table.pharmacyList td {
 	</div>
 	</div>
 		<form method="post" action="byaddress" >
-		<label>검색할 지역 :     </label>
-		<input type="text" class="byaddress" name="byaddress" placeholder="동이름 또는 도로명을 입력하세요">
+		<label style="width:150px">&nbsp&nbsp&nbsp&nbsp&nbsp검색할 지역 :     </label>
+		<input type="text" class="byaddress" name="byaddress" placeholder="동이름 또는 도로명을 입력하세요" style="width:300px">
 		<button>확인</button>
 		</form>
 		<form method="post" action="byname" >
-		<label>검색할 약국 이름 : </label>
-		<input type="text" class="byname" name="byname" placeholder="약국 이름을 입력하세요">
+		<label style="width:150px">&nbsp&nbsp검색할 약국 이름 : </label>
+		<input type="text" class="byname" name="byname" placeholder="약국 이름을 입력하세요" style="width:300px">
 		<button>확인</button>
 		</form>
 	<c:choose>	
