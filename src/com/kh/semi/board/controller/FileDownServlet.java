@@ -47,7 +47,7 @@ public class FileDownServlet extends HttpServlet {
 
         OutputStream os = response.getOutputStream();
         // String path = servletContext.getRealPath("/resources");
-        // d:/upload 폴더를 생성한다.
+        // c:/upload 폴더를 생성한다.
         // server에 clean을 하면 resources 경로의 것이 다 지워지기 때문에
         // 다른 경로로 잡는다(실제 서버에서는 위의 방식으로)
 
