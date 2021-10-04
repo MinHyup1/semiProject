@@ -142,8 +142,8 @@ function fn_add_comment(TYPE,BNO,PARENT_COMMENT_ID,USER_CODE){
 		<input type="hidden" name="USER_CODE" value="${authentication.userCode}"/>
 		
 		<c:if test="${authentication.userCode == vo.USER_CODE}">
-			<input type="button" value="수정" onclick="location.href='write_board?BNO=${vo.BNO}&BBS_TYPE=${BBS_TYPE}&type=modify'" class="input_l_s1">
-			<input type="button" value="삭제" onclick="location.href='delete_board?BNO=${vo.BNO}&BBS_TYPE=${BBS_TYPE}'" class="input_l_s1">
+			<input type="button" value="수정" onclick="location.href='/board/write_board?BNO=${vo.BNO}&BBS_TYPE=${BBS_TYPE}&type=modify'" class="input_l_s1">
+			<input type="button" value="삭제" onclick="location.href='/board/delete_board?BNO=${vo.BNO}&BBS_TYPE=${BBS_TYPE}'" class="input_l_s1">
 		</c:if>
 		 
         <table id="tbl_comment" style="padding-top: 50px" align=center width=700 border=0 cellpadding=2>
@@ -197,7 +197,7 @@ function fn_add_comment(TYPE,BNO,PARENT_COMMENT_ID,USER_CODE){
 									</c:if>
 									
 									<c:if test="${authentication.userCode == item.USER_CODE}">
-										<a href="delete_board_comment?BNO=${vo.BNO }&BBS_TYPE=${BBS_TYPE }&COMMENT_ID=${item.COMMENT_ID }">삭제</a>
+										<a href="/board/delete_board_comment?BNO=${vo.BNO }&BBS_TYPE=${BBS_TYPE }&COMMENT_ID=${item.COMMENT_ID }">삭제</a>
 									</c:if>
 								</c:if>
 								
@@ -217,7 +217,7 @@ function fn_add_comment(TYPE,BNO,PARENT_COMMENT_ID,USER_CODE){
 									</c:if>
 									
 									<c:if test="${authentication.userCode == item.USER_CODE}">
-										<a href="delete_board_comment?BNO=${vo.BNO }&BBS_TYPE=${BBS_TYPE }&COMMENT_ID=${item.COMMENT_ID }">삭제</a>
+										<a href="/board/delete_board_comment?BNO=${vo.BNO }&BBS_TYPE=${BBS_TYPE }&COMMENT_ID=${item.COMMENT_ID }">삭제</a>
 									</c:if>
 								</c:if>
 								

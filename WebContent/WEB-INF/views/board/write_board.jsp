@@ -127,7 +127,7 @@ a {
                         </table>
  
                         <tr>
-                        <td colspan="2"><input type = "submit" value="작성"></td>
+                        <td colspan="2"><input type = "submit" value="작성" class="submit_board"></td>
                         </tr>
 
         </table>
@@ -136,7 +136,7 @@ a {
 		
 		<!-- 수정모드일 경우 -->
 		<c:if test="${type == 'modify'}">
-		<form method = "post" action = "update_board">
+		<form method = "post" action = "/board/update_board">
 		<input type="hidden" name="BBS_TYPE" value="${BBS_TYPE }"/> 
 		<input type="hidden" name="BNO" value="${vo.BNO }"/> 
 		<input type="hidden" name="USER_CODE" value="${authentication.userCode}"/>
@@ -182,4 +182,18 @@ a {
 </div>
 
 </body>
+<script type="text/javascript">
+document.querySelector(".submit_board").addEventListener('click', e => {
+	//e.preventDefault();
+	let title = document.querySelector('input[name=TITLE]').value;
+	let content = document.querySelector('textarea[name=CONTENT]').value;
+	if(title.length == 0 || content.length == 0) {
+		e.preventDefault();
+		alert('제목과 내용을 입력하세요.');
+	}
+	
+})
+
+
+</script>
 </html>

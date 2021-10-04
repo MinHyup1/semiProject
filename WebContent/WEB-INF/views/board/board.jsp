@@ -108,7 +108,7 @@ th{
 		<h1>자주묻는 질문</h1>
 	</c:if>
 	<c:if test="${not empty authentication}">
-		<input type="button" value="글쓰기" onclick="location.href='write_board?BBS_TYPE=${BBS_TYPE}'" class="input_l_s1">
+		<input type="button" value="글쓰기" onclick="location.href='/board/write_board?BBS_TYPE=${BBS_TYPE}'" class="input_l_s1">
 	</c:if>
 		<table class="board_list">
 			<caption>게시판 목록</caption>
@@ -125,7 +125,7 @@ th{
 						<tr>
 							<td>${item.RN }</td>
 							<td>
-								<a href="view_board?BBS_TYPE=${BBS_TYPE}&BNO=${item.BNO}">${item.TITLE }</a>
+								<a href="/board/view_board?BBS_TYPE=${BBS_TYPE}&BNO=${item.BNO}">${item.TITLE }</a>
 							</td>
 							<td>${item.NAME }</td>
 							<td>${item.REGDATE }</td>
@@ -170,17 +170,17 @@ th{
 			 
 				<!-- << 처음으로 < 이전으로 -->  
 			   <c:if test="${numPageGroup > 1}">
-			        <a class="bt" href="/test/board?BBS_TYPE=${BBS_TYPE}&CURRENT_ROW=1">첫 페이지</a>
-			        <a class="bt"href="/test/board?BBS_TYPE=${BBS_TYPE}&pageNum=${(numPageGroup-2)*pageGroupSize+1 }">이전 페이지</a>
+			        <a class="bt" href="/board/board?BBS_TYPE=${BBS_TYPE}&CURRENT_ROW=1">첫 페이지</a>
+			        <a class="bt"href="/board/board?BBS_TYPE=${BBS_TYPE}&pageNum=${(numPageGroup-2)*pageGroupSize+1 }">이전 페이지</a>
 			   </c:if>
 			  
 
 			  <c:forEach var="i" begin="${startPage}" end="${endPage}">
 				   <c:if test="${CURRENT_ROW == i}">
-				   		<a href="/test/board?BBS_TYPE=${BBS_TYPE}&CURRENT_ROW=${i}" class="num on">${i}</a>
+				   		<a href="/board/board?BBS_TYPE=${BBS_TYPE}&CURRENT_ROW=${i}" class="num on">${i}</a>
 				   </c:if>
 			 		<c:if test="${CURRENT_ROW != i}">
-				   		<a href="/test/board?BBS_TYPE=${BBS_TYPE}&CURRENT_ROW=${i}" class="num">${i}</a>
+				   		<a href="/board/board?BBS_TYPE=${BBS_TYPE}&CURRENT_ROW=${i}" class="num">${i}</a>
 				   </c:if>
 			  </c:forEach>
 			 
@@ -190,8 +190,8 @@ th{
 			 ${maxPage }  
 			<!-- >> 맨뒤로 > 다음으로 -->
 			   <c:if test="${numPageGroup < pageGroupCount}">
-			      <a href="/test/board?BBS_TYPE=${BBS_TYPE}&CURRENT_ROW=${numPageGroup*pageGroupSize+1}">다음 페이지</a>
-			      <a href="/test/board?BBS_TYPE=${BBS_TYPE}&CURRENT_ROW=${maxPage}">마지막 페이지</a>
+			      <a href="/board/board?BBS_TYPE=${BBS_TYPE}&CURRENT_ROW=${numPageGroup*pageGroupSize+1}">다음 페이지</a>
+			      <a href="/board/board?BBS_TYPE=${BBS_TYPE}&CURRENT_ROW=${maxPage}">마지막 페이지</a>
 			  
 			   </c:if>
 			</c:if>

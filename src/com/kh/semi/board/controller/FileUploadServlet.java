@@ -95,7 +95,7 @@ public class FileUploadServlet extends HttpServlet {
 				
 				
 			}
-			response.sendRedirect("/test/board?BBS_TYPE="+BBS_TYPE);
+			response.sendRedirect("/board/board?BBS_TYPE="+BBS_TYPE);
 		} catch (Exception e) {
 			out.println("<PRE>");
 			e.printStackTrace(out);
@@ -129,7 +129,7 @@ public class FileUploadServlet extends HttpServlet {
 			out.println("파일 이름:" + fileName + "<BR>");
 			out.println("콘텐츠 타입:" + contentType + "<BR>");
 			out.println("파일 사이즈:" + fileSize + "<BR>");
-			// 확장자가 이미지인겨우 이미지 출력
+			// 확장자가 이미지인경우 이미지 출력
 			if (".jpg.jpeg.bmp.png.gif".contains(fileExt.toLowerCase())) {
 				out.println("<IMG SRC='upload/" + uploadedFileName + "' width='300'><BR>");
 			}
