@@ -8,11 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.semi.main.controller.CovidController;
+import com.kh.semi.main.model.service.CovidService;
 
 @WebServlet("/index")
 public class indexController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	CovidController covidController = new CovidController();
        
     public indexController() {
         super();

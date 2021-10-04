@@ -55,7 +55,11 @@ public class AuthorizationFilter implements Filter {
 	private void index(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String[] uriArr) throws ServletException, IOException {
 		      HttpSession session = httpRequest.getSession();
 		      Member member = (Member) session.getAttribute("authentication");
-		      covidController.covidChart(httpRequest, httpResponse);
+
+			
+				//covidController.covidChart(httpRequest);
+				
+		      		      
 		      if(member==null) {
 		    	 
 		         httpRequest.getRequestDispatcher("/index").forward(httpRequest, httpResponse);

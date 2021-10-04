@@ -53,7 +53,7 @@ public class CovidController extends HttpServlet {
 			covidInfo(request, response);
 			break;
 		case "covidChart":
-			covidChart(request, response);
+			covidChart(request);
 			break;
 		case "covid":
 			request.getRequestDispatcher("/main/covid").forward(request, response);
@@ -63,13 +63,14 @@ public class CovidController extends HttpServlet {
 
 	}
 
-	public void covidChart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public HttpServletRequest covidChart(HttpServletRequest request) throws ServletException, IOException {
 		JSONArray covidJson = new JSONArray();
 		covidJson = covidService.covidDecideCnt();
 		System.out.println(covidJson);
 		
 		request.getSession().setAttribute("covidJson", covidJson);
-		request.getRequestDispatcher("/index").forward(request, response);
+		//request.getRequestDispatcher("/index").forward(request, response);
+		return request;
 	}
 
 	private void covidInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
