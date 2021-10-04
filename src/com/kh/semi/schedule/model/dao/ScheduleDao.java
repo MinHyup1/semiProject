@@ -619,6 +619,7 @@ public class ScheduleDao {
 		}
 	}
 	
+	//조건 Y로 바꿈
 	public List<Notice> selectEmailAndTimeInDoseNotice(Connection conn) {
 		PreparedStatement pstm = null;
 		ResultSet rset = null;

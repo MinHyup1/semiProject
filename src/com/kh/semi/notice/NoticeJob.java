@@ -67,19 +67,15 @@ public class NoticeJob implements Job{
 			System.out.println("메일 전송할 알림 : " + notice);
 			mailSender.sendEmail(notice.getEmail(), "medibook 알림", notice.getNoticeName());
 		}
-		
-		/*
-		 * for (Notice notice : nowDoseNoticeList) {
-		 * System.out.println("업데이트 알림 : " + notice);
-		 * scheduleService.updateDoseNotice(notice.getNoticeCode());
-		 * }
-		 */
 
-		/*
-		 * for (Notice notice : nowVisitNoticeList) {
-		 * scheduleService.updateVisitNotice(notice.getNoticeCode());
-		 * }
-		 */
+		for (Notice notice : nowDoseNoticeList) {
+			System.out.println("업데이트 알림 : " + notice);
+			scheduleService.updateDoseNotice(notice.getNoticeCode());
+		}
+
+		for (Notice notice : nowVisitNoticeList) {
+			scheduleService.updateVisitNotice(notice.getNoticeCode());
+		}
 
 	}
 
