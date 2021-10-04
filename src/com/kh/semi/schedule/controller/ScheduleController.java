@@ -616,9 +616,9 @@ public class ScheduleController extends HttpServlet {
 	
 	private String createVisitName(String hospital) {
 		if(hospital.length() == 0) {
-			return "병원 진료 예약 알림";
+			return "병원 진료 알림";
 		}
-		return hospital + "진료 예약 알림";
+		return hospital + "진료 알림";
 	}
 	
 	private String createPrescriptionName(String pharm, String[] medicine, String[] doseNotice) {
@@ -635,7 +635,7 @@ public class ScheduleController extends HttpServlet {
 				name = firstMed + " ";
 			}
 		}else if(pharm.length() != 0) {
-			name = pharm + " 약";
+			name = pharm + "처방 약 ";
 		}else {
 			name = "약 ";
 		}

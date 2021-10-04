@@ -153,7 +153,7 @@ let rendPrescriptionToTable = async (event) => {
 	end.innerHTML = '<label>복용 종료일 : <input type="date" value=' + datas.end + ' readonly></label>';
 	
 	let pharm = document.createElement('td');
-	pharm.innerHTML = '<label>처방 약국 : <input type="text" readonly></label>';
+	pharm.innerHTML = '<label>처방 약국 : </label>';
 	
 	let mediTitle = document.createElement('td');
 	mediTitle.innerHTML = '<label>처방 약 : </label>';
@@ -211,7 +211,7 @@ let rendVisitToTable = async (event) => {
 	date.innerHTML = '<label>알림 날짜 : <input type="date" value=' + datas.notice_date + ' readonly></label>';
 	
 	let hospital = document.createElement('td');
-	hospital.innerHTML = '<label>진료 병원 : <input type="text" readonly></label>';
+	hospital.innerHTML = '<label>진료 병원 : </label>';
 	if(datas.hospital) {
 		hospital.innerHTML = "<label>진료 병원 : <a href='/searchHospital/search-hospital?input=" + datas.hospital + "&hospCode=" + datas.hospCode + "'>" + datas.hospital + "</a></label>";
 	}
