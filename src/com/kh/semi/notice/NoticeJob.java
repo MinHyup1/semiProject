@@ -33,7 +33,6 @@ public class NoticeJob implements Job{
 		//DB에서  알림 여부가 N인 사용자 이메일, 스케줄 타이틀, 알림시간을 가져온다.
 		List<Notice> doseNoticeList = scheduleService.selectEmailAndTimeInDoseNotice();
 		List<Notice> visitNoticeList = scheduleService.selectEmailAndTimeInVisitNotice();
-		System.out.println("db에서 가져온 알림 : " + doseNoticeList);
 		
 		
 		if(doseNoticeList.size() == 0 && visitNoticeList.size() == 0) return;
@@ -69,7 +68,6 @@ public class NoticeJob implements Job{
 		}
 
 		for (Notice notice : nowDoseNoticeList) {
-			System.out.println("업데이트 알림 : " + notice);
 			scheduleService.updateDoseNotice(notice.getNoticeCode());
 		}
 
