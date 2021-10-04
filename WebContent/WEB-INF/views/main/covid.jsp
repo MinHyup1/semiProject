@@ -30,7 +30,7 @@ body{
 
 </head>
 <body>
-<div id="covidTitle">코로나19 일일 확진자 현황</div>
+<a href="/covid/covidInfo" id="covidTitle">코로나19 일일 확진자 현황</a>
 
 <div id="chart"></div>
 

@@ -19,7 +19,7 @@ function loginWithKakao(){
 				const email = res.kakao_account.email;
 				const nick = res.properties.nickname;
 				const gender = res.kakao_account.gender;
-				alert(nick+' 환영합니다!');	
+				alert(nick+' 님 환영합니다!');	
 				console.log(email);
 				console.log(nick);
 				console.log(gender);
